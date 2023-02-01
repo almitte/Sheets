@@ -1,0 +1,110 @@
+.refresh-button {
+	background-color: var(--accent-bright);
+	border: none;
+	text-align: center;
+	text-decoration: none;
+	font-size: var(--font-small-size);
+	color: white;
+	padding: 16px 32px;
+	cursor: pointer;
+	border-radius: 42px;
+	font-weight: bold;
+	transition: transition 0.2s ease-out-in;
+	box-shadow: 0px 0px 14px -2px var(--accent-bright);
+}
+
+.refresh-button:hover {
+	background-color: var(--accent-medium);
+}
+
+/* Search box container styles */
+.search-box-container {
+	vertical-align: middle;
+	position: relative;
+	z-index: 0;
+	margin-right: 0;
+}
+
+/* Search box styles */
+.search-box {
+	width: 100px;
+	/* Set the width of the search box */
+	height: 40px;
+	/* Set the height of the search box */
+	border-radius: 42px;
+	/* Add round corners to the search box using the border-radius property */
+	border: 2px solid var(--main-dark);
+	/* Add a border to the search box */
+	outline: none;
+	/* Remove the default outline of the search box */
+	font-size: 16px;
+	/* Set the font size of the search box */
+	color: var(--main-dark);
+	/* Set the font color of the search box */
+	padding: 0px 50px;
+	/* Add some padding to the search box */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	/* Add a drop shadow to the search box using the box-shadow property */
+	transition: border 0.2s ease-in-out;
+	/* Add a transition to the border to animate the change */
+	transition: width 0.2s ease-in-out;
+}
+
+/* Search box styles */
+.search-box-2 {
+	width: 100px;
+	/* Set the width of the search box */
+	height: 40px;
+	/* Set the height of the search box */
+	border-radius: 42px;
+	/* Add round corners to the search box using the border-radius property */
+	border: 2px solid var(--main-dark);
+	/* Add a border to the search box */
+	outline: none;
+	/* Remove the default outline of the search box */
+	font-size: 16px;
+	/* Set the font size of the search box */
+	color: var(--main-dark);
+	/* Set the font color of the search box */
+	padding: 0px 50px;
+	/* Add some padding to the search box */
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	/* Add a drop shadow to the search box using the box-shadow property */
+	transition: border 0.2s ease-in-out;
+	/* Add a transition to the border to animate the change */
+	transition: width 0.2s ease-in-out;
+}
+
+/* Search box focus styles */
+.search-box:focus,
+.search-box:hover,
+.search-box-2:focus,
+.search-box-2:hover {
+	border: 2px solid var(--main-dark);
+	width: 15rem;
+	/* Change the border color of the search box on focus */
+}
+
+.search-icon {
+	position: absolute;
+	/* Set the position property of the search icon to absolute */
+	top: 45%;
+	/* Position the search icon vertically in the middle of the search box container */
+	left: 20px;
+	/* Position the search icon horizontally at the left of the search box container */
+	transform: translateY(-50%);
+	/* Translate the search icon vertically by half its own height to position it in the middle of the search box container */
+	font-size: 20px;
+	/* Set the font size of the search icon */
+	color: var(--main-dark);
+	/* Set the font color of the search icon */
+}
+
+.refresh-search-container {
+	display: flex;
+	/* Set the display property of the container to flex to align the child elements horizontally */
+	justify-content: space-between;
+	/* Align the child elements to the left and right of the container using the justify-content property */
+	margin-bottom: 0px;
+	padding: 7px;
+}

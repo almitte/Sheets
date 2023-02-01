@@ -1,0 +1,103 @@
+nav {
+	z-index: 1;
+	margin-left: 20px;
+	margin-right: 20px;
+	/* Navbar styles */
+	position: sticky;
+	/* Make the navbar sticky using the position: sticky property */
+	top: 0;
+	/* Set the top position of the navbar to 0 to make it stick to the top of the page */
+	background-color: var(--main-dark);
+	/* Set the background color of the navbar */
+	color: white;
+	/* Set the font color of the navbar */
+	display: flex;
+	/* Set the display property of the navbar to flex */
+	align-items: center;
+	/* Align the content inside the navbar to the center */
+	border-radius: 15px;
+	/* Add round corners to the navbar using the border-radius property */
+	padding: 0px;
+}
+
+nav .left {
+	/* Left section styles */
+	float: left;
+	/* Float the left div to the left */
+	display: flex;
+	/* Set the display property of the left div to flex */
+	align-items: center;
+	/* Align the content inside the left div to the center */
+}
+
+nav .middle {
+	/* Set the flex property of the middle div to 1 to make it take up all available space */
+	display: flex;
+	/* Set the display property of the middle div to flex */
+	align-items: center;
+	/* Align the content inside the middle div to the center */
+	border-right: 1px solid white;
+	border-left: 1px solid white;
+	/* Add a border-right to the middle div to create a vertical line */
+}
+
+nav .right {
+	/* Right section styles */
+	float: right;
+	/* Float the right div to the right */
+	display: flex;
+	justify-content: space-start;
+	margin-left: 0;
+	/* Add a border-left to the middle div to create a vertical line */
+	/* Align the content inside the right div to the center */
+	flex: 1;
+}
+
+nav img {
+	padding: 10px;
+	/* Image styles */
+	width: 50px;
+	/* Set the width of the image */
+}
+
+nav h2 {
+	/* Heading styles */
+	margin: 0;
+	font-size: var(--font-medium-size);
+	padding-left: 2.5rem;
+	color: white;
+	/* Remove the default margin of the heading element */
+}
+
+nav a {
+	/* Link styles */
+	display: block;
+	/* Set the display property of the links to block to make them span the full width of the navbar */
+	padding: 0 10px;
+	/* Add some padding to the links */
+	text-decoration: none;
+	/* Remove the default text-decoration of the links */
+	color: white;
+	/* Set the font color of the links to white */
+	transition: all 0.4s ease-in-out;
+}
+
+nav a:hover,
+nav a.active {
+	/* Link hover styles */
+	color: #000;
+	/* Set the font color of the links to black on hover */
+	background-color: var(--accent-bright);
+	/* Set the background color for the links to grey on hover */
+	box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+	/* Add a box shadow to the links on hover */
+	border-radius: 25px;
+	/* Add rounded corners to the links on hover */
+}
+
+@media only screen and (max-width: 600px) {
+	nav .middle,
+	nav .right {
+		display: none;
+	}
+}

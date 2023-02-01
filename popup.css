@@ -1,0 +1,66 @@
+/* The popup form - hidden by default */
+.form-popup {
+	display: none;
+	position: fixed;
+	bottom: 0;
+	right: 15px;
+	border: 3px solid #f1f1f1;
+	z-index: 9;
+	margin-bottom: 20px;
+}
+
+/* Add styles to the form container */
+.form-container {
+	max-width: 350px;
+	padding: 10px;
+	background-color: white;
+}
+
+.form-container h1 {
+	margin: 0;
+	margin-bottom: 10px;
+}
+
+/* Full-width input fields */
+.form-container input[type="password"] {
+	width: 300px;
+	padding: 15px;
+	margin: 5px 0 10px 0;
+	border: none;
+	background: #e1e1e1;
+	border-radius: 42px;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type="password"]:focus {
+	background-color: #ddd;
+	outline: none;
+	box-shadow: 0px 0px 14px -2px #949494;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+	color: white;
+	padding: 15px 30px;
+	border: none;
+	cursor: pointer;
+	margin-bottom: 10px;
+	opacity: 0.8;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover,
+.open-button:hover {
+	opacity: 1;
+}
+
+.btn {
+	background-color: var(--main-dark);
+	border: none;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 42px;
+	font-weight: bold;
+	font-size: var(--font-small-size);
+	box-shadow: 0px 0px 14px -2px var(--main-dark);
+}

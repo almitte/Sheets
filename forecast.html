@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Rollout Monitor</title>
+  <style>
+    :root {
+      --font-big-size: 2rem;
+      --font-medium-size: 1.5rem;
+      --font-small-size: 1rem;
+      --main-dark: #009879;
+      --main-medium: #006a60;
+      --main-light: #40b3a2;
+      --accent-bright: #ffc10b;
+      --accent-medium: #ffd23f;
+      --accent-light: #ffe57a;
+      --margin-big: 2rem;
+      --margin-medium: 1rem;
+      --magin-small: 0.5rem;
+    }
+
+    * {
+      /* Targets all elements */
+      /* Adds a padding of 10 pixels to all elements */
+      font-family: Roboto, sans-serif;
+      animation: fadein 0.5s;
+      /* Add a fade-in animation when the page loads */
+    }
+
+    body {
+      background-color: #f7f7f7;
+    }
+
+    /* Add the fade-in animation */
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+
+
+  <link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="table.css">
+  <link rel="stylesheet" href="nav.css">
+  <link rel="stylesheet" href="search_and_refresh.css">
+  <link rel="stylesheet" href="header.css">
+  <link rel="stylesheet" href="info_box.css">
+  <link rel="stylesheet" href="background.css">
+  <link rel="stylesheet" href="div.css">
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<nav>
+  <div class="left">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
+      alt="McDonald's logo">
+    <h2>McDonald's Rollout Monitor</h2>
+  </div>
+  <div class="right">
+    <a href="index.html">Home</a>
+    <a href="detail.html">Detailplanung</a>
+    <a href="archiv.html">Archiv</a>
+  </div>
+</nav>
+
+<body onload="openForm()">
+
+  <!-- The form -->
+  <div class="form-popup" id="myForm">
+    <form class="form-container">
+      <h1>Login</h1>
+
+      <label class="error-mark" for="psw" style="display:none; color: red; font-size: 15px;"><b>Ungültiges
+          Passwort</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+      <button type="submit" class="btn">Login</button>
+    </form>
+  </div>
+
+  <section id="home">
+
+    <div>
+      <h1>
+        Forecast für alle geplanten Rolloutprojekte
+      </h1>
+    </div>
+    <div class="info-box">
+      <div class="info-box__icon">i</div>
+      <div class="info-box__text">
+        Diese Seite bietet Ihnen einen Überblick über alle geplanten Rolloutprojekte (NSO / IRLX). <br> Über das
+        Suchfeld kann gezielt nach einzelnen Einträgen gesucht werden. Mit einem Klick auf einen der Spaltenköpfe kann
+        die Tabelle entsprechend sortiert werden. <br> Änderungen werden dabei nur temporär vorgenommen. Nach dem
+        Drücken des Buttons
+        "Aktualisieren" wird die Übersicht aus dem Masterdokument neu geladen.
+      </div>
+    </div>
+  </section id="home">
+  <section id="main">
+    </p>
+    <!-- Refresh and search container -->
+    <div class="refresh-search-container">
+      <!-- Refresh button -->
+      <button class="refresh-button" onclick="myFunction();"><i class="fa fa-refresh"
+          style="margin-right: 10px;"></i>Aktualisieren</button>
+      <!-- Search box container -->
+      <div class="search-box-container">
+        <!-- Search box -->
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-box" placeholder="Suche...">
+        <!-- Search icon -->
+      </div>
+    </div>
+    <div>
+      <div class="table-wrapper">
+        <div class=table-scroll id="scroll-1">
+          <table id="forecast-table" class="sortable">
+            <thead>
+              <tr>
+                <th class="status">Status</th>
+                <th class="medium">Store</th>
+                <th class="long">Adresse</th>
+                <th class="short">Art</th>
+                <th class="medium">Variante</th>
+                <th class="medium">F/C</th>
+                <th class="short">DL</th>
+                <th class="medium">Abbau</th>
+                <th class="medium">KW</th>
+                <th class="medium">Eröffnung</th>
+                <th class="medium">KW</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <script>
+    function myFunction() {
+      if (checkPassword()) {
+
+        // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+        const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+        // Replace YOUR_API_KEY with your Google API key
+        const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
+
+        // Make a GET request to the Google Sheets API to retrieve the data for the table
+        $.ajax({
+          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Forecast!A1:K100?key=${API_KEY}`,
+          type: 'GET',
+          success: function (response) {
+            // The response from the API includes the data for the table in the "values" property
+            const data = response.values;
+
+            data.shift();
+            // Iterate through the data and add a row to the table for each item
+            $('#forecast-table tbody').empty();
+            data.forEach(function (item) {
+
+              try {// Determine the class name for the "status" cell based on its value
+                var statusClass = "";
+                if (item[0] == "ABGESCHLOSSEN") {
+                  statusClass = "abgeschlossen";
+                } else if (item[0] == "IN BAU") {
+                  statusClass = "in-bau";
+                } else if (item[0] == "IN PLANUNG") {
+                  statusClass = "in-planung";
+                } else if (item[0] == "VERTRAG") {
+                  statusClass = "vertrag";
+                } else if (item[0] == "FREIGABE 2") {
+                  statusClass = "freigabe2";
+                } else if (item[0] == "FREIGABE 1") {
+                  statusClass = "freigabe1";
+                } else { statusClass = "else" }
+              }
+              catch (e) {
+                console.log(e);
+              }
+
+              try {// Determine the class name for the "status" cell based on its value
+                var varianteClass = "";
+                if (item[4] == "NSO") {
+                  varianteClass = "nso";
+                } else if (item[4] == "IRLX") {
+                  varianteClass = "irlx";
+                } else { varianteClass = "else" }
+              }
+              catch (e) {
+                console.log(e);
+              }
+
+              $('#forecast-table tbody').append(`
+            <tr>
+              <td class="${statusClass}" disabled>
+                <button>${item[0]}</button>
+              </td>
+              <td>${item[1]}</td>
+              <td>${item[2]}</td>
+              <td>${item[3]}</td>
+              <td class="${varianteClass}" disabled>
+                <button>${item[4]}</button>
+              </td>
+              <td>${item[5]}</td>
+              <td>${item[6]}</td>
+              <td>${item[7]}</td>
+              <td>${item[8]}</td>
+              <td>${item[9]}</td>
+              <td>${item[10]}</td>
+            </tr>
+          `);
+            });
+            const table = document.getElementById("forecast-table");
+            const tableContainer = document.getElementById("scroll-1");
+
+            if (table.offsetHeight > window.innerHeight * 0.5) {
+              tableContainer.style.height = "70vh";
+            }
+          }
+        });
+      }
+    }
+  </script>
+
+  <script>
+    // Get the search box and data table elements
+    var searchBox = document.querySelector('.search-box');
+    var dataTable = document.querySelector('#forecast-table');
+
+    // Add an event listener to the search box that listens for input events
+    searchBox.addEventListener('input', function () {
+      // Get the search query from the search box
+      var query = this.value.toLowerCase();
+
+      // Loop through all the rows in the data table
+      for (var i = 1; i < dataTable.rows.length; i++) {
+        // Get the current row
+        var row = dataTable.rows[i];
+
+        // Set the row's display style to none by default
+        row.style.display = 'none';
+
+        // Loop through all the cells in the row
+        for (var j = 0; j < row.cells.length; j++) {
+          // Get the current cell
+          var cell = row.cells[j];
+
+          // If the cell's text content contains the search query, set the row's display style to '' (empty string) to show the row
+          if (cell.textContent.toLowerCase().indexOf(query) > -1) {
+            row.style.display = '';
+            break;
+          }
+        }
+      }
+    });
+
+  </script>
+  <script>
+    $(function () {
+      $('.scroll-page').on('click', function () {
+        var offset = 60; // Set the offset to 50px
+        var speed = 800;
+        var target = $(this.hash);
+
+        $('nav a').each(function () {
+          $(this).removeClass('active');
+        });
+
+        $(this).addClass('active');
+
+        $('html, body').animate({
+          scrollTop: target.offset().top - offset // Subtract the offset from the scrollTop position
+        }, speed, 'swing');
+      });
+    });
+  </script>
+  <script>
+    function openForm() {
+      const form = document.querySelector(".form-container");
+      if (checkPassword()) {
+        passwordIsCorrect = true;
+        myFunction();
+        form.remove();
+      } else {
+        document.getElementById("myForm").style.display = "block";
+        const passwordInput = document.querySelector("input[name='psw']");
+        const errorMark = document.querySelector(".error-mark");
+        const submitButton = document.querySelector("button[type='submit']");
+
+        submitButton.addEventListener("click", (event) => {
+          event.preventDefault();
+
+          if (passwordInput.value === "mcdonalds") {
+            sessionStorage.setItem("passwordIsCorrect", true);
+            form.remove();
+            myFunction();
+          } else {
+            errorMark.style.display = "inline";
+          }
+        });
+      }
+    }
+
+
+  </script>
+
+  <script>
+    function checkPassword() {
+      const passwordIsCorrect = sessionStorage.getItem("passwordIsCorrect");
+      if (passwordIsCorrect === "true") {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+  </script>
+
+</body>
+
+</html>

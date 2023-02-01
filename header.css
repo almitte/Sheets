@@ -1,0 +1,18 @@
+h1 {
+	font-size: var(--font-big-size);
+	text-align: left;
+	color: var(--main-medium);
+	margin-bottom: 0;
+}
+
+h2 {
+	font-size: var(--font-medium-size);
+	text-align: left;
+	color: var(--main-light);
+	margin-bottom: 0;
+}
+
+h3 {
+	color: var(--main-light);
+	font-size: var(--font-small-size);
+}
