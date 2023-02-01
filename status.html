@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Rollout Monitor</title>
+    <style>
+        :root {
+            --font-big-size: 2rem;
+            --font-medium-size: 1.5rem;
+            --font-small-size: 1rem;
+            --main-dark: #009879;
+            --main-medium: #006a60;
+            --main-light: #40b3a2;
+            --accent-bright: #ffc10b;
+            --accent-medium: #ffd23f;
+            --accent-light: #ffe57a;
+            --margin-big: 2rem;
+            --margin-medium: 1rem;
+            --magin-small: 0.5rem;
+        }
+
+        * {
+            /* Targets all elements */
+            /* Adds a padding of 10 pixels to all elements */
+            font-family: Roboto, sans-serif;
+            animation: fadein 0.5s;
+            /* Add a fade-in animation when the page loads */
+        }
+
+
+        body {
+            background-color: #f7f7f7;
+        }
+
+        /* Add the fade-in animation */
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        .KPI-grid {
+            grid-gap: 1rem;
+            margin-right: 2rem;
+            margin-left: 2rem;
+            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            justify-content: space-between;
+            align-content: center;
+        }
+
+        div>div {
+            margin: 0;
+            padding: 0;
+        }
+
+        .KPI-box {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 1rem;
+            border-radius: 0.5rem;
+            overflow-wrap: break-word;
+            background-clip: border-box;
+            border-width: 0px;
+            border-style: solid;
+            border-color: rgb(217, 222, 227);
+        }
+
+        div.KPI-box div.Header {
+            margin-top: 1.5rem;
+        }
+
+        .KPI-box h1 {
+            color: var(--main-medium);
+            font-size: 3rem;
+            font-weight: 600;
+            margin: 0;
+            margin-top: 1.5rem;
+
+        }
+
+        .KPI-box h2 {
+            color: #566a7f;
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin: 0;
+            padding-bottom: 1rem;
+        }
+
+        .KPI-box h3 {
+            color: #566a7f;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 0;
+            margin-top: 1rem;
+        }
+
+        .Combine {
+            grid-gap: 1rem;
+            margin-right: 2rem;
+            margin-left: 2rem;
+            justify-content: space-between;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            justify-content: space-between;
+            align-content: center;
+            margin-left: 1.5rem;
+            margin-right: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .status-table {
+            margin: 0;
+        }
+
+        .status-table table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 0.9rem;
+        }
+    </style>
+
+
+    <link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="styling/table.css">
+    <link rel="stylesheet" href="styling/nav.css">
+    <link rel="stylesheet" href="styling/search_and_refresh.css">
+    <link rel="stylesheet" href="styling/header.css">
+    <link rel="stylesheet" href="styling/info_box.css">
+    <link rel="stylesheet" href="styling/background.css">
+    <link rel="stylesheet" href="styling/div.css">
+    <link rel="stylesheet" href="styling/popup.css">
+</head>
+
+<nav>
+    <div class="left">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
+            alt="McDonald's logo">
+        <h2>McDonald's Rollout Monitor</h2>
+    </div>
+    <div class="right">
+        <a href="index.html">Home</a>
+        <a href="detail.html">Detailplanung</a>
+        <a href="forecast.html">Forecast</a>
+        <a href="archiv.html">Archiv</a>
+    </div>
+</nav>
+
+<body onload="openForm()">
+
+    <!-- The form -->
+    <div class="form-popup" id="myForm">
+        <form class="form-container">
+            <h1>Login</h1>
+
+            <label class="error-mark" for="psw" style="display:none; color: red; font-size: 15px;"><b>Ungültiges
+                    Passwort</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+            <button type="submit" class="btn">Login</button>
+        </form>
+    </div>
+
+    <section id="home">
+
+        <div>
+            <h1>
+                BestBurger Rollout Dashboard
+            </h1>
+        </div>
+        <div class="info-box">
+            <div class="info-box__icon">i</div>
+            <div class="info-box__text">
+                Änderungen werden dabei nur temporär vorgenommen. Nach
+                dem
+                Drücken des Buttons
+                "Aktualisieren" wird die Übersicht aus dem Masterdokument neu geladen.
+            </div>
+        </div>
+    </section id="home">
+    <section>
+
+        <div class="KPI-grid">
+            <div class="KPI-box">
+
+                <div class="Combine">
+
+                    <div class="Total">
+                        <h3>Status Server Rollout</h3>
+                        <h1>200</h1>
+                        <h2>Total</h2>
+
+                        <div class="status-table">
+                            <table id="status-table" class="sortable">
+                                <thead>
+                                    <tr>
+                                        <th>Status Server Rollout (2023)</th>
+                                        <th>Anzahl Server
+                                            RHS01</th>
+                                        <th>Anzahl Server
+                                            RHS02</th>
+                                        <th>Anzahl Server
+                                            GESAMT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="chart">
+                        <canvas id="myPieChart" width="200" height="200"></canvas>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="KPI-box">
+                <div class="Header">
+                    <h1>Anzahl</h1>
+                </div>
+                <div class="Value">
+                    <p>200</p>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+    </section>
+
+    <script>
+        var ctx = document.getElementById("myPieChart").getContext("2d");
+        var myPieChart = new Chart(ctx, {
+            type: "doughnut",
+            data: {
+                labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
+                datasets: [
+                    {
+                        data: [12, 19, 3, 5, 2],
+                        backgroundColor: [
+                            "rgba(255, 99, 132, 0.2)",
+                            "rgba(54, 162, 235, 0.2)",
+                            "rgba(255, 206, 86, 0.2)",
+                            "rgba(75, 192, 192, 0.2)",
+                            "rgba(153, 102, 255, 0.2)",
+                        ],
+                        borderColor: [
+                            "rgba(255, 99, 132, 1)",
+                            "rgba(54, 162, 235, 1)",
+                            "rgba(255, 206, 86, 1)",
+                            "rgba(75, 192, 192, 1)",
+                            "rgba(153, 102, 255, 1)",
+                        ],
+                    },
+                ],
+            },
+            options: {
+                responsive: true,
+                tooltips: {
+                    callbacks: {
+                        label: function (tooltipItem, data) {
+                            var allData = data.datasets[tooltipItem.datasetIndex].data;
+                            var tooltipLabel = data.labels[tooltipItem.index];
+                            var tooltipData = allData[tooltipItem.index];
+                            var total = 0;
+                            for (var i in allData) {
+                                total += allData[i];
+                            }
+                            var tooltipPercentage = Math.round((tooltipData / total) * 100);
+                            return tooltipLabel + ": " + tooltipPercentage + "%";
+                        },
+                    },
+                },
+                legend: {
+                    display: false
+                }
+            },
+        });
+    </script>
+
+    <script>
+        $(function () {
+            $('.scroll-page').on('click', function () {
+                var offset = 60; // Set the offset to 50px
+                var speed = 800;
+                var target = $(this.hash);
+
+                $('nav a').each(function () {
+                    $(this).removeClass('active');
+                });
+
+                $(this).addClass('active');
+
+                $('html, body').animate({
+                    scrollTop: target.offset().top - offset // Subtract the offset from the scrollTop position
+                }, speed, 'swing');
+            });
+        });
+    </script>
+    <script>
+        function openForm() {
+            const form = document.querySelector(".form-container");
+            if (checkPassword()) {
+                passwordIsCorrect = true;
+                myFunction();
+                form.remove();
+            } else {
+                document.getElementById("myForm").style.display = "block";
+                const passwordInput = document.querySelector("input[name='psw']");
+                const errorMark = document.querySelector(".error-mark");
+                const submitButton = document.querySelector("button[type='submit']");
+
+                submitButton.addEventListener("click", (event) => {
+                    event.preventDefault();
+
+                    if (passwordInput.value === "mcdonalds") {
+                        setCookie("passwordIsCorrect", "true", 30);
+                        form.remove();
+                        myFunction();
+                    } else {
+                        errorMark.style.display = "inline";
+                    }
+                });
+            }
+        }
+    </script>
+
+    <script>
+        function checkPassword() {
+            var passwordIsCorrect = getCookie("passwordIsCorrect");
+            if (passwordIsCorrect === "true") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+    </script>
+    <script>
+        function setCookie(cname, cvalue, exdays) {
+            var d = new Date();
+            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+            var expires = "expires=" + d.toUTCString();
+            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        }
+
+        function getCookie(cname) {
+            var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+            return cookieValue
+        }
+    </script>
+
+</body>
+
+</html>

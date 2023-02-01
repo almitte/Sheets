@@ -32,6 +32,8 @@
 	align-items: center;
 	justify-content: center;
 	margin-right: 1rem;
+	margin-left: 2rem;
+	margin-right: 2rem;
 }
 
 .info-box__text {
@@ -39,4 +41,6 @@
 	font-size: var(--font-small-size);
 	color: #000;
 	flex: 1;
+	margin-left: 2rem;
+	margin-right: 2rem;
 }
