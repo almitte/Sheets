@@ -231,40 +231,43 @@
               // The response from the API includes the data for the table in the "values" property
               const data = response.values;
 
+              // Skip the first row of the data, which contains the column names
               data.shift();
 
               // Iterate through the data and add a row to the table for each item
               data.forEach(function (item) {
                 try {// Determine the class name for the "status" cell based on its value
+
                   var varianteClass = "";
+
                   if (item[3] == "NSO") {
                     varianteClass = "nso";
                   } else if (item[3] == "IRLX") {
                     varianteClass = "irlx";
                   } else { varianteClass = "else" }
                 }
+
                 catch (e) {
                   console.log(e);
                 }
 
                 $('#2023-table tbody').append(`
-            <tr>
-              <td>${item[0]}</td>
-              <td>${item[1]}</td>
-              <td>${item[2]}</td>
-              <td class="${varianteClass}" disabled>
-                <button>${item[3]}</button>
-              </td>
-                <td>${item[4]}</td>
-              <td>${item[5]}</td>
-              <td>${item[6]}</td>
-              <td>${item[7]}</td>
-              <td>${item[8]}</td>
-              <td>${item[9]}</td>
-              <td>${item[10]}</td>
-            </tr>
-          `);
+                  <tr>
+                  <td>${item[0]}</td>
+                  <td>${item[1]}</td>
+                  <td>${item[2]}</td>
+                  <td class="${varianteClass}" disabled><button>${item[3]}</button></td>
+                  <td>${item[4]}</td>
+                  <td>${item[5]}</td>
+                  <td>${item[6]}</td>
+                  <td>${item[7]}</td>
+                  <td>${item[8]}</td>
+                  <td>${item[9]}</td>
+                  <td>${item[10]}</td>
+                  </tr>
+                `);
               });
+
               const table = document.getElementById("2023-table");
               const tableContainer = document.getElementById("scroll-1");
 
@@ -276,7 +279,9 @@
         })
       }
     }
+
   </script>
+
   <script>
     function load2022() {
       if (checkPassword()) {
@@ -309,30 +314,29 @@
               }
 
               $('#2022-table tbody').append(`
-              <tr>
-                <td>${item[0]}</td>
-                <td>${item[1]}</td>
-                <td>${item[2]}</td>
-                <td class="${varianteClass}" disabled>
-                <button>${item[3]}</button>
-              </td>
-                <td>${item[4]}</td>
-                <td>${item[5]}</td>
-                <td>${item[6]}</td>
-                <td>${item[7]}</td>
-                <td>${item[8]}</td>
-                <td>${item[9]}</td>
-                <td>${item[10]}</td>
- 
-              </tr>
-            `);
+                <tr>
+                  <td>${item[0]}</td>
+                  <td>${item[1]}</td>
+                  <td>${item[2]}</td>
+                  <td class="${varianteClass}" disabled><button>${item[3]}</button></td>
+                  <td>${item[4]}</td>
+                  <td>${item[5]}</td>
+                  <td>${item[6]}</td>
+                  <td>${item[7]}</td>
+                  <td>${item[8]}</td>
+                  <td>${item[9]}</td>
+                  <td>${item[10]}</td>
+                </tr>
+              `);
             });
+
             const table2 = document.getElementById("2022-table");
             const tableContainer2 = document.getElementById("scroll-2");
 
             if (table2.offsetHeight > window.innerHeight * 0.5) {
               tableContainer2.style.height = "50vh";
             }
+
           }
         });
       }
