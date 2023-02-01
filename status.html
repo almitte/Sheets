@@ -23,7 +23,7 @@
             /* Targets all elements */
             /* Adds a padding of 10 pixels to all elements */
             font-family: Roboto, sans-serif;
-            animation: fadein 0.5s;
+
             /* Add a fade-in animation when the page loads */
         }
 
@@ -49,9 +49,14 @@
             margin-left: 2rem;
             justify-content: space-between;
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            grid-template-columns: 1.75fr 1fr;
             justify-content: space-between;
             align-content: center;
+        }
+
+        .single {
+            margin-right: 2rem;
+            margin-left: 2rem;
         }
 
         div>div {
@@ -70,10 +75,7 @@
             border-width: 0px;
             border-style: solid;
             border-color: rgb(217, 222, 227);
-        }
-
-        div.KPI-box div.Header {
-            margin-top: 1.5rem;
+            height: 450px;
         }
 
         .KPI-box h1 {
@@ -125,8 +127,24 @@
         }
 
         canvas {
-            margin-top: 1rem;
-            margin-bottom: 3rem;
+            margin-bottom: 1rem;
+            margin: 0 auto;
+
+        }
+
+        .chart {
+            max-width: 300px;
+            max-height: 300px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 1rem;
+            margin-top: 2rem;
+        }
+
+        .lineChart {
+            max-width: 300px;
+            max-height: 300px;
         }
 
         .status-table {
@@ -146,6 +164,7 @@
         }
 
         .status-table td {
+            animation: fadein 1s;
             padding: 12px 15px;
             text-align: left;
         }
@@ -156,8 +175,12 @@
         }
 
         .status-table td {
-            font-size: var(--font-small-medium);
+            font-size: 20px;
             align-items: center;
+        }
+
+        .status-table td:nth-child(1) {
+            font-size: var(--font-small-size);
         }
 
         .status-table th {
@@ -215,22 +238,6 @@
             border-bottom-right-radius: 10px;
         }
 
-        .status-table th.long {
-            width: 10%;
-        }
-
-        .status-table th.status {
-            width: 5%;
-        }
-
-        .status-table th.short {
-            width: 2%;
-        }
-
-        .status-table th.medium {
-            width: 4%;
-        }
-
         /* Add a hover effect to the rows of the table */
         .status-table table tbody tr:hover {
             background-color: #00987a4b;
@@ -248,6 +255,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-doughnutlabel"></script>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
@@ -326,12 +334,6 @@
                                         <th>RHS02</th>
                                         <th>Gesamt</th>
                                     </tr>
-                                <tbody>
-                                    <td>data</td>
-                                    <td>data</td>
-                                    <td>data</td>
-                                    <td>data</td>
-                                </tbody>
                                 </thead>
                                 <tbody>
                                 </tbody>
@@ -339,7 +341,7 @@
                         </div>
                     </div>
                     <div class="chart">
-                        <canvas id="myPieChart" width="200" height="200"></canvas>
+                        <canvas id="myPieChart" width="300" height="300"></canvas>
                     </div>
                 </div>
 
@@ -361,6 +363,21 @@
             </div>
 
         </div>
+        <div class="single">
+            <div class="KPI-box">
+                <div class="Combine">
+                    <h3>Status Server Rollout</h3>
+
+                </div>
+                <div class="lineChart">
+                    <canvas id="lineChart" width="1200px" height="380"></canvas>
+                </div>
+
+
+            </div>
+
+
+        </div>
 
 
 
@@ -369,6 +386,7 @@
     </section>
 
     <script>
+
         var ctx = document.getElementById("myPieChart").getContext("2d");
         var myPieChart = new Chart(ctx, {
             type: "doughnut",
@@ -395,7 +413,19 @@
                 ],
             },
             options: {
+                animation: {
+
+                    duration: 2000,
+                    delay: 2000,
+                },
                 responsive: true,
+                plugins: {
+                    datalabels: {
+                        formatter: (value) => {
+                            return value + '%';
+                        },
+                    },
+                },
                 tooltips: {
                     callbacks: {
                         label: function (tooltipItem, data) {
@@ -416,6 +446,114 @@
                 }
             },
         });
+    </script>
+
+    <script>
+        // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+        const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+        // Replace YOUR_API_KEY with your Google API key
+        const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
+        var kw = [];
+        var rhs01 = [];
+        var rhs02 = [];
+        var gesamt = [];
+
+        // Make a GET request to the Google Sheets API to retrieve the data for the table
+        $.ajax({
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!F3:I27?key=${API_KEY}`,
+            type: 'GET',
+            success: function (response) {
+                // The response from the API includes the data for the table in the "values" property
+                const data = response.values;
+
+                data.shift();
+
+                data.forEach(function (item) {
+
+                    kw.push(item[0]);
+                    rhs01.push(item[1]);
+                    rhs02.push(item[2]);
+                    gesamt.push(item[3]);
+
+
+                });
+                var ctx = document.getElementById("lineChart").getContext("2d");
+                var datashart = {
+                    labels: kw, // calendar weeks
+                    datasets: [
+                        {
+                            label: "RHS 01",
+                            data: rhs01,
+                            borderColor: "rgba(255, 99, 132, 1)",
+                            pointBackgroundColor: "rgba(255, 99, 132, 1)",
+                            fill: false
+                        },
+                        {
+                            label: "RHS 02",
+                            data: rhs02,
+                            borderColor: "blue",
+                            pointBackgroundColor: "blue",
+                            fill: false
+                        },
+                        {
+                            label: "Total",
+                            data: gesamt,
+                            borderColor: "green",
+                            pointBackgroundColor: "green",
+                            fill: false
+                        }
+                    ]
+                };
+
+                var myChart = new Chart(ctx, {
+                    type: "line",
+                    data: datashart,
+                    options: {
+
+                        //hide the x axis lines
+                        scales: {
+                            xAxes: [{
+                                gridLines: {
+                                    display: false
+                                }
+                            }],
+                            yAxes: [{
+                                display: false,
+                                gridLines: {
+                                    display: false
+                                }
+                            }]
+                        },
+
+                        elements: {
+                            point: {
+                                radius: 4,
+                                //increase transparency of the point
+                                pointHitRadius: 10,
+                            },
+                        },
+                        legend: {
+                            display: false,
+                        },
+                        responsive: false,
+                        indexAxis: "y",
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false
+                        },
+                        hover: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    }
+                });
+
+
+            }
+        });
+
+
+
     </script>
 
     <script>
@@ -443,6 +581,7 @@
             if (checkPassword()) {
                 passwordIsCorrect = true;
                 myFunction();
+                loadLineChart();
                 form.remove();
             } else {
                 document.getElementById("myForm").style.display = "block";
@@ -457,6 +596,7 @@
                         setCookie("passwordIsCorrect", "true", 30);
                         form.remove();
                         myFunction();
+                        loadLineChart();
                     } else {
                         errorMark.style.display = "inline";
                     }
