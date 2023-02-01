@@ -428,7 +428,7 @@
           event.preventDefault();
 
           if (passwordInput.value === "mcdonalds") {
-            sessionStorage.setItem("passwordIsCorrect", true);
+            setCookie("passwordIsCorrect", "true", 30);
             form.remove();
             load2022();
             load2023();

@@ -319,7 +319,7 @@
           event.preventDefault();
 
           if (passwordInput.value === "mcdonalds") {
-            sessionStorage.setItem("passwordIsCorrect", true);
+            setCookie("passwordIsCorrect", "true", 30);
             form.remove();
             loadDetail1();
             loadDetail2();
@@ -356,6 +356,12 @@
       var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
       return cookieValue
     }
+
+    function deleteCookie(cname) {
+      document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+
+
   </script>
 
 
