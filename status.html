@@ -110,20 +110,134 @@
             grid-template-columns: 2fr 1fr;
             justify-content: space-between;
             align-content: center;
-            margin-left: 1.5rem;
-            margin-right: 1.5rem;
+            margin-left: 2.5rem;
+            margin-right: 2.5rem;
             margin-top: 1rem;
         }
 
+        #smallerbox {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        #red {
+            color: #fc5130;
+            padding-top: 2.5rem;
+        }
+
+        canvas {
+            margin-top: 1rem;
+            margin-bottom: 3rem;
+        }
+
         .status-table {
-            margin: 0;
+            margin-right: 2.5rem;
         }
 
         .status-table table {
             border-collapse: collapse;
-            width: 100%;
-            border: 1px solid #ddd;
+            margin-bottom: var(--margin-big);
             font-size: 0.9rem;
+            min-width: 400px;
+            width: 100%;
+            table-layout: fixed;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+            margin: 0;
+
+        }
+
+        .status-table td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .status-table th {
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .status-table td {
+            font-size: var(--font-small-medium);
+            align-items: center;
+        }
+
+        .status-table th {
+            font-size: var(--font-small-size);
+        }
+
+        .status-table thead tr {
+            background-color: var(--main-dark);
+            color: #ffffff;
+            text-align: left;
+        }
+
+        .status-table tbody tr {
+            border-bottom: 1px solid #dddddd;
+        }
+
+        .status-table .table-scroll tbody {
+            padding-top: 40px;
+        }
+
+        .status-table tbody tr:nth-of-type(even) {
+            background-color: #f3f3f3;
+        }
+
+        .status-table tbody tr:nth-of-type(odd) {
+            background-color: white;
+        }
+
+        .status-table th {
+            border-top: none;
+        }
+
+        .status-table td:first-child,
+        th:first-child {
+            border-left: none;
+        }
+
+        .status-table th:first-of-type {
+            background-color: white;
+        }
+
+        .status-table th:nth-of-type(2) {
+            border-top-left-radius: 10px;
+        }
+
+        .status-table th:last-of-type {
+            border-top-right-radius: 10px;
+        }
+
+        .status-table tr:last-of-type td:first-of-type {
+            border-bottom-left-radius: 10px;
+        }
+
+        .status-table tr:last-of-type td:last-of-type {
+            border-bottom-right-radius: 10px;
+        }
+
+        .status-table th.long {
+            width: 10%;
+        }
+
+        .status-table th.status {
+            width: 5%;
+        }
+
+        .status-table th.short {
+            width: 2%;
+        }
+
+        .status-table th.medium {
+            width: 4%;
+        }
+
+        /* Add a hover effect to the rows of the table */
+        .status-table table tbody tr:hover {
+            background-color: #00987a4b;
+        }
+
+        .status-table tr {
+            display: table-row;
         }
     </style>
 
@@ -162,7 +276,7 @@
     </div>
 </nav>
 
-<body onload="openForm()">
+<body onload="loadStatusTable()">
 
     <!-- The form -->
     <div class="form-popup" id="myForm">
@@ -197,9 +311,7 @@
 
         <div class="KPI-grid">
             <div class="KPI-box">
-
                 <div class="Combine">
-
                     <div class="Total">
                         <h3>Status Server Rollout</h3>
                         <h1>200</h1>
@@ -209,14 +321,17 @@
                             <table id="status-table" class="sortable">
                                 <thead>
                                     <tr>
-                                        <th>Status Server Rollout (2023)</th>
-                                        <th>Anzahl Server
-                                            RHS01</th>
-                                        <th>Anzahl Server
-                                            RHS02</th>
-                                        <th>Anzahl Server
-                                            GESAMT</th>
+                                        <th></th>
+                                        <th>RHS01</th>
+                                        <th>RHS02</th>
+                                        <th>Gesamt</th>
                                     </tr>
+                                <tbody>
+                                    <td>data</td>
+                                    <td>data</td>
+                                    <td>data</td>
+                                    <td>data</td>
+                                </tbody>
                                 </thead>
                                 <tbody>
                                 </tbody>
@@ -231,12 +346,18 @@
 
             </div>
             <div class="KPI-box">
-                <div class="Header">
-                    <h1>Anzahl</h1>
+                <div class="Combine" id="smallerbox">
+                    <div class="Total">
+                        <h3>Platzhalter</h3>
+                        <h1>0</h1>
+                        <h2>Rollout</h2>
+                    </div>
+                    <div class="Total">
+                        <h1 id="red">2</h1>
+                        <h2>Störungen</h2>
+                    </div>
                 </div>
-                <div class="Value">
-                    <p>200</p>
-                </div>
+
             </div>
 
         </div>
@@ -338,6 +459,43 @@
                         myFunction();
                     } else {
                         errorMark.style.display = "inline";
+                    }
+                });
+            }
+        }
+    </script>
+    <script>
+        function loadStatusTable() {
+            if (checkPassword()) {
+
+                // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+                const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+                // Replace YOUR_API_KEY with your Google API key
+                const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
+
+                // Make a GET request to the Google Sheets API to retrieve the data for the table
+                $.ajax({
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!A2:D7?key=${API_KEY}`,
+                    type: 'GET',
+                    success: function (response) {
+                        // The response from the API includes the data for the table in the "values" property
+                        const data = response.values;
+
+                        data.shift();
+
+                        // Iterate through the data and add a row to the table for each item
+                        $('#status-table tbody').empty();
+                        data.forEach(function (item) {
+
+                            $('#status-table tbody').append(`
+                                <tr>
+                                <td>${item[0]}</td>
+                                <td>${item[1]}</td>
+                                <td>${item[2]}</td>
+                                <td>${item[3]}</td>
+                                </tr>
+                            `);
+                        });
                     }
                 });
             }
