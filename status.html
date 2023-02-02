@@ -19,12 +19,14 @@
             --magin-small: 0.5rem;
         }
 
-        * {
-            /* Targets all elements */
-            /* Adds a padding of 10 pixels to all elements */
-            font-family: "Roboto", sans-serif;
+        @font-face {
+            font-family: "dashboardfont";
+            src: url("fonts/Roboto-Regular.ttf");
+        }
 
-            /* Add a fade-in animation when the page loads */
+        * {
+            font-family: "dashboardfont", sans-serif;
+            animation: fadein .5s;
         }
 
 
@@ -272,13 +274,13 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8" />
+    <title>Rollout Monitor</title>
     <link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styling/table.css">

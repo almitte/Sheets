@@ -19,13 +19,16 @@
       --magin-small: 0.5rem;
     }
 
-    * {
-      /* Targets all elements */
-      /* Adds a padding of 10 pixels to all elements */
-      font-family: Roboto, sans-serif;
-      animation: fadein 0.5s;
-      /* Add a fade-in animation when the page loads */
+    @font-face {
+      font-family: "dashboardfont";
+      src: url("fonts/Roboto-Regular.ttf");
     }
+
+    * {
+      font-family: "dashboardfont", sans-serif;
+      animation: fadein .5s;
+    }
+
 
     /* Add the fade-in animation */
     @keyframes fadein {
@@ -44,12 +47,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
-  <link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
   <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ubuntu">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="styling/table.css">
