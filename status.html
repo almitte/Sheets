@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 
 <head>
     <title>Rollout Monitor</title>
@@ -22,7 +22,7 @@
         * {
             /* Targets all elements */
             /* Adds a padding of 10 pixels to all elements */
-            font-family: Roboto, sans-serif;
+            font-family: "Roboto", sans-serif;
 
             /* Add a fade-in animation when the page loads */
         }
@@ -75,7 +75,11 @@
             border-width: 0px;
             border-style: solid;
             border-color: rgb(217, 222, 227);
-            height: 450px;
+            height: 500px;
+        }
+
+        #KPI-smaller {
+            height: 450px !important;
         }
 
         .KPI-box h1 {
@@ -84,7 +88,7 @@
             font-weight: 600;
             margin: 0;
             margin-top: 1.5rem;
-
+            animation: fadein 1s;
         }
 
         .KPI-box h2 {
@@ -121,8 +125,8 @@
             grid-template-columns: 1fr 1fr;
         }
 
-        #red {
-            color: #fc5130;
+        .red {
+            color: #fc5130 !important;
             padding-top: 2.5rem;
         }
 
@@ -130,9 +134,27 @@
             margin-bottom: 1rem;
         }
 
+        .center-text {
+            margin-top: -180px;
+            margin-bottom: 100px;
+        }
+
+        #center-text-h5 {
+            margin-bottom: 5px;
+            margin-top: 0;
+            font-size: 40px;
+            text-align: center;
+        }
+
+        #center-text-span {
+            font-size: 12px;
+            text-align: center;
+        }
+
+
         .lineChart {
             width: 80vw;
-            height: 360px;
+            height: 85%;
             /* Center child horizontally*/
             margin: 0 auto;
 
@@ -141,11 +163,8 @@
         .chart {
             max-width: 300px;
             max-height: 300px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-left: 1rem;
-            margin-top: 2rem;
+            margin: 0 auto;
+            margin-top: 4rem;
         }
 
         .status-table {
@@ -161,6 +180,8 @@
             table-layout: fixed;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
             margin: 0;
+            margin-bottom: .5rem;
+            border-bottom: 2px solid var(--main-dark);
 
         }
 
@@ -249,12 +270,14 @@
         }
     </style>
 
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
     <link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -282,7 +305,7 @@
     </div>
 </nav>
 
-<body onload="loadStatusTable()">
+<body onload="openForm()">
 
     <!-- The form -->
     <div class="form-popup" id="myForm">
@@ -340,6 +363,15 @@
                     </div>
                     <div class="chart">
                         <canvas id="myPieChart" width="300" height="300"></canvas>
+                        <div class="center-text">
+                            <div id="center-text-span">
+
+                            </div>
+                            <div id="center-text-h5">
+
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
@@ -348,12 +380,22 @@
             <div class="KPI-box">
                 <div class="Combine" id="smallerbox">
                     <div class="Total">
-                        <h3>Platzhalter</h3>
+                        <h3>KPI Übersicht</h3>
+                        <h1 id="rollout">&nbsp;</h1>
+                        <h2>Rollout</h2>
+                    </div>
+                    <div class="Total">
+                        <h1 id="störung" class="red">&nbsp;</h1>
+                        <h2>Störungen</h2>
+                    </div>
+                </div>
+                <div class="Combine" id="smallerbox">
+                    <div class="Total">
                         <h1>0</h1>
                         <h2>Rollout</h2>
                     </div>
                     <div class="Total">
-                        <h1 id="red">2</h1>
+                        <h1>2</h1>
                         <h2>Störungen</h2>
                     </div>
                 </div>
@@ -362,14 +404,15 @@
 
         </div>
         <div class="single">
-            <div class="KPI-box">
+            <div class="KPI-box" id="KPI-smaller">
                 <div class="Combine">
-                    <h3>Status Server Rollout</h3>
+                    <h3>Anzahl getauschter Server</h3>
 
                 </div>
                 <div class="lineChart">
-                    <canvas id="lineChart" width="1200" , height="270"></canvas>
+                    <canvas id="lineChart" width="1400" , height="340"></canvas>
                 </div>
+
 
 
             </div>
@@ -384,178 +427,246 @@
     </section>
 
     <script>
+        function loadKPIs() {
+            if (checkPassword()) {// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+                const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+                // Replace YOUR_API_KEY with your Google API key
+                const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
-        var ctx = document.getElementById("myPieChart").getContext("2d");
-        var myPieChart = new Chart(ctx, {
-            type: "doughnut",
-            data: {
-                labels: ["Red", "Blue", "Yellow", "Green", "Purple"],
-                datasets: [
-                    {
-                        data: [12, 19, 3, 5, 2],
-                        backgroundColor: [
-                            "rgba(255, 99, 132, 0.2)",
-                            "rgba(54, 162, 235, 0.2)",
-                            "rgba(255, 206, 86, 0.2)",
-                            "rgba(75, 192, 192, 0.2)",
-                            "rgba(153, 102, 255, 0.2)",
-                        ],
-                        borderColor: [
-                            "rgba(255, 99, 132, 1)",
-                            "rgba(54, 162, 235, 1)",
-                            "rgba(255, 206, 86, 1)",
-                            "rgba(75, 192, 192, 1)",
-                            "rgba(153, 102, 255, 1)",
-                        ],
-                    },
-                ],
-            },
-            options: {
-                animation: {
+                // Make a GET request to the Google Sheets API to retrieve the data for the table
+                $.ajax({
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!K3:L3?key=${API_KEY}`,
+                    type: 'GET',
+                    success: function (response) {
+                        // The response from the API includes the data for the table in the "values" property
+                        const data = response.values;
 
-                    duration: 2000,
-                    delay: 2000,
-                },
-                responsive: true,
-                plugins: {
-                    datalabels: {
-                        formatter: (value) => {
-                            return value + '%';
-                        },
-                    },
-                },
-                tooltips: {
-                    callbacks: {
-                        label: function (tooltipItem, data) {
-                            var allData = data.datasets[tooltipItem.datasetIndex].data;
-                            var tooltipLabel = data.labels[tooltipItem.index];
-                            var tooltipData = allData[tooltipItem.index];
-                            var total = 0;
-                            for (var i in allData) {
-                                total += allData[i];
-                            }
-                            var tooltipPercentage = Math.round((tooltipData / total) * 100);
-                            return tooltipLabel + ": " + tooltipPercentage + "%";
-                        },
-                    },
-                },
-                legend: {
-                    display: false
-                }
-            },
-        });
-    </script>
+                        var values = [];
 
-    <script>
-        // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-        const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-        // Replace YOUR_API_KEY with your Google API key
-        const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-        var kw = [];
-        var rhs01 = [];
-        var rhs02 = [];
-        var gesamt = [];
+                        data.forEach(function (item) {
 
-        // Make a GET request to the Google Sheets API to retrieve the data for the table
-        $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!F3:I27?key=${API_KEY}`,
-            type: 'GET',
-            success: function (response) {
-                // The response from the API includes the data for the table in the "values" property
-                const data = response.values;
+                            values.push(item[0]);
+                            values.push(item[1]);
+                        });
 
-                data.shift();
-
-                data.forEach(function (item) {
-
-                    kw.push(item[0]);
-                    rhs01.push(item[1]);
-                    rhs02.push(item[2]);
-                    gesamt.push(item[3]);
-
-
-                });
-                var ctx = document.getElementById("lineChart").getContext("2d");
-                var datashart = {
-                    labels: kw, // calendar weeks
-                    datasets: [
-                        {
-                            label: "RHS 01",
-                            data: rhs01,
-                            borderColor: "rgba(255, 99, 132, 1)",
-                            pointBackgroundColor: "rgba(255, 99, 132, 1)",
-                            fill: false
-                        },
-                        {
-                            label: "RHS 02",
-                            data: rhs02,
-                            borderColor: "blue",
-                            pointBackgroundColor: "blue",
-                            fill: false
-                        },
-                        {
-                            label: "Total",
-                            data: gesamt,
-                            borderColor: "green",
-                            pointBackgroundColor: "green",
-                            fill: false
-                        }
-                    ]
-                };
-
-                var myChart = new Chart(ctx, {
-                    type: "line",
-                    data: datashart,
-                    options: {
-
-                        //hide the x axis lines
-                        scales: {
-                            xAxes: [{
-                                gridLines: {
-                                    display: false
-                                }
-                            }],
-                            yAxes: [{
-                                display: false,
-                                gridLines: {
-                                    display: false
-                                }
-                            }]
-                        },
-
-                        animation: {
-                            duration: 2000,
-                            delay: 2000,
-                        },
-
-                        elements: {
-                            point: {
-                                radius: 4,
-                                pointHitRadius: 10,
-                            },
-                        },
-                        legend: {
-                            display: true,
-                            position: "right",
-                            labels: {
-                                padding: 50,
-                            }
-                        },
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        indexAxis: "y",
-                        tooltips: {
-                            mode: 'index',
-                            intersect: false
-                        },
-                        hover: {
-                            mode: 'index',
-                            intersect: false
-                        }
+                        // Set the inner text of the html h1 element with id "total" to values[0]
+                        document.getElementById('rollout').innerText = values[0];
+                        document.getElementById('störung').innerText = values[1];
                     }
                 });
             }
-        });
+        }
+    </script>
+
+    <script>
+        function loadPieChart() {
+            if (checkPassword()) {
+                // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+                const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+                // Replace YOUR_API_KEY with your Google API key
+                const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
+
+                // Make a GET request to the Google Sheets API to retrieve the data for the table
+                $.ajax({
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!D3:D6?key=${API_KEY}`,
+                    type: 'GET',
+                    success: function (response) {
+                        // The response from the API includes the data for the table in the "values" property
+                        const data = response.values;
+
+                        var values = [];
+                        var sum = 0;
+
+                        data.forEach(function (item) {
+
+                            values.push(item[0]);
+                            sum += +item[0]
+                        });
+
+                        var percent = Math.round(+values[0] / sum * 100) + "%"
+
+                        const config = {
+                            type: "doughnut",
+                            data: {
+                                labels: ["R330 (gesamt)", "R330 (getauscht)", "Austausch auf R340", "Austausch auf R350"],
+                                datasets: [
+                                    {
+                                        data: [+values[0], +values[1], +values[2], +values[3]],
+                                        backgroundColor: [
+                                            "rgba(255, 99, 132, 0.2)",
+                                            "rgba(54, 162, 235, 0.2)",
+                                            "rgba(255, 206, 86, 0.2)",
+                                            "rgba(75, 192, 192, 0.2)",
+                                            "rgba(153, 102, 255, 0.2)",
+                                        ],
+                                        borderColor: [
+                                            "rgba(255, 99, 132, 1)",
+                                            "rgba(54, 162, 235, 1)",
+                                            "rgba(255, 206, 86, 1)",
+                                            "rgba(75, 192, 192, 1)",
+                                            "rgba(153, 102, 255, 1)",
+                                        ],
+                                    },
+                                ],
+                            },
+                            options: {
+                                responsive: true,
+                                legend: {
+                                    display: false
+                                },
+                                tooltips: {
+                                    enabled: false,
+
+                                }
+                            },
+
+                        };
+
+                        var ctx = document.getElementById("myPieChart").getContext("2d");
+
+                        var myDoughnutChart = new Chart(ctx, config);
+
+                        ctx.canvas.onmousemove = function (e) {
+                            var activePoint = myDoughnutChart.getElementAtEvent(e);
+                            if (activePoint[0]) {
+                                var index = activePoint[0]._index;
+                                var value = config.data.datasets[0].data[index];
+                                var label = config.data.labels[index];
+                                var color = activePoint[0]._model.borderColor;
+
+                                var percent = (activePoint[0]._model.endAngle - activePoint[0]._model.startAngle) / (2 * Math.PI) * 100;
+                                document.getElementById('center-text-h5').innerHTML = Math.round(percent.toFixed(2)) + '%';
+
+
+                                //document.getElementById('center-text-h5').innerHTML = value;
+                                document.getElementById('center-text-h5').style.color = color;
+                                document.getElementById('center-text-span').innerHTML = label;
+                            }
+                        };
+
+
+
+                    }
+                })
+            }
+        }
+    </script>
+
+    <script>
+        function loadLineChart() {
+            if (checkPassword()) {
+                // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+                const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+                // Replace YOUR_API_KEY with your Google API key
+                const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
+                var kw = [];
+                var rhs01 = [];
+                var rhs02 = [];
+                var gesamt = [];
+
+                // Make a GET request to the Google Sheets API to retrieve the data for the table
+                $.ajax({
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!F3:I27?key=${API_KEY}`,
+                    type: 'GET',
+                    success: function (response) {
+                        // The response from the API includes the data for the table in the "values" property
+                        const data = response.values;
+
+                        data.forEach(function (item) {
+
+                            kw.push(item[0]);
+                            rhs01.push(+item[1]);
+                            rhs02.push(+item[2]);
+                            gesamt.push(+item[3]);
+
+                        });
+
+
+                        var ctx = document.getElementById("lineChart").getContext("2d");
+                        var datashart = {
+                            labels: kw, // calendar weeks
+                            datasets: [
+                                {
+                                    label: "RHS 01",
+                                    data: rhs01,
+                                    borderColor: "rgba(255, 99, 132, 1)",
+                                    pointBackgroundColor: "rgba(255, 99, 132, 1)",
+                                    fill: false
+                                },
+                                {
+                                    label: "RHS 02",
+                                    data: rhs02,
+                                    borderColor: "blue",
+                                    pointBackgroundColor: "blue",
+                                    fill: false
+                                },
+                                {
+                                    label: "Total",
+                                    data: gesamt,
+                                    borderColor: "green",
+                                    pointBackgroundColor: "green",
+                                    fill: false
+                                }
+                            ]
+                        };
+
+                        function delay(time) {
+                            return new Promise(resolve => setTimeout(resolve, time));
+                        }
+                        function createChart() {
+                            var myChart = new Chart(ctx, {
+                                type: "line",
+                                data: datashart,
+                                options: {
+
+                                    //hide the x axis lines
+                                    scales: {
+                                        xAxes: [{
+                                            gridLines: {
+                                                display: false
+                                            }
+                                        }],
+                                        yAxes: [{
+                                            display: false,
+                                            gridLines: {
+                                                display: false
+                                            }
+                                        }]
+                                    },
+                                    elements: {
+                                        point: {
+                                            radius: 4,
+                                            pointHitRadius: 10,
+                                        },
+                                    },
+                                    legend: {
+                                        display: true,
+                                        position: "right",
+                                        labels: {
+                                            padding: 50,
+                                        }
+                                    },
+                                    responsive: false,
+                                    maintainAspectRatio: false,
+
+                                    tooltips: {
+                                        mode: 'index',
+                                        intersect: false
+                                    },
+                                    hover: {
+                                        mode: 'index',
+                                        intersect: false
+                                    }
+                                }
+                            });
+                        }
+
+                        delay(1).then(() => createChart());
+
+                    }
+                });
+            }
+        }
     </script>
 
     <script>
@@ -582,8 +693,10 @@
             const form = document.querySelector(".form-container");
             if (checkPassword()) {
                 passwordIsCorrect = true;
-                myFunction();
+                loadStatusTable();
                 loadLineChart();
+                loadPieChart();
+                loadKPIs();
                 form.remove();
             } else {
                 document.getElementById("myForm").style.display = "block";
@@ -597,8 +710,10 @@
                     if (passwordInput.value === "mcdonalds") {
                         setCookie("passwordIsCorrect", "true", 30);
                         form.remove();
-                        myFunction();
+                        loadStatusTable();
                         loadLineChart();
+                        loadPieChart();
+                        loadKPIs();
                     } else {
                         errorMark.style.display = "inline";
                     }
