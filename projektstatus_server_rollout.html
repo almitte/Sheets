@@ -51,7 +51,7 @@
             margin-left: 2rem;
             justify-content: space-between;
             display: grid;
-            grid-template-columns: 1.75fr 1fr;
+            grid-template-columns: 2.5fr 0.5fr;
             justify-content: space-between;
             align-content: center;
         }
@@ -78,6 +78,11 @@
             border-style: solid;
             border-color: rgb(217, 222, 227);
             height: 500px;
+            transition: all 0.3s ease 0s;
+        }
+
+        .KPI-box:hover {
+            box-shadow: none;
         }
 
         #KPI-smaller {
@@ -129,11 +134,12 @@
 
         .red {
             color: #fc5130 !important;
-            padding-top: 2.5rem;
+
         }
 
         canvas {
-            margin-bottom: 1rem;
+            margin: 0 auto;
+            padding-top: 1rem;
         }
 
         .center-text {
@@ -325,7 +331,7 @@
 
         <div>
             <h1>
-                BestBurger Rollout Dashboard
+                Projektstatus Server Rollout
             </h1>
         </div>
         <div class="info-box">
@@ -364,7 +370,7 @@
                         </div>
                     </div>
                     <div class="chart">
-                        <canvas id="myPieChart" width="300" height="300"></canvas>
+                        <canvas id="myPieChart" width="400" height="400"></canvas>
                         <div class="center-text">
                             <div id="center-text-span">
 
@@ -382,26 +388,18 @@
             <div class="KPI-box">
                 <div class="Combine" id="smallerbox">
                     <div class="Total">
-                        <h3>KPI Übersicht</h3>
+                        <h3>Rollout Status</h3>
                         <h1 id="rollout">&nbsp;</h1>
                         <h2>Rollout</h2>
                     </div>
+
+                </div>
+                <div class="Combine" id="smallerbox">
                     <div class="Total">
                         <h1 id="störung" class="red">&nbsp;</h1>
                         <h2>Störungen</h2>
                     </div>
                 </div>
-                <div class="Combine" id="smallerbox">
-                    <div class="Total">
-                        <h1>0</h1>
-                        <h2>Rollout</h2>
-                    </div>
-                    <div class="Total">
-                        <h1>2</h1>
-                        <h2>Störungen</h2>
-                    </div>
-                </div>
-
             </div>
 
         </div>
@@ -431,18 +429,19 @@
     <script>
         function loadKPIs() {
             if (checkPassword()) {// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-                const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+                const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
                 // Replace YOUR_API_KEY with your Google API key
                 const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
                 // Make a GET request to the Google Sheets API to retrieve the data for the table
                 $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!K3:L3?key=${API_KEY}`,
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!K3:L3?key=${API_KEY}`,
                     type: 'GET',
                     success: function (response) {
                         // The response from the API includes the data for the table in the "values" property
                         const data = response.values;
 
+                        console.log("helo");
                         var values = [];
 
                         data.forEach(function (item) {
@@ -464,13 +463,13 @@
         function loadPieChart() {
             if (checkPassword()) {
                 // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-                const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+                const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
                 // Replace YOUR_API_KEY with your Google API key
                 const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
                 // Make a GET request to the Google Sheets API to retrieve the data for the table
                 $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!D3:D6?key=${API_KEY}`,
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D4:D6?key=${API_KEY}`,
                     type: 'GET',
                     success: function (response) {
                         // The response from the API includes the data for the table in the "values" property
@@ -480,7 +479,6 @@
                         var sum = 0;
 
                         data.forEach(function (item) {
-
                             values.push(item[0]);
                             sum += +item[0]
                         });
@@ -490,10 +488,10 @@
                         const config = {
                             type: "doughnut",
                             data: {
-                                labels: ["R330 (gesamt)", "R330 (getauscht)", "Austausch auf R340", "Austausch auf R350"],
+                                labels: ["R330 (offen)", "Austausch auf R340", "Austausch auf R350"],
                                 datasets: [
                                     {
-                                        data: [+values[0], +values[1], +values[2], +values[3]],
+                                        data: [+values[1], +values[2], +values[3]],
                                         backgroundColor: [
                                             "rgba(255, 99, 132, 0.2)",
                                             "rgba(54, 162, 235, 0.2)",
@@ -558,7 +556,7 @@
         function loadLineChart() {
             if (checkPassword()) {
                 // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-                const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+                const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
                 // Replace YOUR_API_KEY with your Google API key
                 const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
                 var kw = [];
@@ -568,7 +566,7 @@
 
                 // Make a GET request to the Google Sheets API to retrieve the data for the table
                 $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!F3:I27?key=${API_KEY}`,
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!F3:I27?key=${API_KEY}`,
                     type: 'GET',
                     success: function (response) {
                         // The response from the API includes the data for the table in the "values" property
@@ -620,6 +618,11 @@
                                 type: "line",
                                 data: datashart,
                                 options: {
+                                    layout: {
+                                        padding: {
+                                            top: 20
+                                        }
+                                    },
 
                                     //hide the x axis lines
                                     scales: {
@@ -728,13 +731,13 @@
             if (checkPassword()) {
 
                 // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-                const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+                const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
                 // Replace YOUR_API_KEY with your Google API key
                 const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
                 // Make a GET request to the Google Sheets API to retrieve the data for the table
                 $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/BestBurger!A2:D7?key=${API_KEY}`,
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!A2:D7?key=${API_KEY}`,
                     type: 'GET',
                     success: function (response) {
                         // The response from the API includes the data for the table in the "values" property
