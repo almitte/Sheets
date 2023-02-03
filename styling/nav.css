@@ -116,8 +116,8 @@ nav a.active {
 }
 
 .logo:hover {
-	background-color: transparent;
-	box-shadow: none;
+	background-color: transparent !important;
+	box-shadow: none !important;
 }
 
 /* Dropdown content (hidden by default) */

@@ -304,11 +304,7 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
                 alt="McDonald's logo"></a>
         <h2>McDonald's Rollout Monitor</h2>
-    </div>
-    <div class="middle">
-        <p style="margin-left: 15px; font-weight: bold;">Jahr: </p>
-        <a class="scroll-page" href="#2023">2023</a>
-        <a class="scroll-page" href="#2022">2022</a>
+
     </div>
     <div class="right">
         <div class="dropdown">
@@ -364,10 +360,7 @@
         <div class="info-box">
             <div class="info-box__icon">i</div>
             <div class="info-box__text">
-                Änderungen werden dabei nur temporär vorgenommen. Nach
-                dem
-                Drücken des Buttons
-                "Aktualisieren" wird die Übersicht aus dem Masterdokument neu geladen.
+                Dieses Dashboard gibt Ihnen eine Übersicht über den Projektstatus des Server Rollouts.
             </div>
         </div>
     </section id="home">
@@ -378,8 +371,8 @@
                 <div class="Combine">
                     <div class="Total">
                         <h3>Status Server Rollout</h3>
-                        <h1>200</h1>
-                        <h2>Total</h2>
+                        <h1 id="total">&nbsp;</h1>
+                        <h2>Insgesamt zu tauschende Server</h2>
 
                         <div class="status-table">
                             <table id="status-table" class="sortable">
@@ -480,6 +473,25 @@
                         // Set the inner text of the html h1 element with id "total" to values[0]
                         document.getElementById('rollout').innerText = values[0];
                         document.getElementById('störung').innerText = values[1];
+                    }
+                });
+                $.ajax({
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D3?key=${API_KEY}`,
+                    type: 'GET',
+                    success: function (response) {
+                        // The response from the API includes the data for the table in the "values" property
+                        const data = response.values;
+
+                        console.log("helo");
+                        var values = [];
+
+                        data.forEach(function (item) {
+
+                            values.push(item[0]);
+                        });
+
+                        // Set the inner text of the html h1 element with id "total" to values[0]
+                        document.getElementById('total').innerText = values[0];
                     }
                 });
             }
