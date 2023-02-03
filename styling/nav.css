@@ -142,6 +142,22 @@ nav a.active {
 	transition: transition 1s ease-out-in !important;
 }
 
+.dropdown-element span {
+	float: none;
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+	text-align: left;
+	transition: transition 1s ease-out-in !important;
+}
+
+.dropdown-element span:hover {
+	background-color: var(--accent-bright);
+	color: white;
+	border-radius: 0px;
+}
+
 /* Add a grey background color to dropdown links on hover */
 .dropdown-content a:hover {
 	background-color: var(--accent-bright);
