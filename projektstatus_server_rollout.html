@@ -173,6 +173,11 @@
             margin: 0 auto;
         }
 
+        #kpis {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
 
 
         .status-table {
@@ -286,9 +291,11 @@
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script
+        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js"></script>
+
     <link rel="stylesheet" href="styling/table.css">
     <link rel="stylesheet" href="styling/nav.css">
     <link rel="stylesheet" href="styling/search_and_refresh.css">
@@ -319,11 +326,12 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">BestBurger
+            <button class="dropbtn">Dashboards
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="projektstatus_server_rollout.html">Projektstatus Server Rollout</a>
+                <a href="projektstatus_server_rollout.html">Server Rollout</a>
+                <a href="projektstatus_server_rollout.html">BestBurger</a>
             </div>
         </div>
         <div class="dropdown">
@@ -370,9 +378,14 @@
             <div class="KPI-box">
                 <div class="Combine">
                     <div class="Total">
-                        <h3>Status Server Rollout</h3>
-                        <h1 id="total">&nbsp;</h1>
-                        <h2>Insgesamt zu tauschende Server</h2>
+                        <div id="KPIs">
+                            <div>
+                                <h3>Status Server Rollout</h3>
+                                <h1 id="total">&nbsp;</h1>
+                                <h2>Insgesamt zu tauschende Server</h2>
+                            </div>
+                        </div>
+
 
                         <div class="status-table">
                             <table id="status-table" class="sortable">
@@ -562,7 +575,12 @@
                             sum += +item[0]
                         });
 
-                        var percent = Math.round(+values[0] / sum * 100) + "%"
+                        document.getElementById('center-text-h5').innerHTML = 100 * Math.round((values[0] / sum)) + '%';
+
+
+                        //document.getElementById('center-text-h5').innerHTML = value;
+                        document.getElementById('center-text-h5').style.color = "#FF6384";
+                        document.getElementById('center-text-span').innerHTML = "R330 (offen)";
 
                         const config = {
                             type: "doughnut",
@@ -592,6 +610,13 @@
                                 responsive: true,
                                 legend: {
                                     display: false
+                                },
+                                plugins: {
+                                    datalabels: {
+                                        display: false,
+                                        align: 'center',
+                                        anchor: 'center'
+                                    }
                                 },
                                 tooltips: {
                                     enabled: false,
@@ -668,23 +693,36 @@
                                 {
                                     label: "RHS 01",
                                     data: rhs01,
+                                    backgroundColor: "rgba(255, 99, 132, 0.5)",
                                     borderColor: "rgba(255, 99, 132, 1)",
-                                    pointBackgroundColor: "rgba(255, 99, 132, 1)",
-                                    fill: false
+                                    borderWidth: 1,
+                                    datalabels: {
+                                        align: 'end',
+                                        anchor: 'start'
+                                    }
                                 },
                                 {
                                     label: "RHS 02",
                                     data: rhs02,
-                                    borderColor: "blue",
-                                    pointBackgroundColor: "blue",
-                                    fill: false
+                                    backgroundColor: "rgba(54, 162, 235, 0.5)",
+                                    borderColor: "rgba(54, 162, 235, 1)",
+                                    borderWidth: 1,
+                                    datalabels: {
+                                        align: 'end',
+                                        anchor: 'start'
+                                    }
                                 },
                                 {
                                     label: "Total",
                                     data: gesamt,
-                                    borderColor: "green",
-                                    pointBackgroundColor: "green",
-                                    fill: false
+                                    backgroundColor: "rgba(255, 206, 86, 0.5)",
+                                    borderColor: "rgba(255, 206, 86, 1)",
+                                    borderWidth: 1,
+
+                                    datalabels: {
+                                        align: 'end',
+                                        anchor: 'start'
+                                    }
                                 }
                             ]
                         };
@@ -694,9 +732,17 @@
                         }
                         function createChart() {
                             var myChart = new Chart(ctx, {
-                                type: "line",
+                                type: "bar",
                                 data: datashart,
                                 options: {
+                                    plugins: {
+                                        datalabels: {
+                                            display: true,
+                                            align: 'center',
+                                            anchor: 'center',
+                                            color: 'black',
+                                        }
+                                    },
                                     layout: {
                                         padding: {
                                             top: 20
@@ -712,17 +758,16 @@
                                         }],
                                         yAxes: [{
                                             display: false,
+                                            ticks: {
+                                                beginAtZero: true,
+                                                callback: function (value) { if (value % 1 === 0) { return value; } }
+                                            },
                                             gridLines: {
-                                                display: false
+                                                display: true
                                             }
                                         }]
                                     },
-                                    elements: {
-                                        point: {
-                                            radius: 4,
-                                            pointHitRadius: 10,
-                                        },
-                                    },
+
                                     legend: {
                                         display: true,
                                         position: "right",
@@ -730,7 +775,8 @@
                                             padding: 50,
                                         }
                                     },
-                                    responsive: false,
+
+                                    responsive: true,
                                     maintainAspectRatio: false,
 
                                     tooltips: {
@@ -745,7 +791,7 @@
                             });
                         }
 
-                        delay(1).then(() => createChart());
+                        delay(0).then(() => createChart());
 
                     }
                 });
