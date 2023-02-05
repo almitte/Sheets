@@ -29,7 +29,6 @@
       animation: fadein .5s;
     }
 
-
     /* Add the fade-in animation */
     @keyframes fadein {
       from {
@@ -40,35 +39,59 @@
         opacity: 1;
       }
     }
+
+    @media only screen and (max-width: 1620px) {
+      .dropdown {
+        display: none;
+      }
+
+      #combined-dropdown {
+        display: block !important;
+      }
+
+      #dropdown-selector {
+        display: block !important;
+      }
+
+      nav .right {
+        justify-content: right;
+        margin-right: 10vw !important;
+      }
+
+      .dropdown-content {
+        margin: 0;
+      }
+    }
   </style>
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title> Rollout Monitor</title>
-  <link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
+  <link rel="icon" href="../images/Logo SOS IS GmbH Neu shadow_tif.webp">
   <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="styling/table.css">
-  <link rel="stylesheet" href="styling/nav.css">
-  <link rel="stylesheet" href="styling/search_and_refresh.css">
-  <link rel="stylesheet" href="styling/header.css">
-  <link rel="stylesheet" href="styling/info_box.css">
-  <link rel="stylesheet" href="styling/background.css">
-  <link rel="stylesheet" href="styling/div.css">
-  <link rel="stylesheet" href="styling/popup.css">
+  <link rel="stylesheet" href="../styling/table.css">
+  <link rel="stylesheet" href="../styling/nav.css">
+  <link rel="stylesheet" href="../styling/search_and_refresh.css">
+  <link rel="stylesheet" href="../styling/header.css">
+  <link rel="stylesheet" href="../styling/info_box.css">
+  <link rel="stylesheet" href="../styling/background.css">
+  <link rel="stylesheet" href="../styling/div.css">
+  <link rel="stylesheet" href="../styling/popup.css">
 </head>
 
 <nav>
-  <div class="left"><a class="logo" href="index.html">
+  <div class="left"><a class="logo" href="../index.html">
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
         alt="McDonald's logo"></a>
-    <h2>McDonald's Rollout Monitor</h2>
+    <h2 id="text-long">McDonald's Rollout Monitor</h2>
+    <h2 id="text-short">McD Rollout Monitor</h2>
   </div>
   <div class="middle">
     <p style="margin-left: 15px; font-weight: bold;">Jahr: </p>
@@ -76,15 +99,32 @@
     <a class="scroll-page" href="#2022">2022</a>
   </div>
   <div class="right">
+    <div class="dropdown" id="combined-dropdown">
+      <button class="dropbtn"><i class="fa fa-bars"></i>
+      </button>
+      <div class="dropdown-content">
+        <h3>NSO/IRLX</h3>
+        <a href="../rolloutmonitor.html">Home</a>
+        <a href="../rolloutmonitor/forecast.html">Forecast</a>
+        <a href="../rolloutmonitor/detail.html">Detailplanung</a>
+        <a href="../rolloutmonitor/archiv.html">Archiv</a>
+        <hr>
+        <h3>Dashboards</h3>
+        <a href="../dashboards/projektstatus_server_rollout.html">Server Rollout</a>
+        <a href="../dashboards.html">BestBurger</a>
+        <hr>
+        <h3>Rolloutkalender Deployments</h3>
+      </div>
+    </div>
     <div class="dropdown">
       <button class="dropbtn">NSO/IRLX
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-content">
-        <a href="rolloutmonitor.html">Home</a>
-        <a href="forecast.html">Forecast</a>
-        <a href="detail.html">Detailplanung</a>
-        <a href="archiv.html">Archiv</a>
+        <a href="../rolloutmonitor.html">Home</a>
+        <a href="../rolloutmonitor/forecast.html">Forecast</a>
+        <a href="../rolloutmonitor/detail.html">Detailplanung</a>
+        <a href="../rolloutmonitor/archiv.html">Archiv</a>
       </div>
     </div>
     <div class="dropdown">
@@ -92,8 +132,8 @@
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-content">
-        <a href="projektstatus_server_rollout.html">Server Rollout</a>
-        <a href="dashboards.html">BestBurger</a>
+        <a href="../dashboards/projektstatus_server_rollout.html">Server Rollout</a>
+        <a href="../dashboards.html">BestBurger</a>
       </div>
     </div>
     <div class="dropdown">

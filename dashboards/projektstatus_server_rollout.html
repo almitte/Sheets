@@ -26,7 +26,7 @@
 
         * {
             font-family: "dashboardfont", sans-serif;
-            animation: fadein .5s;
+            animation: fadein 0.1s;
         }
 
 
@@ -49,14 +49,10 @@
             grid-gap: 1rem;
             margin-right: 2rem;
             margin-left: 2rem;
-            justify-content: space-between;
-            display: grid;
-            grid-template-columns: 2.5fr 0.5fr;
-            justify-content: space-between;
-            align-content: center;
         }
 
         .single {
+            grid-gap: 1rem;
             margin-right: 2rem;
             margin-left: 2rem;
         }
@@ -77,16 +73,11 @@
             border-width: 0px;
             border-style: solid;
             border-color: rgb(217, 222, 227);
-            height: 510px;
             transition: all 0.3s ease 0s;
         }
 
         .KPI-box:hover {
             box-shadow: none;
-        }
-
-        #KPI-smaller {
-            height: 480px !important;
         }
 
         .KPI-box h1 {
@@ -116,35 +107,44 @@
 
         .Combine {
             grid-gap: 1rem;
-            justify-content: space-between;
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            justify-content: space-between;
-            align-content: center;
+            display: flex;
             margin-left: 2.5rem;
             margin-right: 2.5rem;
             margin-top: 1rem;
-            margin-bottom: 1rem
+            justify-content: center;
+            margin-bottom: 1.5rem;
         }
 
-        #smallerbox {
-            grid-template-columns: 1fr 1fr;
-
+        #combine-2 {
+            display: block;
         }
 
         .red {
             color: #fc5130 !important;
-
         }
 
-        canvas {
-            margin: 0 auto;
+        .chart {
+            flex-basis: 33%;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .Total {
+            flex-basis: 66%;
+        }
+
+        @media (max-width: 999px) {
+            .Combine {
+                flex-wrap: wrap;
+            }
+        }
+
+        .chart canvas {
             padding-top: 1rem;
         }
 
         .center-text {
-            margin-top: -200px;
-            margin-bottom: 100px;
+            margin-top: calc(max(-220px, -16vw));
         }
 
         #center-text-h5 {
@@ -159,134 +159,33 @@
             text-align: center;
         }
 
+        .chart {
+            margin: 0;
+        }
+
+        .chart canvas {
+            max-width: 380px !important;
+            max-height: 380px !important;
+            margin: 0 auto;
+        }
+
+        #KPIs {
+            display: flex;
+            gap: 5vw;
+            margin-bottom: 1rem;
+        }
 
         .lineChart {
-            width: 80vw;
-            height: 85%;
-            /* Center child horizontally*/
-            margin: 0 auto;
-        }
-
-        .chart {
-            max-width: 400px;
-            max-height: 520px;
-            margin: 0 auto;
-        }
-
-        #kpis {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-        }
-
-
-
-        .status-table {
-            margin-right: 2.5rem;
-        }
-
-        .status-table table {
-            border-collapse: collapse;
-            margin-bottom: var(--margin-big);
-            font-size: 0.9rem;
-            min-width: 400px;
-            width: 100%;
-            table-layout: fixed;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-            margin: 0;
-            margin-bottom: .5rem;
-            border-bottom: 2px solid var(--main-dark);
-
-        }
-
-        .status-table td {
-            animation: fadein 1s;
-            padding: 12px 15px;
-            text-align: left;
-        }
-
-        .status-table th {
-            padding: 12px 15px;
-            text-align: left;
-        }
-
-        .status-table td {
-            font-size: 20px;
-            align-items: center;
-        }
-
-        .status-table td:nth-child(1) {
-            font-size: var(--font-small-size);
-        }
-
-        .status-table th {
-            font-size: var(--font-small-size);
-        }
-
-        .status-table thead tr {
-            background-color: var(--main-dark);
-            color: #ffffff;
-            text-align: left;
-        }
-
-        .status-table tbody tr {
-            border-bottom: 1px solid #dddddd;
-        }
-
-        .status-table .table-scroll tbody {
-            padding-top: 40px;
-        }
-
-        .status-table tbody tr:nth-of-type(even) {
-            background-color: #f3f3f3;
-        }
-
-        .status-table tbody tr:nth-of-type(odd) {
-            background-color: white;
-        }
-
-        .status-table th {
-            border-top: none;
-        }
-
-        .status-table td:first-child,
-        th:first-child {
-            border-left: none;
-        }
-
-        .status-table th:first-of-type {
-            background-color: white;
-        }
-
-        .status-table th:nth-of-type(2) {
-            border-top-left-radius: 10px;
-        }
-
-        .status-table th:last-of-type {
-            border-top-right-radius: 10px;
-        }
-
-        .status-table tr:last-of-type td:first-of-type {
-            border-bottom-left-radius: 10px;
-        }
-
-        .status-table tr:last-of-type td:last-of-type {
-            border-bottom-right-radius: 10px;
-        }
-
-        /* Add a hover effect to the rows of the table */
-        .status-table table tbody tr:hover {
-            background-color: #00987a4b;
-        }
-
-        .status-table tr {
-            display: table-row;
+            margin-left: 4rem;
+            margin-right: 4rem;
+            margin-bottom: 2rem;
         }
     </style>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="utf-8" />
     <title>Rollout Monitor</title>
-    <link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
+    <link rel="icon" href="../images/Logo SOS IS GmbH Neu shadow_tif.webp">
     <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -295,34 +194,51 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script
         src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js"></script>
-
-    <link rel="stylesheet" href="styling/table.css">
-    <link rel="stylesheet" href="styling/nav.css">
-    <link rel="stylesheet" href="styling/search_and_refresh.css">
-    <link rel="stylesheet" href="styling/header.css">
-    <link rel="stylesheet" href="styling/info_box.css">
-    <link rel="stylesheet" href="styling/background.css">
-    <link rel="stylesheet" href="styling/div.css">
-    <link rel="stylesheet" href="styling/popup.css">
+    <link rel="stylesheet" href="../styling/table.css">
+    <link rel="stylesheet" href="../styling/nav.css">
+    <link rel="stylesheet" href="../styling/search_and_refresh.css">
+    <link rel="stylesheet" href="../styling/header.css">
+    <link rel="stylesheet" href="../styling/info_box.css">
+    <link rel="stylesheet" href="../styling/background.css">
+    <link rel="stylesheet" href="../styling/div.css">
+    <link rel="stylesheet" href="../styling/popup.css">
+    <link rel="stylesheet" href="statustable.css">
 </head>
 
 <nav>
-    <div class="left"><a class="logo" href="index.html">
+    <div class="left"><a class="logo" href="../index.html">
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
                 alt="McDonald's logo"></a>
-        <h2>McDonald's Rollout Monitor</h2>
-
+        <h2 id="text-long">McDonald's Rollout Monitor</h2>
+        <h2 id="text-short">McD Rollout Monitor</h2>
     </div>
     <div class="right">
+        <div class="dropdown" id="combined-dropdown">
+            <button class="dropbtn"><i class="fa fa-bars"></i>
+            </button>
+            <div class="dropdown-content">
+                <h3>NSO/IRLX</h3>
+                <a href="../rolloutmonitor.html">Home</a>
+                <a href="../rolloutmonitor/forecast.html">Forecast</a>
+                <a href="../rolloutmonitor/detail.html">Detailplanung</a>
+                <a href="../rolloutmonitor/archiv.html">Archiv</a>
+                <hr>
+                <h3>Dashboards</h3>
+                <a href="../dashboards/projektstatus_server_rollout.html">Server Rollout</a>
+                <a href="../dashboards.html">BestBurger</a>
+                <hr>
+                <h3>Rolloutkalender Deployments</h3>
+            </div>
+        </div>
         <div class="dropdown">
             <button class="dropbtn">NSO/IRLX
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="rolloutmonitor.html">Home</a>
-                <a href="forecast.html">Forecast</a>
-                <a href="detail.html">Detailplanung</a>
-                <a href="archiv.html">Archiv</a>
+                <a href="../rolloutmonitor.html">Home</a>
+                <a href="../rolloutmonitor/forecast.html">Forecast</a>
+                <a href="../rolloutmonitor/detail.html">Detailplanung</a>
+                <a href="../rolloutmonitor/archiv.html">Archiv</a>
             </div>
         </div>
         <div class="dropdown">
@@ -330,8 +246,8 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
-                <a href="projektstatus_server_rollout.html">Server Rollout</a>
-                <a href="dashboards.html">BestBurger</a>
+                <a href="../dashboards/projektstatus_server_rollout.html">Server Rollout</a>
+                <a href="../dashboards.html">BestBurger</a>
             </div>
         </div>
         <div class="dropdown">
@@ -345,8 +261,6 @@
 </nav>
 
 <body onload="openForm()">
-
-    <!-- The form -->
     <div class="form-popup" id="myForm">
         <form class="form-container">
             <h1>Login</h1>
@@ -357,12 +271,10 @@
             <button type="submit" class="btn">Login</button>
         </form>
     </div>
-
     <section id="home">
-
         <div>
             <h1>
-                BestBurger
+                Projektstatus Server Rollout
             </h1>
         </div>
         <div class="info-box">
@@ -373,20 +285,25 @@
         </div>
     </section id="home">
     <section>
-
         <div class="KPI-grid">
             <div class="KPI-box">
                 <div class="Combine">
                     <div class="Total">
+                        <h3>Status Server Rollout</h3>
                         <div id="KPIs">
                             <div>
-                                <h3>Status Server Rollout</h3>
                                 <h1 id="total">&nbsp;</h1>
                                 <h2>Insgesamt zu tauschende Server</h2>
                             </div>
+                            <div>
+                                <h1 id="rollout" style="color: #3399CC">&nbsp;</h1>
+                                <h2>Rollout</h2>
+                            </div>
+                            <div>
+                                <h1 id="störung" class="red">&nbsp;</h1>
+                                <h2>Störungen</h2>
+                            </div>
                         </div>
-
-
                         <div class="status-table">
                             <table id="status-table" class="sortable">
                                 <thead>
@@ -403,7 +320,7 @@
                         </div>
                     </div>
                     <div class="chart">
-                        <div class="dropdown">
+                        <div class="dropdown" id="dropdown-selector">
                             <button class="dropbtn" id="selector" style="color:black; margin:0 auto;">Gesamt
                                 <i class="fa fa-caret-down"></i>
                             </button>
@@ -427,53 +344,21 @@
                             <div id="center-text-h5">
                                 &nbsp;
                             </div>
-
                         </div>
                     </div>
-
-                </div>
-
-
-            </div>
-            <div class="KPI-box">
-                <div class="Combine" id="smallerbox">
-                    <div class="Total">
-                        <h3>Rollout Status</h3>
-                        <h1 id="rollout">&nbsp;</h1>
-                        <h2>Rollout</h2>
-                    </div>
-
-                </div>
-                <div class="Combine" id="smallerbox">
-                    <div class="Total">
-                        <h1 id="störung" class="red">&nbsp;</h1>
-                        <h2>Störungen</h2>
-                    </div>
                 </div>
             </div>
-
         </div>
         <div class="single">
             <div class="KPI-box" id="KPI-smaller">
-                <div class="Combine">
+                <div class="Combine" id="combine-2">
                     <h3>Anzahl getauschter Server</h3>
-
                 </div>
                 <div class="lineChart">
-                    <canvas id="lineChart" width="1400" , height="330"></canvas>
+                    <canvas id="lineChart" width="1400" height="330"></canvas>
                 </div>
-
-
-
             </div>
-
-
         </div>
-
-
-
-
-
     </section>
     <script>
         const dropdownBtn = document.getElementById("selector");
@@ -490,7 +375,6 @@
         });
 
     </script>
-
     <script>
         function loadKPIs() {
             if (checkPassword()) {// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
@@ -607,6 +491,9 @@
                                 ],
                             },
                             options: {
+                                animation: {
+                                    delay: 5000,
+                                },
                                 responsive: true,
                                 legend: {
                                     display: false
@@ -851,6 +738,10 @@
             }
         }
     </script>
+
+    <script>
+
+    </script>
     <script>
         function loadStatusTable() {
             if (checkPassword()) {
@@ -875,7 +766,7 @@
                         data.forEach(function (item) {
 
                             $('#status-table tbody').append(`
-                                <tr>
+                                <tr class="row">
                                 <td>${item[0]}</td>
                                 <td>${item[1]}</td>
                                 <td>${item[2]}</td>
@@ -885,6 +776,7 @@
                         });
                     }
                 });
+
             }
         }
     </script>

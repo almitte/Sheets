@@ -96,10 +96,54 @@ nav a.active {
 }
 
 @media only screen and (max-width: 600px) {
-	nav .middle,
-	nav .right {
+	nav .left img {
 		display: none;
 	}
+}
+
+@media only screen and (max-width: 1100px) {
+	.dropdown {
+		display: none;
+	}
+
+	#combined-dropdown {
+		display: block !important;
+	}
+
+	#dropdown-selector {
+		display: block !important;
+	}
+
+	nav .right {
+		justify-content: right;
+		margin-right: 12vw;
+	}
+
+	nav .left {
+		justify-content: center;
+	}
+}
+
+@media only screen and (max-width: 750px) {
+	#text-long {
+		display: none !important;
+	}
+
+	#text-short {
+		display: block !important;
+	}
+}
+
+#text-short {
+	display: none;
+}
+
+#text-long {
+	display: block;
+}
+
+#combined-dropdown {
+	display: none;
 }
 
 .dropbtn {
@@ -127,7 +171,7 @@ nav a.active {
 	background-color: #f9f9f9;
 	min-width: 160px;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 1;
+	z-index: 2;
 	border-radius: 25px;
 }
 
@@ -168,4 +212,20 @@ nav a.active {
 /* Show the dropdown menu on hover */
 .dropdown:hover .dropdown-content {
 	display: block;
+}
+
+.dropdown-content h3 {
+	margin-left: 10px;
+	margin-bottom: 0;
+}
+
+.dropdown-content hr {
+	border: 0;
+	height: 1px;
+	background-image: linear-gradient(
+		to right,
+		rgba(0, 0, 0, 0),
+		rgba(0, 0, 0, 0.75),
+		rgba(0, 0, 0, 0)
+	);
 }

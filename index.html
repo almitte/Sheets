@@ -33,8 +33,7 @@
 		display: flex;
 		column-gap: 30px;
 		grid-template-columns: 1fr 1fr 1fr;
-		align-items: center;
-		text-align: center;
+		flex-wrap: wrap;
 		justify-content: center;
 	}
 
@@ -74,38 +73,6 @@
 	.contact-button:hover {
 		font-weight: bold;
 	}
-
-	#login-popup {
-		display: none;
-		/* hidden by default */
-		position: fixed;
-		/* stay in place */
-		z-index: 1;
-		/* sit on top */
-		left: 0;
-		top: 0;
-		width: 100%;
-		/* full width */
-		height: 100%;
-		/* full height */
-		overflow: auto;
-		/* enable scroll if needed */
-		background-color: rgb(0, 0, 0);
-		/* fallback color */
-		background-color: rgba(0, 0, 0, 0.4);
-		/* black w/ opacity */
-	}
-
-
-	form {
-		background-color: #fefefe;
-		margin: 15% auto;
-		/* 15% from the top and centered */
-		padding: 20px;
-		border: 1px solid #888;
-		width: 80%;
-		/* Could be more or less, depending on screen size */
-	}
 </style>
 
 <head>
@@ -113,20 +80,16 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Rollout Monitor</title>
-	<link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
+	<link rel="icon" href="images/Logo SOS IS GmbH Neu shadow_tif.webp">
 	<link rel="stylesheet" href="dist/css/style.css">
 	<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
 	<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+	<link rel="stylesheet" href="styling/popup.css">
 </head>
 
 <body onload="showGame()" class="is-boxed has-animations">
-
-
 	<div class="body-wrap boxed-container">
-
 		<main>
-
-
 			<section class="features section">
 				<div class="features-header text-center">
 					<div class="header"
@@ -140,7 +103,8 @@
 					<p class="section-paragraph">Dieses Dashboard soll Ihnen einen schnellen Überblick
 						über
 						alle aktuellen und geplanten Rolloutprojekte geben. <br> Über die Kacheln erreichen Sie die
-						dedizierten Rolloutbereiche. <br>Bei Fragen, Problemen oder Anregungen nutzen Sie bitte eine der
+						dedizierten Rolloutbereiche. <br>Bei Fragen, Problemen oder Anregungen nutzen Sie bitte eine
+						der
 						untenstehenden Kontaktmöglichkeiten.</p>
 
 				</div>
@@ -297,11 +261,7 @@
 				<div><button class="game-button" id=button onclick="location.href='minigame.html'"
 						style="margin-right: 20px; margin-bottom: 20px; margin-top: 0px;">Dont Press</button></div>
 				<hr>
-				<a href="https://www.sosindustrieservice.de/impressum"
-					style="color:white; font-size: 15px; font-weight: bold;">Impressum</a>
-				<a>●</a>
-				<a href="https://www.sosindustrieservice.de/datenschutz"
-					style="color:white; font-size: 15px; font-weight: bold;">Datenschutz</a>
+
 			</div>
 
 		</div>
@@ -316,6 +276,35 @@
 				document.getElementById("button").style.display = "none";
 			}
 		}
+	</script>
+	<script>
+		const form = document.querySelector(".form-container");
+		function openForm() {
+			if (checkPassword()) {
+				showGame();
+				form.remove();
+			} else {
+				document.getElementById("myForm").style.display = "block";
+				const passwordInput = document.querySelector("input[name='psw']");
+				const errorMark = document.querySelector(".error-mark");
+				const submitButton = document.querySelector("button[type='submit']");
+
+				submitButton.addEventListener("click", (event) => {
+					event.preventDefault();
+
+					if (passwordInput.value === "mcdonalds") {
+						setCookie("passwordIsCorrect", "true", 30);
+						form.remove();
+						load2022();
+						showGame();
+					} else {
+						errorMark.style.display = "inline";
+					}
+				});
+			}
+		}
+
+
 	</script>
 	<script>
 		function checkPassword() {
@@ -339,6 +328,10 @@
 		function getCookie(cname) {
 			var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
 			return cookieValue
+		}
+
+		function delCookie() {
+			document.cookie = "passwordIsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
 		}
 	</script>
 </body>

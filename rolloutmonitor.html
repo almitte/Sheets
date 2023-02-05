@@ -28,10 +28,9 @@
 	.grid-container {
 		display: flex;
 		column-gap: 30px;
-		grid-template-columns: 1fr 1fr 1fr;
 		align-items: center;
-		text-align: center;
 		justify-content: center;
+		flex-wrap: wrap;
 	}
 
 	.grid-item {
@@ -108,7 +107,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Rollout Monitor</title>
-	<link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
+	<link rel="icon" href="images/Logo SOS IS GmbH Neu shadow_tif.webp">
 	<link rel="stylesheet" href="dist/css/style.css">
 	<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
 	<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
@@ -161,7 +160,7 @@
 								<p class="text-sm">Detaillierte Übersicht der aktuellen Rolloutprojekte</p>
 								<button class="go-to-button"
 									style="margin-left: -70px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#FF6381"
-									onclick="location.href='detail.html';">Detailplanung</button>
+									onclick="location.href='rolloutmonitor/detail.html';">Detailplanung</button>
 							</div>
 
 						</div>
@@ -192,7 +191,7 @@
 								<p class="text-sm">Forecast der geplanten Rolloutprojekte</p>
 								<button class="go-to-button"
 									style="margin-left: -50px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#4950F6"
-									onclick="location.href='forecast.html';">Forecast</button>
+									onclick="location.href='rolloutmonitor/forecast.html';">Forecast</button>
 							</div>
 						</div>
 					</div>
@@ -214,7 +213,7 @@
 								<p class="text-sm">Alle abgeschlossenen Rolloutprojekte</p>
 								<div style="float: center;"><button class="go-to-button"
 										style="margin-left: -39px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#ff997d"
-										onclick="location.href='archiv.html';">Archiv</button></div>
+										onclick="location.href='rolloutmonitor/archiv.html';">Archiv</button></div>
 							</div>
 						</div>
 					</div>
@@ -241,11 +240,7 @@
 				<div><button class="game-button" id=button onclick="location.href='minigame.html'"
 						style="margin-right: 20px; margin-bottom: 20px; margin-top: 0px;">Dont Press</button></div>
 				<hr>
-				<a href="https://www.sosindustrieservice.de/impressum"
-					style="color:white; font-size: 15px; font-weight: bold;">Impressum</a>
-				<a>●</a>
-				<a href="https://www.sosindustrieservice.de/datenschutz"
-					style="color:white; font-size: 15px; font-weight: bold;">Datenschutz</a>
+
 			</div>
 
 		</div>

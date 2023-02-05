@@ -29,9 +29,6 @@
       animation: fadein .5s;
     }
 
-    body {
-      background-color: #f7f7f7;
-    }
 
     /* Add the fade-in animation */
     @keyframes fadein {
@@ -43,43 +40,87 @@
         opacity: 1;
       }
     }
+
+    @media only screen and (max-width: 1400px) {
+      .dropdown {
+        display: none;
+      }
+
+      #combined-dropdown {
+        display: block !important;
+      }
+
+      #dropdown-selector {
+        display: block !important;
+      }
+
+      nav .right {
+        justify-content: right;
+        margin-right: 10vw !important;
+      }
+
+      .dropdown-content {
+        margin: 0;
+      }
+    }
   </style>
 
 
-  <link rel="icon" href="Logo SOS IS GmbH Neu shadow_tif.webp">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="../images/Logo SOS IS GmbH Neu shadow_tif.webp">
   <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="styling/table.css">
-  <link rel="stylesheet" href="styling/nav.css">
-  <link rel="stylesheet" href="styling/search_and_refresh.css">
-  <link rel="stylesheet" href="styling/header.css">
-  <link rel="stylesheet" href="styling/info_box.css">
-  <link rel="stylesheet" href="styling/background.css">
-  <link rel="stylesheet" href="styling/div.css">
-  <link rel="stylesheet" href="styling/popup.css">
+  <link rel="stylesheet" href="../styling/table.css">
+  <link rel="stylesheet" href="../styling/nav.css">
+  <link rel="stylesheet" href="../styling/search_and_refresh.css">
+  <link rel="stylesheet" href="../styling/header.css">
+  <link rel="stylesheet" href="../styling/info_box.css">
+  <link rel="stylesheet" href="../styling/background.css">
+  <link rel="stylesheet" href="../styling/div.css">
+  <link rel="stylesheet" href="../styling/popup.css">
 </head>
 
 <nav>
-  <div class="left"><a class="logo" href="index.html">
+  <div class="left"><a class="logo" href="../index.html">
       <img
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
         alt="McDonald's logo"></a>
-    <h2>McDonald's Rollout Monitor</h2>
+    <h2 id="text-long">McDonald's Rollout Monitor</h2>
+    <h2 id="text-short">McD Rollout Monitor</h2>
   </div>
   <div class="right">
+    <div class="dropdown" id="combined-dropdown">
+      <button class="dropbtn"><i class="fa fa-bars"></i>
+      </button>
+      <div class="dropdown-content">
+        <h3>NSO/IRLX</h3>
+        <a href="../rolloutmonitor.html">Home</a>
+        <a href="../rolloutmonitor/forecast.html">Forecast</a>
+        <a href="../rolloutmonitor/detail.html">Detailplanung</a>
+        <a href="../rolloutmonitor/archiv.html">Archiv</a>
+        <hr>
+        <h3>Dashboards</h3>
+        <a href="../dashboards/projektstatus_server_rollout.html">Server Rollout</a>
+        <a href="../dashboards.html">BestBurger</a>
+        <hr>
+        <h3>Rolloutkalender Deployments</h3>
+      </div>
+    </div>
     <div class="dropdown">
       <button class="dropbtn">NSO/IRLX
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-content">
-        <a href="rolloutmonitor.html">Home</a>
-        <a href="forecast.html">Forecast</a>
-        <a href="detail.html">Detailplanung</a>
-        <a href="archiv.html">Archiv</a>
+        <a href="../rolloutmonitor.html">Home</a>
+        <a href="../rolloutmonitor/forecast.html">Forecast</a>
+        <a href="../rolloutmonitor/detail.html">Detailplanung</a>
+        <a href="../rolloutmonitor/archiv.html">Archiv</a>
       </div>
     </div>
     <div class="dropdown">
@@ -87,8 +128,8 @@
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-content">
-        <a href="projektstatus_server_rollout.html">Server Rollout</a>
-        <a href="dashboards.html">BestBurger</a>
+        <a href="../dashboards/projektstatus_server_rollout.html">Server Rollout</a>
+        <a href="../dashboards.html">BestBurger</a>
       </div>
     </div>
     <div class="dropdown">
@@ -101,9 +142,9 @@
   </div>
 </nav>
 
-<body onload="openForm()">
+</head>
 
-  <!-- The form -->
+<body onload="openForm();">
   <div class="form-popup" id="myForm">
     <form class="form-container">
       <h1>Login</h1>
@@ -119,65 +160,81 @@
 
     <div>
       <h1>
-        Forecast für alle geplanten Rolloutprojekte
+        Detailplanung für alle laufenden Rolloutprojekte
       </h1>
     </div>
     <div class="info-box">
       <div class="info-box__icon">i</div>
       <div class="info-box__text">
-        Diese Seite bietet Ihnen einen Überblick über alle geplanten Rolloutprojekte (NSO / IRLX). <br> Über das
-        Suchfeld kann gezielt nach einzelnen Einträgen gesucht werden. Mit einem Klick auf einen der Spaltenköpfe kann
-        die Tabelle entsprechend sortiert werden. <br> Änderungen werden dabei nur temporär vorgenommen. Nach dem
-        Drücken des Buttons
-        "Aktualisieren" wird die Übersicht aus dem Masterdokument neu geladen.
+        Diese Seite bietet Ihnen einen detaillierten Überblick über alle laufenden Rolloutprojekte. <br>
+        Nach dem Drücken des Buttons "Aktualisieren" wird die Übersicht aus dem Masterdokument neu geladen.
       </div>
     </div>
   </section id="home">
-  <section id="main">
-    </p>
+  <section id="detail1">
+
     <!-- Refresh and search container -->
     <div class="refresh-search-container">
       <!-- Refresh button -->
-      <button class="refresh-button" onclick="myFunction();"><i class="fa fa-refresh"
+      <button class="refresh-button" onclick="loadDetail1();"><i class="fa fa-refresh"
           style="margin-right: 10px;"></i>Aktualisieren</button>
-      <!-- Search box container -->
-      <div class="search-box-container">
-        <!-- Search box -->
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" class="search-box" placeholder="Suche...">
-        <!-- Search icon -->
-      </div>
+
     </div>
     <div class="bigtable">
       <div class="table-wrapper">
-        <div class=table-scroll id="scroll-1">
-          <table id="forecast-table" class="sortable">
-            <thead>
-              <tr>
-                <th class="status">Status</th>
-                <th class="medium">Store</th>
-                <th class="long">Adresse</th>
-                <th class="short">Art</th>
-                <th class="medium">Variante</th>
-                <th class="medium">F/C</th>
-                <th class="short">DL</th>
-                <th class="medium">Abbau</th>
-                <th class="medium">KW</th>
-                <th class="medium">Eröffnung</th>
-                <th class="medium">KW</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
+        <table id="detail1-table" class="sortable">
+          <thead>
+            <tr>
+              <th class="long"></th>
+              <th>#01</th>
+              <th>#02</th>
+              <th>#03</th>
+              <th>#04</th>
+              <th>#05</th>
+              <th>#06</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+
       </div>
     </div>
+  </section id="detail1">
+  <section id="detail2">
 
-  </section>
+    <!-- Refresh and search container -->
+    <div class="refresh-search-container" style="margin-top:30px">
+      <!-- Refresh button -->
+      <button class="refresh-button" onclick="loadDetail2();"><i class="fa fa-refresh"
+          style="margin-right: 10px;"></i>Aktualisieren</button>
+      <!-- Search box container -->
+
+    </div>
+    <div class="bigtable">
+      <div class="table-wrapper">
+        <table id="detail2-table" class="sortable">
+          <thead>
+            <tr>
+              <th class="long"></th>
+              <th>#07</th>
+              <th>#08</th>
+              <th>#09</th>
+              <th>#10</th>
+              <th>#11</th>
+              <th>#12</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+  </section id="detail2">
 
   <script>
-    function myFunction() {
+    function loadDetail2() {
       if (checkPassword()) {
 
         // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
@@ -187,75 +244,72 @@
 
         // Make a GET request to the Google Sheets API to retrieve the data for the table
         $.ajax({
-          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Forecast!A1:K100?key=${API_KEY}`,
+          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?ranges=Detailplanung!A1:A28&ranges=Detailplanung!H1:K28&key=${API_KEY}`,
           type: 'GET',
           success: function (response) {
+            $('#detail2-table tbody').empty();
+            const data1 = response.valueRanges[0].values;
+            const data2 = response.valueRanges[1].values;
+            for (let i = 1; i < data1.length; i++) {
+              let hasValue = false;
+              if (data2[i]) {
+                for (let j = 0; j < data2[i].length; j++) {
+                  if (data2[i][j]) {
+                    hasValue = true;
+                    break;
+                  }
+                }
+              }
+              for (let j = 0; j < data1[i].length; j++) {
+                $('#detail2-table tbody').append(`
+        <tr>
+          <td class ="first-column">${data1[i][j]}</td>
+          <td>${hasValue && data2[i] && data2[i][j] ? data2[i][j] : ''}</td>
+          <td>${hasValue && data2[i] && data2[i][j + 1] ? data2[i][j + 1] : ''}</td>
+          <td>${hasValue && data2[i] && data2[i][j + 2] ? data2[i][j + 2] : ''}</td>
+          <td>${hasValue && data2[i] && data2[i][j + 3] ? data2[i][j + 3] : ''}</td>
+          <td>${hasValue && data2[i] && data2[i][j + 4] ? data2[i][j + 4] : ''}</td>
+          <td>${hasValue && data2[i] && data2[i][j + 5] ? data2[i][j + 5] : ''}</td>
+        </tr>
+    `);
+              }
+            }
+          }
+        });
+      }
+    }
+  </script>
+  <script>
+    function loadDetail1() {
+      if (checkPassword()) {
+        // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+        const SHEET_ID_2 = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+        // Replace YOUR_API_KEY with your Google API key
+        const API_KEY_2 = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
+        // Make a GET request to the Google Sheets API to retrieve the data for the table
+        $.ajax({
+          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID_2}/values/Detailplanung!A1:G28?key=${API_KEY_2}`,
+          type: 'GET',
+          success: function (response) {
+            $('#detail1-table tbody').empty();
             // The response from the API includes the data for the table in the "values" property
             const data = response.values;
-
             data.shift();
             // Iterate through the data and add a row to the table for each item
-            $('#forecast-table tbody').empty();
             data.forEach(function (item) {
 
-              try {// Determine the class name for the "status" cell based on its value
-                var statusClass = "";
-                if (item[0] == "ABGESCHLOSSEN") {
-                  statusClass = "abgeschlossen";
-                } else if (item[0] == "IN BAU") {
-                  statusClass = "in-bau";
-                } else if (item[0] == "IN PLANUNG") {
-                  statusClass = "in-planung";
-                } else if (item[0] == "VERTRAG") {
-                  statusClass = "vertrag";
-                } else if (item[0] == "FREIGABE 2") {
-                  statusClass = "freigabe2";
-                } else if (item[0] == "FREIGABE 1") {
-                  statusClass = "freigabe1";
-                } else { statusClass = "else" }
-              }
-              catch (e) {
-                console.log(e);
-              }
-
-              try {// Determine the class name for the "status" cell based on its value
-                var varianteClass = "";
-                if (item[4] == "NSO") {
-                  varianteClass = "nso";
-                } else if (item[4] == "IRLX") {
-                  varianteClass = "irlx";
-                } else { varianteClass = "else" }
-              }
-              catch (e) {
-                console.log(e);
-              }
-
-              $('#forecast-table tbody').append(`
-            <tr>
-              <td class="${statusClass}" disabled>
-                <button>${item[0]}</button>
-              </td>
-              <td>${item[1]}</td>
-              <td>${item[2]}</td>
-              <td>${item[3]}</td>
-              <td class="${varianteClass}" disabled>
-                <button>${item[4]}</button>
-              </td>
-              <td>${item[5]}</td>
-              <td>${item[6]}</td>
-              <td>${item[7]}</td>
-              <td>${item[8]}</td>
-              <td>${item[9]}</td>
-              <td>${item[10]}</td>
-            </tr>
-          `);
+              $('#detail1-table tbody').append(`
+              <tr>
+                <td class ="first-column">${item[0] || "\u200B"}</td>
+                <td>${item[1] || "\u200B"}</td>
+                <td>${item[2] || "\u200B"}</td>
+                <td>${item[3] || "\u200B"}</td>
+                <td>${item[4] || "\u200B"}</td>
+                <td>${item[5] || "\u200B"}</td>
+                <td>${item[6] || "\u200B"}</td>
+              </tr>
+            `);
             });
-            const table = document.getElementById("forecast-table");
-            const tableContainer = document.getElementById("scroll-1");
-
-            if (table.offsetHeight > window.innerHeight * 0.5) {
-              tableContainer.style.height = "70vh";
-            }
           }
         });
       }
@@ -265,7 +319,7 @@
   <script>
     // Get the search box and data table elements
     var searchBox = document.querySelector('.search-box');
-    var dataTable = document.querySelector('#forecast-table');
+    var dataTable = document.querySelector('#detail1-table');
 
     // Add an event listener to the search box that listens for input events
     searchBox.addEventListener('input', function () {
@@ -315,11 +369,11 @@
     });
   </script>
   <script>
+    const form = document.querySelector(".form-container");
     function openForm() {
-      const form = document.querySelector(".form-container");
       if (checkPassword()) {
-        passwordIsCorrect = true;
-        myFunction();
+        loadDetail1();
+        loadDetail2();
         form.remove();
       } else {
         document.getElementById("myForm").style.display = "block";
@@ -333,13 +387,16 @@
           if (passwordInput.value === "mcdonalds") {
             setCookie("passwordIsCorrect", "true", 30);
             form.remove();
-            myFunction();
+            loadDetail1();
+            loadDetail2();
           } else {
             errorMark.style.display = "inline";
           }
         });
       }
     }
+
+
   </script>
 
   <script>
@@ -365,7 +422,14 @@
       var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
       return cookieValue
     }
+
+    function deleteCookie(cname) {
+      document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+
+
   </script>
+
 
 </body>
 
