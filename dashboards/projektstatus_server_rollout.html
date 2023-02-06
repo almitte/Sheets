@@ -460,8 +460,7 @@
                             sum += +item[0]
                         });
 
-                        document.getElementById('center-text-h5').innerHTML = 100 * Math.round((values[0] / sum)) + '%';
-
+                        document.getElementById('center-text-h5').innerHTML = Math.round(100 * +values[0] / sum) + '%';
 
                         //document.getElementById('center-text-h5').innerHTML = value;
                         document.getElementById('center-text-h5').style.color = "#FF6384";
@@ -473,7 +472,7 @@
                                 labels: ["R330 (offen)", "Austausch auf R340", "Austausch auf R350"],
                                 datasets: [
                                     {
-                                        data: [+values[1], +values[2], +values[3]],
+                                        data: [+values[0], +values[1], +values[2]],
                                         backgroundColor: [
                                             "rgba(255, 99, 132, 0.2)",
                                             "rgba(54, 162, 235, 0.2)",
