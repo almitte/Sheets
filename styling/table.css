@@ -24,7 +24,6 @@
 .bigtable .table-scroll thead {
 	position: sticky;
 	top: 0px;
-	z-index: 1;
 }
 
 .bigtable ::-webkit-scrollbar {
@@ -236,4 +235,52 @@ th:first-child {
 	border-radius: 42px;
 	font-weight: bold;
 	box-shadow: 0px 0px 14px -2px #44bba4;
+}
+
+#installation-table .ja-class button {
+	background-color: var(--main-dark);
+	border: none;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	padding: 8px 16px;
+	margin: 0 auto !important;
+	border-radius: 100px;
+	box-shadow: 0px 0px 14px -2px var(--main-dark);
+}
+
+#installation-table .offen-class button {
+	background-color: var(--accent-medium);
+	border: none;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 100px;
+	box-shadow: 0px 0px 14px -2px var(--accent-medium);
+}
+
+#installation-table .nein-class button {
+	background-color: red;
+	border: none;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 100px;
+	box-shadow: 0px 0px 14px -2px red;
+}
+
+#installation-table th {
+	text-align: center !important;
+}
+
+#installation-table td {
+	text-align: center !important;
+}
+
+#installation-table .table-scroll {
+	margin: 0;
+	overflow: auto;
+	border-bottom: 2px solid var(--main-dark);
 }

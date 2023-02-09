@@ -194,6 +194,7 @@ nav a.active {
 	display: block;
 	text-align: left;
 	transition: transition 1s ease-out-in !important;
+	z-index: 2;
 }
 
 .dropdown-element span:hover {
@@ -217,6 +218,7 @@ nav a.active {
 .dropdown-content h3 {
 	margin-left: 10px;
 	margin-bottom: 0;
+	z-index: 2;
 }
 
 .dropdown-content hr {
@@ -228,4 +230,5 @@ nav a.active {
 		rgba(0, 0, 0, 0.75),
 		rgba(0, 0, 0, 0)
 	);
+	z-index: 2;
 }
