@@ -181,6 +181,18 @@
             margin-right: 4rem;
             margin-bottom: 2rem;
         }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center !important;
+            margin-top: var(--magin-small) !important;
+        }
+
+        .header h1 {
+            margin: 0 !important;
+        }
     </style>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -273,10 +285,16 @@
         </form>
     </div>
     <section id="home">
-        <div>
+        <div class="header">
             <h1>
                 Projektstatus Server Rollout
             </h1>
+            <div class="refresh-search-container">
+                <!-- Refresh button -->
+                <button class="refresh-button" onclick="openForm();"><i class="fa fa-refresh"
+                        style="margin-right: 10px;"></i>Aktualisieren</button>
+                <!-- Search box container -->
+            </div>
         </div>
 
     </section id="home">
