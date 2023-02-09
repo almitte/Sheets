@@ -278,12 +278,7 @@
                 Projektstatus Server Rollout
             </h1>
         </div>
-        <div class="info-box">
-            <div class="info-box__icon">i</div>
-            <div class="info-box__text">
-                Dieses Dashboard gibt Ihnen eine Übersicht über den Projektstatus des Server Rollouts.
-            </div>
-        </div>
+
     </section id="home">
     <section>
         <div class="KPI-grid">
@@ -293,16 +288,17 @@
                         <h3>Status Server Rollout</h3>
                         <div id="KPIs">
                             <div>
-                                <h1 id="total">&nbsp;</h1>
-                                <h2>Insgesamt zu tauschende Server</h2>
+                                <h1 id="total_restaurants" style="color: #566a7f">&nbsp;</h1>
+                                <h2>Gesamtzahl Restaurants</h2>
                             </div>
                             <div>
-                                <h1 id="rollout" style="color: #3399CC">&nbsp;</h1>
-                                <h2>Rollout</h2>
+                                <h1 id="offen_restaurants" class="red">&nbsp;</h1>
+                                <h2>Offene Restaurants</h2>
                             </div>
                             <div>
-                                <h1 id="störung" class="red">&nbsp;</h1>
-                                <h2>Störungen</h2>
+                                <h1 id="abgeschlossen_restaurants" style="color: var(--main-dark)">&nbsp;
+                                </h1>
+                                <h2>Abgeschlossene Restaurants</h2>
                             </div>
                         </div>
                         <div class="status-table">
@@ -385,43 +381,21 @@
 
                 // Make a GET request to the Google Sheets API to retrieve the data for the table
                 $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!K3:L3?key=${API_KEY}`,
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!C8:C10?key=${API_KEY}`,
                     type: 'GET',
                     success: function (response) {
                         // The response from the API includes the data for the table in the "values" property
                         const data = response.values;
-
-                        console.log("helo");
                         var values = [];
 
                         data.forEach(function (item) {
-
-                            values.push(item[0]);
-                            values.push(item[1]);
-                        });
-
-                        // Set the inner text of the html h1 element with id "total" to values[0]
-                        document.getElementById('rollout').innerText = values[0];
-                        document.getElementById('störung').innerText = values[1];
-                    }
-                });
-                $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D3?key=${API_KEY}`,
-                    type: 'GET',
-                    success: function (response) {
-                        // The response from the API includes the data for the table in the "values" property
-                        const data = response.values;
-
-                        console.log("helo");
-                        var values = [];
-
-                        data.forEach(function (item) {
-
                             values.push(item[0]);
                         });
 
                         // Set the inner text of the html h1 element with id "total" to values[0]
-                        document.getElementById('total').innerText = values[0];
+                        document.getElementById('total_restaurants').innerText = values[0];
+                        document.getElementById('offen_restaurants').innerText = values[1];
+                        document.getElementById('abgeschlossen_restaurants').innerText = values[2];
                     }
                 });
             }
