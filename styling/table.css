@@ -261,14 +261,14 @@ th:first-child {
 }
 
 #installation-table .nein-class button {
-	background-color: red;
+	background-color: #ff4b3eb7;
 	border: none;
 	text-align: center;
 	text-decoration: none;
 	color: white;
 	padding: 8px 16px;
 	border-radius: 100px;
-	box-shadow: 0px 0px 14px -2px red;
+	box-shadow: 0px 0px 14px -2px #ff4b3eb7;
 }
 
 #installation-table th {
@@ -283,4 +283,14 @@ th:first-child {
 	margin: 0;
 	overflow: auto;
 	border-bottom: 2px solid var(--main-dark);
+}
+
+#installation-table td:first-child,
+th:first-child {
+	text-align: left !important;
+}
+
+#installation-table th {
+	transform: rotate(-90deg);
+	height: 150px; /* adjust this value as needed */
 }

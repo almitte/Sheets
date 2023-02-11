@@ -461,7 +461,7 @@
                         const config = {
                             type: "doughnut",
                             data: {
-                                labels: ["R330 (offen)", "Austausch auf R340", "Austausch auf R350"],
+                                labels: ["R330 (offen)", "Austausch auf R340-SSD", "Austausch auf R350"],
                                 datasets: [
                                     {
                                         data: [+values[0], +values[1], +values[2]],
@@ -570,10 +570,10 @@
                             labels: kw, // calendar weeks
                             datasets: [
                                 {
-                                    label: "RHS 01",
+                                    label: "RHS01",
                                     data: rhs01,
-                                    backgroundColor: "rgba(255, 99, 132, 0.5)",
-                                    borderColor: "rgba(255, 99, 132, 1)",
+                                    backgroundColor: "rgba(95,221,157, 0.5)",
+                                    borderColor: "rgba(95,221,157, 1)",
                                     borderWidth: 1,
                                     datalabels: {
                                         align: 'end',
@@ -581,7 +581,7 @@
                                     }
                                 },
                                 {
-                                    label: "RHS 02",
+                                    label: "RHS02",
                                     data: rhs02,
                                     backgroundColor: "rgba(54, 162, 235, 0.5)",
                                     borderColor: "rgba(54, 162, 235, 1)",
