@@ -238,7 +238,7 @@ th:first-child {
 }
 
 #installation-table .ja-class button {
-	background-color: var(--main-dark);
+	background-color: #0098389f;
 	border: none;
 	text-align: center;
 	text-decoration: none;
@@ -246,18 +246,18 @@ th:first-child {
 	padding: 8px 16px;
 	margin: 0 auto !important;
 	border-radius: 100px;
-	box-shadow: 0px 0px 14px -2px var(--main-dark);
+	box-shadow: 0px 0px 14px -2px #0098389f;
 }
 
 #installation-table .offen-class button {
-	background-color: var(--accent-medium);
+	background-color: #ffc20b94;
 	border: none;
 	text-align: center;
 	text-decoration: none;
 	color: white;
 	padding: 8px 16px;
 	border-radius: 100px;
-	box-shadow: 0px 0px 14px -2px var(--accent-medium);
+	box-shadow: 0px 0px 14px -2px #ffc20b94;
 }
 
 #installation-table .nein-class button {
