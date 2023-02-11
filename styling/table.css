@@ -243,7 +243,7 @@ th:first-child {
 	text-align: center;
 	text-decoration: none;
 	color: white;
-	padding: 8px 16px;
+	padding: 8px 14px;
 	margin: 0 auto !important;
 	border-radius: 100px;
 	box-shadow: 0px 0px 14px -2px #0098389f;
@@ -255,7 +255,7 @@ th:first-child {
 	text-align: center;
 	text-decoration: none;
 	color: white;
-	padding: 8px 16px;
+	padding: 8px 14px;
 	border-radius: 100px;
 	box-shadow: 0px 0px 14px -2px #ffc20b94;
 }
@@ -266,7 +266,7 @@ th:first-child {
 	text-align: center;
 	text-decoration: none;
 	color: white;
-	padding: 8px 16px;
+	padding: 8px 14px;
 	border-radius: 100px;
 	box-shadow: 0px 0px 14px -2px #ff4b3eb7;
 }
