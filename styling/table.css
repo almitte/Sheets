@@ -294,3 +294,6 @@ th:first-child {
 	transform: rotate(-90deg);
 	height: 150px; /* adjust this value as needed */
 }
+
+#installation-table th {
+}
