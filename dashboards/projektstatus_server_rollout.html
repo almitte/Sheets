@@ -127,48 +127,27 @@
             flex-basis: 33%;
             margin-bottom: 2rem;
             overflow: hidden;
+            margin: 0;
+        }
+
+        .chart canvas {
+            max-width: 380px !important;
+            min-height: 390px !important;
+            margin: 0 auto;
+            padding-top: 1rem;
         }
 
         .Total {
             flex-basis: 66%;
         }
 
-        @media (max-width: 999px) {
+        @media (max-width: 1200px) {
             .Combine {
                 flex-wrap: wrap;
             }
         }
 
-        .chart canvas {
-            padding-top: 1rem;
-        }
 
-        .center-text {
-            margin-top: calc(max(-220px, -16vw));
-            margin-bottom: 6rem !important;
-        }
-
-        #center-text-h5 {
-            margin-bottom: 5px;
-            margin-top: 0;
-            font-size: 40px;
-            text-align: center;
-        }
-
-        #center-text-span {
-            font-size: 12px;
-            text-align: center;
-        }
-
-        .chart {
-            margin: 0;
-        }
-
-        .chart canvas {
-            max-width: 380px !important;
-            max-height: 380px !important;
-            margin: 0 auto;
-        }
 
         #KPIs {
             display: flex;
@@ -176,7 +155,7 @@
             margin-bottom: 1rem;
         }
 
-        .lineChart {
+    	.lineChart {
             margin-left: 4rem;
             margin-right: 4rem;
             margin-bottom: 2rem;
@@ -193,6 +172,7 @@
         .header h1 {
             margin: 0 !important;
         }
+
     </style>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -237,11 +217,7 @@
                 <a href="../rolloutmonitor/installation.html">Rollout Status</a>
                 <a href="../rolloutmonitor/archiv.html">Archiv</a>
                 <hr>
-                <h3>Dashboards</h3>
                 <a href="../dashboards/projektstatus_server_rollout.html">Server Rollout</a>
-                <a href="../dashboards.html">BestBurger</a>
-                <hr>
-                <h3>Rolloutkalender Deployments</h3>
             </div>
         </div>
         <div class="dropdown">
@@ -252,29 +228,17 @@
                 <a href="../rolloutmonitor.html">Home</a>
                 <a href="../rolloutmonitor/forecast.html">Forecast</a>
                 <a href="../rolloutmonitor/detail.html">Detailplanung</a>
-                <a href="../rolloutmonitor/installation.html">Rollout Status</a>
+                <!--<a href="../rolloutmonitor/installation.html">Rollout Status</a>-->
                 <a href="../rolloutmonitor/archiv.html">Archiv</a>
             </div>
         </div>
         <div class="dropdown">
-            <button class="dropbtn">Dashboards
-                <i class="fa fa-caret-down"></i>
+            <button class="dropbtn">
+                <a href="../dashboards/projektstatus_server_rollout.html">Projektstatus Server Rollout</a>
             </button>
-            <div class="dropdown-content">
-                <a href="../dashboards/projektstatus_server_rollout.html">Server Rollout</a>
-                <a href="../dashboards.html">BestBurger</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Rolloutkalender Deployments
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-            </div>
         </div>
     </div>
 </nav>
-
 <body onload="openForm()">
     <div class="form-popup" id="myForm">
         <form class="form-container">
@@ -298,7 +262,6 @@
                 <!-- Search box container -->
             </div>
         </div>
-
     </section id="home">
     <section>
         <div class="KPI-grid">
@@ -307,15 +270,15 @@
                     <div class="Total">
                         <h3>Status Server Rollout</h3>
                         <div id="KPIs">
-                            <div>
+                            <div id = "KPI">
                                 <h1 id="total_restaurants" style="color: #566a7f">&nbsp;</h1>
                                 <h2>Gesamtzahl Restaurants</h2>
                             </div>
-                            <div>
+                            <div id = "KPI">
                                 <h1 id="offen_restaurants" class="red">&nbsp;</h1>
                                 <h2>Offene Restaurants</h2>
                             </div>
-                            <div>
+                            <div id = "KPI">
                                 <h1 id="abgeschlossen_restaurants" style="color: var(--main-dark)">&nbsp;
                                 </h1>
                                 <h2>Abgeschlossene Restaurants</h2>
@@ -354,14 +317,6 @@
                             </div>
                         </div>
                         <canvas id="myPieChart" width="350" height="350"></canvas>
-                        <div class="center-text">
-                            <div id="center-text-span">
-                                &nbsp;
-                            </div>
-                            <div id="center-text-h5">
-                                &nbsp;
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -401,7 +356,7 @@
 
                 // Make a GET request to the Google Sheets API to retrieve the data for the table
                 $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!C8:C10?key=${API_KEY}`,
+                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D11:D13?key=${API_KEY}`,
                     type: 'GET',
                     success: function (response) {
                         // The response from the API includes the data for the table in the "values" property
@@ -431,11 +386,11 @@
                 const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
                 if (type == "RHS01") {
-                    url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!B4:B6?key=${API_KEY}`
+                    url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!B3:B9?key=${API_KEY}`
                 } else if (type == "RHS02") {
-                    url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!C4:C6?key=${API_KEY}`
+                    url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!C3:C9?key=${API_KEY}`
                 } else {
-                    url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D4:D6?key=${API_KEY}`
+                    url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D3:D9?key=${API_KEY}`
                 }
 
                 // Make a GET request to the Google Sheets API to retrieve the data for the table
@@ -447,40 +402,36 @@
                         const data = response.values;
 
                         var values = [];
-                        var sum = 0;
 
                         data.forEach(function (item) {
                             values.push(item[0]);
-                            sum += +item[0]
                         });
-
-                        document.getElementById('center-text-h5').innerHTML = Math.round(100 * +values[0] / sum) + '%';
-
-                        //document.getElementById('center-text-h5').innerHTML = value;
-                        document.getElementById('center-text-h5').style.color = "#FF6384";
-                        document.getElementById('center-text-span').innerHTML = "R330 (offen)";
+                        
+                        var percent_done_r330 = Math.round(((values[0]-values[1]) / values[0]) * 100);
+                        var percent_open_r330 = Math.round(((values[1]) / values[0]) * 100);
+                        
+                        var percent_done_r340 = Math.round(((values[2]-values[3]) / values[2]) * 100);
+                        var percent_open_r340 = Math.round(((values[3]) / values[2]) * 100);
 
                         const config = {
-                            type: "doughnut",
+                            type: "bar",
                             data: {
-                                labels: ["R330 (offen)", "Austausch auf R340-SSD", "Austausch auf R350"],
+                                labels: ["R330", "R340"],
                                 datasets: [
                                     {
-                                        data: [+values[0], +values[1], +values[2]],
-                                        backgroundColor: [
-                                            "rgba(255, 99, 132, 0.2)",
-                                            "rgba(54, 162, 235, 0.2)",
-                                            "rgba(255, 206, 86, 0.2)",
-                                            "rgba(75, 192, 192, 0.2)",
-                                            "rgba(153, 102, 255, 0.2)",
-                                        ],
-                                        borderColor: [
-                                            "rgba(255, 99, 132, 1)",
-                                            "rgba(54, 162, 235, 1)",
-                                            "rgba(255, 206, 86, 1)",
-                                            "rgba(75, 192, 192, 1)",
-                                            "rgba(153, 102, 255, 1)",
-                                        ],
+                                        label: "offen",
+                                        data: [percent_open_r330, percent_open_r340],
+                                        borderWidth: 1,
+                                        backgroundColor: "rgba(206, 89, 89, 0.2)",
+                                        borderColor: "rgba(206, 89, 89, 1)",
+
+                                    },
+                                    {
+                                        label: "done",
+                                        data: [percent_done_r330, percent_done_r340],
+                                        borderWidth: 1,
+                                        backgroundColor: "rgba(21, 152, 149, 0.2)",
+                                        borderColor: "rgba(21, 152, 149, 1)",
                                     },
                                 ],
                             },
@@ -488,21 +439,58 @@
                                 animation: {
                                     delay: 5000,
                                 },
-                                responsive: true,
+                                responsive: false,
                                 legend: {
                                     display: false
                                 },
                                 plugins: {
                                     datalabels: {
-                                        display: false,
+                                        display: true,
                                         align: 'center',
-                                        anchor: 'center'
-                                    }
-                                },
+                                        anchor: 'center',
+                                                                                font: {
+                                            size: 14,
+                                        },
+                                        formatter: function(value, context) {
+                                            return value +  ' %';
+                                    }                                                                                                                   
+                                },},                           
                                 tooltips: {
-                                    enabled: false,
-
+                                    enabled: true,
+                                    mode: 'index',
+                                    intersect: false,
+                                    callbacks: {
+                                    label: function(tooltipItem, data) {
+                                        var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
+                                        return label + ": " + value + '%';
+                                    }
                                 }
+                                },
+                                scales: {
+                                    xAxes: [{
+                                        stacked: true,
+                                        ticks: {
+                                            display: true // show tick marks
+                                        },
+                                        gridLines: {
+                                            display: false // hide vertical grid lines
+                                        }
+                                    }],
+                                    yAxes: [{
+                                        stacked: true,
+                                        display: true,
+                                        ticks: {
+                                            display: false, // hide y-axis tick marks and labels
+                                            },
+                                        gridLines: {
+                                            display: true, // show the first grid line
+                                            color: 'rgba(0, 0, 0, 0)', // set the color of the grid lines
+                                            zeroLineColor: 'rgba(0, 0, 0, 1)', // set the color of the first grid line
+                                            drawBorder: false, // hide the y-axis border
+                                            drawTicks: false // hide the y-axis tick marks
+                                        }
+                                    }]}
                             },
 
                         };

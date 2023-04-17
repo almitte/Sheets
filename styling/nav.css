@@ -51,6 +51,8 @@ nav .right {
 	/* Add a border-left to the middle div to create a vertical line */
 	/* Align the content inside the right div to the center */
 	flex: 1;
+	/* Vertically align the content inside the right div to the center */
+	align-items:center;
 }
 
 nav img {
@@ -80,12 +82,12 @@ nav a {
 	color: white;
 	/* Set the font color of the links to white */
 	transition: all 0.4s ease-in-out;
+	padding: .5rem;
+	border-radius: 25px;
 }
 
 nav a:hover,
 nav a.active {
-	/* Link hover styles */
-	color: #000;
 	/* Set the font color of the links to black on hover */
 	background-color: var(--accent-bright);
 	/* Set the background color for the links to grey on hover */
@@ -93,6 +95,8 @@ nav a.active {
 	/* Add a box shadow to the links on hover */
 	border-radius: 25px;
 	/* Add rounded corners to the links on hover */
+	padding-left: .75rem;
+	padding-right: .75rem;
 }
 
 @media only screen and (max-width: 600px) {
@@ -201,6 +205,7 @@ nav a.active {
 	background-color: var(--accent-bright);
 	color: white;
 	border-radius: 0px;
+	padding: 12px 25px;
 }
 
 /* Add a grey background color to dropdown links on hover */
@@ -208,6 +213,7 @@ nav a.active {
 	background-color: var(--accent-bright);
 	color: white;
 	border-radius: 0px;
+	padding: 12px 20px;
 }
 
 /* Show the dropdown menu on hover */
