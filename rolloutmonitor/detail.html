@@ -231,7 +231,7 @@
 
         // Make a GET request to the Google Sheets API to retrieve the data for the table
         $.ajax({
-          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?ranges=Detailplanung!A1:A32&ranges=Detailplanung!H1:K32&key=${API_KEY}`,
+          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?ranges=Detailplanung!A1:A32&ranges=Detailplanung!H1:K35&key=${API_KEY}`,
           type: 'GET',
           success: function (response) {
             $('#detail2-table tbody').empty();
@@ -275,7 +275,7 @@
         const API_KEY_2 = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
         // Make a GET request to the Google Sheets API to retrieve the data for the table
         $.ajax({
-          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID_2}/values/Detailplanung!A1:G32?key=${API_KEY_2}`,
+          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID_2}/values/Detailplanung!A1:G35?key=${API_KEY_2}`,
           type: 'GET',
           success: function (response) {
             $('#detail1-table tbody').empty();
