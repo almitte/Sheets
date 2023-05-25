@@ -146,6 +146,19 @@
             animation: fadein 1s;
         }
 
+        #top-irlx {
+            display: grid !important;
+            grid-template-columns: 1fr 1fr;
+            margin-left: 17rem !important;
+            margin-right: 17rem !important;
+        }
+
+        #top-irlx.kpi-value{
+            font-size: 3.5rem !important;
+            font-weight: 600;
+            animation: fadein 1s;
+        }
+
         #chart-nso {
             margin-left: 0 !important;
             margin-right: 0 !important;
@@ -188,6 +201,10 @@
             color: #BA1B1D;
         }
 
+        .kpis #unplanned-irlx{
+            font-size: 4.5rem;
+        }
+
         .kpis #completed {
             color: #4FB477;
         }
@@ -203,6 +220,7 @@
             margin: 0 !important;
             margin-top: .2rem;
         }
+
 
         hr {
             position: relative;
@@ -223,7 +241,6 @@
         .unplanned-divider {
             background-color: #BA1B1D;
         }
-
 
     </style>
 
@@ -334,7 +351,7 @@
                     <b>N</b>ew <b>S</b>tore <b>O</b>pening                    
                 </div>
             </div>
-            <div class="kpis" id = "top">
+            <div class="kpis" id="top">
                 <div class ="kpi-box">
                     <div class ="kpi-value" id="total-nso">
                         10                                      
@@ -406,7 +423,7 @@
                     <b>I</b>n <b>R</b>eal <b>L</b>ife E<b>X</b>perience                    
                 </div>
             </div>
-            <div class="kpis" id = "top">
+            <div class="kpis" id = "top-irlx">
                 <div class ="kpi-box">
                     <div class ="kpi-value" id="total-irlx">
                         10                                      
@@ -415,7 +432,15 @@
                     <div class ="kpi-title">
                         Target              
                     </div>
+                </div>
 
+                <div class ="kpi-box" id="unplanned">
+                    <div class ="kpi-value" id="unplanned-irlx">
+                        10                                      
+                    </div>
+                    <div class ="kpi-title">
+                        Unplanned              
+                    </div>
                 </div>
             </div>
 
@@ -446,20 +471,6 @@
                         </div>
 
                     </div>
-
-                    <div class ="kpi-box" id="unplanned">
-                        <div class ="kpi-value" id="unplanned-irlx">
-                            10                                      
-                        </div>
-
-                        <hr class = "unplanned-divider">
-                        <div class ="kpi-title">
-                            Unplanned              
-                        </div>
-
-
-
-                    </div>
                 </div>
 
                 <div class="chart-container">
@@ -470,14 +481,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        // Load the component into the container
-        const componentContainer = document.getElementById('componentContainer');
-        const template = document.getElementById('navbar');
-        const clone = document.importNode(template.content, true);
-        componentContainer.appendChild(clone);
-      </script>
 
     <script>
         function loadNSOKPIValues() {
@@ -764,7 +767,6 @@
                             padding: {
                                 top: 30,
                                 bottom: 20,
-                                right: 180
                             }
                         },
                         plugins: [{
@@ -866,7 +868,7 @@
                 const planned_month = unplanned_month_irlx - currentMonth -1;
                 const unplanned_month_irlx_nr = 12 - unplanned_month_irlx + 4;
 
-                chartDiv.style.gridTemplateColumns = `${currentMonth}fr ${planned_month}fr ${unplanned_month_irlx_nr}fr`;
+                chartDiv.style.gridTemplateColumns = `${currentMonth}fr ${planned_month}fr`;
                 loadIRLXchart();
             }
         });
