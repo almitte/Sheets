@@ -32,8 +32,6 @@
 
         body {
             background-color: #f7f7f7;
-            margin: 0;
-            padding: 0;
         }
 
         /* Add the fade-in animation */
@@ -46,6 +44,29 @@
                 opacity: 1;
             }
         }
+
+        @media only screen and (max-width: 1400px) {
+      .dropdown {
+        display: none;
+      }
+
+      #combined-dropdown {
+        display: block !important;
+      }
+
+      #dropdown-selector {
+        display: block !important;
+      }
+
+      nav .right {
+        justify-content: right;
+        margin-right: 10vw !important;
+      }
+
+      .dropdown-content {
+        margin: 0;
+      }
+    }
 
         .header {
             display: flex;
