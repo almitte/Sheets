@@ -332,6 +332,8 @@
         </div>
     </div>
 </nav>
+
+
 <body onload="openForm()">
     
     <div class="form-popup" id="myForm">
@@ -347,7 +349,7 @@
     <section id="home">
         <div class="header">
             <h1>
-                Rollout Planung 2023
+                Rollout Planung 2024
             </h1>
             <div class="refresh-search-container">
                 <!-- Refresh button -->
@@ -358,145 +360,6 @@
         </div>
     </section id="home">
 
-
-    <div class="project-grid">   
-        <div class="project-box">
-            <div class="box-line">
-                <div class ="title">
-                    <b>N</b>ew <b>S</b>tore <b>O</b>pening                    
-                </div>
-            </div>
-            <div class="kpis" id="top">
-                <div class ="kpi-box">
-                    <div class ="kpi-value" id="total-nso">
-                        10                                      
-                    </div>
-
-                    <div class ="kpi-title">
-                        Target              
-                    </div>
-
-                </div>
-            </div>
-
-            <div class = "completed-planned-box">
-                <div class="kpis" id = "chart-nso">
-                    <div class ="kpi-box" id="completed">
-                        <div class ="kpi-value" id="completed-nso">
-                            10                                      
-                        </div>
-
-                        <hr class = "completed-divider">
-                        <div class ="kpi-title">
-                            Completed              
-                        </div>
-
-
-
-                    </div>
-
-                    <div class ="kpi-box" id="planned">
-                        <div class ="kpi-value" id = "planned-nso">
-                            20              
-                        </div>
-
-                        <hr class = "planned-divider">
-                        <div class ="kpi-title">
-                            Planned             
-                        </div>
-
-                    </div>
-
-                    <div class ="kpi-box" id="unplanned">
-                        <div class ="kpi-value" id="unplanned-nso">
-                            10                                      
-                        </div>
-
-                        <hr class = "unplanned-divider">
-                        <div class ="kpi-title">
-                            Unplanned              
-                        </div>
-
-
-
-                    </div>
-                </div>
-
-                <div class="chart-container">
-
-                    <canvas id="NSO-chart" width="350" height="200"></canvas>
-
-                </div>
-            </div>
-
-
-        </div>
-
-        <div class="project-box">
-            <div class="box-line">
-                <div class ="title">
-                    <b>I</b>n <b>R</b>eal <b>L</b>ife E<b>X</b>perience                    
-                </div>
-            </div>
-            <div class="kpis" id = "top-irlx">
-                <div class ="kpi-box">
-                    <div class ="kpi-value" id="total-irlx">
-                        10                                      
-                    </div>
-
-                    <div class ="kpi-title">
-                        Target              
-                    </div>
-                </div>
-
-                <div class ="kpi-box" id="unplanned">
-                    <div class ="kpi-value" id="unplanned-irlx">
-                        10                                      
-                    </div>
-                    <div class ="kpi-title">
-                        Unplanned              
-                    </div>
-                </div>
-            </div>
-
-            <div class = "completed-planned-box">
-                <div class="kpis" id = "chart-irlx">
-                    <div class ="kpi-box" id="completed">
-                        <div class ="kpi-value" id="completed-irlx">
-                            10                                      
-                        </div>
-
-                        <hr class = "completed-divider">
-                        <div class ="kpi-title">
-                            Completed              
-                        </div>
-
-
-
-                    </div>
-
-                    <div class ="kpi-box" id="planned">
-                        <div class ="kpi-value" id = "planned-irlx">
-                            20              
-                        </div>
-
-                        <hr class = "planned-divider">
-                        <div class ="kpi-title">
-                            Planned             
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="chart-container">
-
-                    <canvas id="IRLX-chart" width="350" height="200"></canvas>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script>
         function loadNSOKPIValues() {
             const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
@@ -504,7 +367,7 @@
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B3:M3?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B3:M3?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -551,7 +414,7 @@
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B20:M20?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B20:M20?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -615,7 +478,7 @@
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B6:M6?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B6:M6?key=${API_KEY}`,
                 type: 'GET',
                 success: function (response) {
                     // The response from the API includes the data for the table in the "values" property
@@ -731,7 +594,7 @@
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B23:M23?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B23:M23?key=${API_KEY}`,
                 type: 'GET',
                 success: function (response) {
                     // The response from the API includes the data for the table in the "values" property
@@ -840,7 +703,7 @@
         const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!N6?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!N6?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -868,7 +731,7 @@
         const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!N23?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!N23?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property

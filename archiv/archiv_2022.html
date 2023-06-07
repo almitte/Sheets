@@ -29,10 +29,6 @@
       animation: fadein .5s;
     }
 
-    body {
-      background-color: #f7f7f7;
-    }
-
     /* Add the fade-in animation */
     @keyframes fadein {
       from {
@@ -44,7 +40,7 @@
       }
     }
 
-    @media only screen and (max-width: 1400px) {
+    @media only screen and (max-width: 1620px) {
       .dropdown {
         display: none;
       }
@@ -68,9 +64,12 @@
     }
   </style>
 
-
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> Rollout Monitor</title>
   <link rel="icon" href="../images/Logo SOS IS GmbH Neu shadow_tif.webp">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
@@ -147,32 +146,29 @@
         </div>
     </div>
 </nav>
+</head>
 
-<body onload="openForm()">
-
-  <!-- The form -->
+<body onload="openForm();">
   <div class="form-popup" id="myForm">
     <form class="form-container">
       <h1>Login</h1>
-
       <label class="error-mark" for="psw" style="display:none; color: red; font-size: 15px;"><b>Ungültiges
           Passwort</b></label>
       <input type="password" placeholder="Enter Password" name="psw" required>
       <button type="submit" class="btn">Login</button>
     </form>
   </div>
-
-  <section id="home">
-
+  <section id=" home">
     <div>
       <h1>
-        Forecast für alle geplanten Rolloutprojekte
+        Archiv
       </h1>
     </div>
     <div class="info-box">
       <div class="info-box__icon">i</div>
       <div class="info-box__text">
-        Diese Seite bietet Ihnen einen Überblick über alle geplanten Rolloutprojekte (NSO / IRLX). <br> Über das
+        Diese Seite bietet Ihnen einen Überblick über alle abgeschlossenen Rolloutprojekte aus 2022.
+        <br> Über das
         Suchfeld kann gezielt nach einzelnen Einträgen gesucht werden. Mit einem Klick auf einen der Spaltenköpfe kann
         die Tabelle entsprechend sortiert werden. <br> Änderungen werden dabei nur temporär vorgenommen. Nach dem
         Drücken des Buttons
@@ -180,40 +176,46 @@
       </div>
     </div>
   </section id="home">
-  <section id="main">
+
+  <section id="2022">
+    <div>
+      <h2>
+        2022
+      </h2>
+    </div>
     </p>
-    <!-- Refresh and search container -->
     <div class="refresh-search-container">
       <!-- Refresh button -->
-      <button class="refresh-button" onclick="myFunction();"><i class="fa fa-refresh"
+      <button class="refresh-button" onclick="load2022();"><i class="fa fa-refresh"
           style="margin-right: 10px;"></i>Aktualisieren</button>
       <!-- Search box container -->
       <div class="search-box-container">
         <!-- Search box -->
         <i class="fas fa-search search-icon"></i>
-        <input type="text" class="search-box" placeholder="Suche...">
+        <input type="text" class="search-box-2" placeholder="Suche...">
         <!-- Search icon -->
       </div>
     </div>
+
+
     <div class="bigtable">
       <div class="table-wrapper">
-        <div class=table-scroll id="scroll-1">
-          <table id="forecast-table" class="sortable">
+        <div class="table-scroll" id="scroll-2">
+          <table id="2022-table" class="sortable">
             <thead>
               <tr>
-                <th class="status">Status</th>
                 <th class="medium">Store</th>
                 <th class="long">Adresse</th>
                 <th class="short">Art</th>
                 <th class="medium">Variante</th>
                 <th class="medium">F/C</th>
-                <th class="short">DL</th>
-                <th class="medium">Abbau</th>
-                <th class="medium">KW</th>
+                <th class="medium">DL</th>
+                <th class="medium">Teilschließung</th>
+                <th class="medium">Teileröffnung</th>
                 <th class="medium">Eröffnung</th>
-                <th class="medium">KW</th>
-                <th class="medium">Bemerkung</th>
-
+                <th class="short">KW</th>
+                <th class="medium">VIP-Support</th>
+                <th class="medium">Status HS</th>
               </tr>
             </thead>
             <tbody>
@@ -222,59 +224,104 @@
         </div>
       </div>
     </div>
-
   </section>
 
   <script>
-    function myFunction() {
+    function load2023() {
       if (checkPassword()) {
 
+        $(document).ready(function () {
+          // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+          const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+          // Replace YOUR_API_KEY with your Google API key
+          const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
+
+          // Make a GET request to the Google Sheets API to retrieve the data for the table
+          $.ajax({
+
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Archiv2023!A1:L150?key=${API_KEY}`,
+            type: 'GET',
+            success: function (response) {
+              $('#2023-table tbody').empty();
+              // The response from the API includes the data for the table in the "values" property
+              const data = response.values;
+
+              // Skip the first row of the data, which contains the column names
+              data.shift();
+
+              // Iterate through the data and add a row to the table for each item
+              data.forEach(function (item) {
+                try {// Determine the class name for the "status" cell based on its value
+
+                  var varianteClass = "";
+
+                  if (item[3] == "NSO") {
+                    varianteClass = "nso";
+                  } else if (item[3] == "IRLX") {
+                    varianteClass = "irlx";
+                  } else { varianteClass = "else" }
+                }
+
+                catch (e) {
+                  console.log(e);
+                }
+
+                $('#2023-table tbody').append(`
+                  <tr>
+                  <td>${item[0]}</td>
+                  <td>${item[1]}</td>
+                  <td>${item[2]}</td>
+                  <td class="${varianteClass}" disabled><button>${item[3]}</button></td>
+                  <td>${item[4]}</td>
+                  <td>${item[5]}</td>
+                  <td>${item[6]}</td>
+                  <td>${item[7]}</td>
+                  <td>${item[8]}</td>
+                  <td>${item[9]}</td>
+                  <td>${item[10]}</td>
+                  <td>${item[11]}</td>
+                  </tr>
+                `);
+              });
+
+              const table = document.getElementById("2023-table");
+              const tableContainer = document.getElementById("scroll-1");
+
+              if (table.offsetHeight > window.innerHeight * 0.5) {
+                tableContainer.style.height = "50vh";
+              }
+            }
+          });
+        })
+      }
+    }
+
+  </script>
+
+  <script>
+    function load2022() {
+      if (checkPassword()) {
         // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
         const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
         // Replace YOUR_API_KEY with your Google API key
         const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
         // Make a GET request to the Google Sheets API to retrieve the data for the table
         $.ajax({
-          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Forecast!A1:L100?key=${API_KEY}`,
+          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Archiv2022!A1:L150?key=${API_KEY}`,
           type: 'GET',
           success: function (response) {
+            $('#2022-table tbody').empty();
             // The response from the API includes the data for the table in the "values" property
             const data = response.values;
 
             data.shift();
             // Iterate through the data and add a row to the table for each item
-            $('#forecast-table tbody').empty();
             data.forEach(function (item) {
-
-              try {// Determine the class name for the "status" cell based on its value
-                var statusClass = "";
-                if (item[0] == "ABGESCHLOSSEN") {
-                  statusClass = "abgeschlossen";
-                } else if (item[0] == "IN BAU") {
-                  statusClass = "in-bau";
-                } else if (item[0] == "IN PLANUNG") {
-                  statusClass = "in-planung";
-                } else if (item[0] == "VERTRAG") {
-                  statusClass = "vertrag";
-                } else if (item[0] == "FREIGABE 2") {
-                  statusClass = "freigabe2";
-                } else if (item[0] == "FREIGABE 1") {
-                  statusClass = "freigabe1";
-                } else { statusClass = "else" }
-              }
-              catch (e) {
-                console.log(e);
-              }
-              if (item[11] == undefined) {
-                item[11] = "";
-              }
-
               try {// Determine the class name for the "status" cell based on its value
                 var varianteClass = "";
-                if (item[4] == "NSO") {
+                if (item[3] == "NSO") {
                   varianteClass = "nso";
-                } else if (item[4] == "IRLX") {
+                } else if (item[3] == "IRLX") {
                   varianteClass = "irlx";
                 } else { varianteClass = "else" }
               }
@@ -282,43 +329,42 @@
                 console.log(e);
               }
 
-              $('#forecast-table tbody').append(`
-            <tr>
-              <td class="${statusClass}" disabled>
-                <button>${item[0]}</button>
-              </td>
-              <td>${item[1]}</td>
-              <td>${item[2]}</td>
-              <td>${item[3]}</td>
-              <td class="${varianteClass}" disabled>
-                <button>${item[4]}</button>
-              </td>
-              <td>${item[5]}</td>
-              <td>${item[6]}</td>
-              <td>${item[7]}</td>
-              <td>${item[8]}</td>
-              <td>${item[9]}</td>
-              <td>${item[10]}</td>
-              <td>${item[11]}</td>
-            </tr>
-          `);
+              $('#2022-table tbody').append(`
+                <tr>
+                  <td>${item[0]}</td>
+                  <td>${item[1]}</td>
+                  <td>${item[2]}</td>
+                  <td class="${varianteClass}" disabled><button>${item[3]}</button></td>
+                  <td>${item[4]}</td>
+                  <td>${item[5]}</td>
+                  <td>${item[6]}</td>
+                  <td>${item[7]}</td>
+                  <td>${item[8]}</td>
+                  <td>${item[9]}</td>
+                  <td>${item[10]}</td>
+                  <td>${item[11]}</td>
+                </tr>
+              `);
             });
-            const table = document.getElementById("forecast-table");
-            const tableContainer = document.getElementById("scroll-1");
 
-            if (table.offsetHeight > window.innerHeight * 0.5) {
-              tableContainer.style.height = "70vh";
+            const table2 = document.getElementById("2022-table");
+            const tableContainer2 = document.getElementById("scroll-2");
+
+            if (table2.offsetHeight > window.innerHeight * 0.5) {
+              tableContainer2.style.height = "50vh";
             }
+
           }
         });
       }
     }
   </script>
 
+
   <script>
     // Get the search box and data table elements
     var searchBox = document.querySelector('.search-box');
-    var dataTable = document.querySelector('#forecast-table');
+    var dataTable = $("#2023-table")[0];
 
     // Add an event listener to the search box that listens for input events
     searchBox.addEventListener('input', function () {
@@ -349,31 +395,47 @@
 
   </script>
   <script>
-    $(function () {
-      $('.scroll-page').on('click', function () {
-        var offset = 60; // Set the offset to 50px
-        var speed = 800;
-        var target = $(this.hash);
+    // Get the search box and data table elements
+    var searchBox = document.querySelector('.search-box-2');
+    var dataTable2 = $("#2022-table")[0];
 
-        $('nav a').each(function () {
-          $(this).removeClass('active');
-        });
+    // Add an event listener to the search box that listens for input events
+    searchBox.addEventListener('input', function () {
+      // Get the search query from the search box
+      var query = this.value.toLowerCase();
 
-        $(this).addClass('active');
+      // Loop through all the rows in the data table
+      for (var i = 1; i < dataTable2.rows.length; i++) {
+        // Get the current row
+        var row = dataTable2.rows[i];
 
-        $('html, body').animate({
-          scrollTop: target.offset().top - offset // Subtract the offset from the scrollTop position
-        }, speed, 'swing');
-      });
+        // Set the row's display style to none by default
+        row.style.display = 'none';
+
+        // Loop through all the cells in the row
+        for (var j = 0; j < row.cells.length; j++) {
+          // Get the current cell
+          var cell = row.cells[j];
+
+          // If the cell's text content contains the search query, set the row's display style to '' (empty string) to show the row
+          if (cell.textContent.toLowerCase().indexOf(query) > -1) {
+            row.style.display = '';
+            break;
+          }
+        }
+        
+      }
     });
+
   </script>
   <script>
+    const form = document.querySelector(".form-container");
     function openForm() {
-      const form = document.querySelector(".form-container");
       if (checkPassword()) {
-        passwordIsCorrect = true;
-        myFunction();
+        load2022();
+        load2023();
         form.remove();
+
       } else {
         document.getElementById("myForm").style.display = "block";
         const passwordInput = document.querySelector("input[name='psw']");
@@ -386,14 +448,37 @@
           if (passwordInput.value === "mcdonalds") {
             setCookie("passwordIsCorrect", "true", 30);
             form.remove();
-            myFunction();
+            load2022();
+            load2023();
           } else {
             errorMark.style.display = "inline";
           }
         });
       }
     }
+
+
   </script>
+  <script>
+
+    const table = document.getElementById("2023-table");
+    const tableContainer = document.getElementById("scroll-1");
+
+    const observer = new MutationObserver(function () {
+      if (table.offsetHeight > window.innerHeight * 0.5) {
+        tableContainer.style.height = "50vh";
+        tableContainer.style.overflow = "scroll";
+        tableContainer.style.borderBottom = "1px solid black";
+      }
+    });
+
+    observer.observe(table, {
+      childList: true,
+      subtree: true
+    });
+
+  </script>
+
 
   <script>
     function checkPassword() {
@@ -420,6 +505,25 @@
     }
   </script>
 
+  <script>
+    $(function () {
+      $('.scroll-page').on('click', function () {
+        var offset = 60; // Set the offset to 50px
+        var speed = 800;
+        var target = $(this.hash);
+
+        $('nav a').each(function () {
+          $(this).removeClass('active');
+        });
+
+        $(this).addClass('active');
+
+        $('html, body').animate({
+          scrollTop: target.offset().top - offset // Subtract the offset from the scrollTop position
+        }, speed, 'swing');
+      });
+    });
+  </script>
 </body>
 
 </html>

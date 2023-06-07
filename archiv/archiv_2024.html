@@ -102,9 +102,14 @@
                 <a href="../rolloutmonitor/forecast.html">Forecast</a>
                 <a href="../rolloutmonitor/detail.html">Detailplanung</a>
                 <a href="../rolloutmonitor/installation.html">Rollout Status</a>
-                <a href="../rolloutmonitor/archiv.html">Archiv</a>
                 <hr>
+                <a href="../archiv/archiv_2024.html">Archiv 2024</a>
+                <a href="../archiv/archiv_2023.html">Archiv 2023</a>
+                <a href="../archiv/archiv_2022.html">Archiv 2022</a>
+                <hr>
+                <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                 <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
+                <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
             </div>
         </div>
         <div class="dropdown">
@@ -115,8 +120,6 @@
                 <a href="../rolloutmonitor.html">Home</a>
                 <a href="../rolloutmonitor/forecast.html">Forecast</a>
                 <a href="../rolloutmonitor/detail.html">Detailplanung</a>
-                <!--<a href="../rolloutmonitor/installation.html">Rollout Status</a>-->
-                <a href="../rolloutmonitor/archiv.html">Archiv</a>
             </div>
         </div>
         <div class="dropdown">
@@ -124,8 +127,22 @@
                 <i class="fa fa-caret-down"></i>
             </button>
             <div class="dropdown-content">
+                <a href="../dashboards.html">Home</a>
+                <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                 <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
+                <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
             </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn">Archiv
+              <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+              <a href="../archiv.html">Home</a>
+              <a href="../archiv/archiv_2024.html">Archiv 2024</a>
+              <a href="../archiv/archiv_2023.html">Archiv 2023</a>
+              <a href="../archiv/archiv_2022.html">Archiv 2022</a>
+          </div>
         </div>
     </div>
 </nav>
@@ -150,7 +167,7 @@
     <div class="info-box">
       <div class="info-box__icon">i</div>
       <div class="info-box__text">
-        Diese Seite bietet Ihnen einen Überblick über alle abgeschlossenen Rolloutprojekte der vergangenen Jahre.
+        Diese Seite bietet Ihnen einen Überblick über alle abgeschlossenen Rolloutprojekte aus 2024.
         <br> Über das
         Suchfeld kann gezielt nach einzelnen Einträgen gesucht werden. Mit einem Klick auf einen der Spaltenköpfe kann
         die Tabelle entsprechend sortiert werden. <br> Änderungen werden dabei nur temporär vorgenommen. Nach dem
@@ -160,17 +177,17 @@
     </div>
   </section id="home">
 
-  <section id="2023">
+  <section id="2024">
     <div>
       <h2>
-        2023
+        2024
       </h2>
 
     </div>
     </p>
     <div class="refresh-search-container">
       <!-- Refresh button -->
-      <button class="refresh-button" onclick="load2023();"><i class="fa fa-refresh"
+      <button class="refresh-button" onclick="load2024();"><i class="fa fa-refresh"
           style="margin-right: 10px;"></i>Aktualisieren</button>
       <div class="search-box-container">
         <i class="fas fa-search search-icon"></i>
@@ -180,7 +197,7 @@
     <div class="bigtable">
       <div class="table-wrapper">
         <div class="table-scroll" id="scroll-1">
-          <table id="2023-table" class="sortable">
+          <table id="2024-table" class="sortable">
             <thead>
               <tr>
                 <th class="medium">Store</th>
@@ -203,60 +220,11 @@
         </div>
       </div>
 
-    </div>
-  </section>
-
-  <section id="2022">
-    <div>
-      <h2>
-        2022
-      </h2>
-    </div>
-    </p>
-    <div class="refresh-search-container">
-      <!-- Refresh button -->
-      <button class="refresh-button" onclick="load2022();"><i class="fa fa-refresh"
-          style="margin-right: 10px;"></i>Aktualisieren</button>
-      <!-- Search box container -->
-      <div class="search-box-container">
-        <!-- Search box -->
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" class="search-box-2" placeholder="Suche...">
-        <!-- Search icon -->
-      </div>
-    </div>
-
-
-    <div class="bigtable">
-      <div class="table-wrapper">
-        <div class="table-scroll" id="scroll-2">
-          <table id="2022-table" class="sortable">
-            <thead>
-              <tr>
-                <th class="medium">Store</th>
-                <th class="long">Adresse</th>
-                <th class="short">Art</th>
-                <th class="medium">Variante</th>
-                <th class="medium">F/C</th>
-                <th class="medium">DL</th>
-                <th class="medium">Teilschließung</th>
-                <th class="medium">Teileröffnung</th>
-                <th class="medium">Eröffnung</th>
-                <th class="short">KW</th>
-                <th class="medium">VIP-Support</th>
-                <th class="medium">Status HS</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   </section>
 
   <script>
-    function load2023() {
+    function load2024() {
       if (checkPassword()) {
 
         $(document).ready(function () {
@@ -268,10 +236,10 @@
           // Make a GET request to the Google Sheets API to retrieve the data for the table
           $.ajax({
 
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Archiv2023!A1:L150?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Archiv2024!A1:L150?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
-              $('#2023-table tbody').empty();
+              $('#2024-table tbody').empty();
               // The response from the API includes the data for the table in the "values" property
               const data = response.values;
 
@@ -295,7 +263,7 @@
                   console.log(e);
                 }
 
-                $('#2023-table tbody').append(`
+                $('#2024-table tbody').append(`
                   <tr>
                   <td>${item[0]}</td>
                   <td>${item[1]}</td>
@@ -313,7 +281,7 @@
                 `);
               });
 
-              const table = document.getElementById("2023-table");
+              const table = document.getElementById("2024-table");
               const tableContainer = document.getElementById("scroll-1");
 
               if (table.offsetHeight > window.innerHeight * 0.5) {
@@ -328,72 +296,9 @@
   </script>
 
   <script>
-    function load2022() {
-      if (checkPassword()) {
-        // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-        const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-        // Replace YOUR_API_KEY with your Google API key
-        const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-        // Make a GET request to the Google Sheets API to retrieve the data for the table
-        $.ajax({
-          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Archiv2022!A1:L150?key=${API_KEY}`,
-          type: 'GET',
-          success: function (response) {
-            $('#2022-table tbody').empty();
-            // The response from the API includes the data for the table in the "values" property
-            const data = response.values;
-
-            data.shift();
-            // Iterate through the data and add a row to the table for each item
-            data.forEach(function (item) {
-              try {// Determine the class name for the "status" cell based on its value
-                var varianteClass = "";
-                if (item[3] == "NSO") {
-                  varianteClass = "nso";
-                } else if (item[3] == "IRLX") {
-                  varianteClass = "irlx";
-                } else { varianteClass = "else" }
-              }
-              catch (e) {
-                console.log(e);
-              }
-
-              $('#2022-table tbody').append(`
-                <tr>
-                  <td>${item[0]}</td>
-                  <td>${item[1]}</td>
-                  <td>${item[2]}</td>
-                  <td class="${varianteClass}" disabled><button>${item[3]}</button></td>
-                  <td>${item[4]}</td>
-                  <td>${item[5]}</td>
-                  <td>${item[6]}</td>
-                  <td>${item[7]}</td>
-                  <td>${item[8]}</td>
-                  <td>${item[9]}</td>
-                  <td>${item[10]}</td>
-                  <td>${item[11]}</td>
-                </tr>
-              `);
-            });
-
-            const table2 = document.getElementById("2022-table");
-            const tableContainer2 = document.getElementById("scroll-2");
-
-            if (table2.offsetHeight > window.innerHeight * 0.5) {
-              tableContainer2.style.height = "50vh";
-            }
-
-          }
-        });
-      }
-    }
-  </script>
-
-
-  <script>
     // Get the search box and data table elements
     var searchBox = document.querySelector('.search-box');
-    var dataTable = $("#2023-table")[0];
+    var dataTable = $("#2024-table")[0];
 
     // Add an event listener to the search box that listens for input events
     searchBox.addEventListener('input', function () {
@@ -423,46 +328,13 @@
     });
 
   </script>
-  <script>
-    // Get the search box and data table elements
-    var searchBox = document.querySelector('.search-box-2');
-    var dataTable2 = $("#2022-table")[0];
 
-    // Add an event listener to the search box that listens for input events
-    searchBox.addEventListener('input', function () {
-      // Get the search query from the search box
-      var query = this.value.toLowerCase();
-
-      // Loop through all the rows in the data table
-      for (var i = 1; i < dataTable2.rows.length; i++) {
-        // Get the current row
-        var row = dataTable2.rows[i];
-
-        // Set the row's display style to none by default
-        row.style.display = 'none';
-
-        // Loop through all the cells in the row
-        for (var j = 0; j < row.cells.length; j++) {
-          // Get the current cell
-          var cell = row.cells[j];
-
-          // If the cell's text content contains the search query, set the row's display style to '' (empty string) to show the row
-          if (cell.textContent.toLowerCase().indexOf(query) > -1) {
-            row.style.display = '';
-            break;
-          }
-        }
-        
-      }
-    });
-
-  </script>
   <script>
     const form = document.querySelector(".form-container");
     function openForm() {
       if (checkPassword()) {
         load2022();
-        load2023();
+        load2024();
         form.remove();
 
       } else {
@@ -478,7 +350,7 @@
             setCookie("passwordIsCorrect", "true", 30);
             form.remove();
             load2022();
-            load2023();
+            load2024();
           } else {
             errorMark.style.display = "inline";
           }
@@ -490,7 +362,7 @@
   </script>
   <script>
 
-    const table = document.getElementById("2023-table");
+    const table = document.getElementById("2024-table");
     const tableContainer = document.getElementById("scroll-1");
 
     const observer = new MutationObserver(function () {
