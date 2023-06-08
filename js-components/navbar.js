@@ -61,9 +61,7 @@ class Navbar extends HTMLElement{
             </div>
         </div>
     </nav>`
-
     }
-
 }
 
 customElements.define('app-nav', Navbar);

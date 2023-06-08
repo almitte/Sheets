@@ -115,6 +115,8 @@
             text-align: center;
             margin: 0 !important;
             margin-top: 1.5rem !important;
+            margin-left: 14rem !important;
+            margin-right: 14rem !important;
         }
 
         .kpi-box {
@@ -149,8 +151,6 @@
         #top-irlx {
             display: grid !important;
             grid-template-columns: 1fr 1fr;
-            margin-left: 17rem !important;
-            margin-right: 17rem !important;
         }
 
         #top-irlx.kpi-value{
@@ -241,6 +241,20 @@
         .unplanned-divider {
             background-color: #BA1B1D;
         }
+
+        @media (max-width: 1400px) {
+            .project-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }   
+
+        @media (max-width: 1800px) {
+            #top-irlx {
+                margin-left: 9.5rem !important;
+                margin-right: 9.5rem !important;
+            }
+        }   
+        
 
     </style>
 
