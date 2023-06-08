@@ -110,10 +110,7 @@
         }
 
         .kpis {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
             text-align: center;
-            margin: 0 !important;
             margin-top: 1.5rem !important;
         }
 
@@ -135,25 +132,11 @@
         }
 
         #top {
-            margin-left: 18rem !important;
-            margin-right: 18rem !important;
+
             display: inline !important;
         }
 
         #top.kpi-value{
-            font-size: 3.5rem !important;
-            font-weight: 600;
-            animation: fadein 1s;
-        }
-
-        #top-irlx {
-            display: grid !important;
-            grid-template-columns: 1fr 1fr;
-            margin-left: 17rem !important;
-            margin-right: 17rem !important;
-        }
-
-        #top-irlx.kpi-value{
             font-size: 3.5rem !important;
             font-weight: 600;
             animation: fadein 1s;
@@ -266,73 +249,11 @@
     <link rel="stylesheet" href="../styling/div.css">
     <link rel="stylesheet" href="../styling/popup.css">
     <link rel="stylesheet" href="statustable.css">
-
-    <link rel="import" href="../navbar.html">
-
+    <script src = "../js-components/navbar.js"></script>
 </head>
 
-<nav>
-    <div class="left"><a class="logo" href="../index.html">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
-                alt="McDonald's logo"></a>
-        <h2 id="text-long">McDonald's Rollout Monitor</h2>
-        <h2 id="text-short">McD Rollout Monitor</h2>
-    </div>
-    <div class="right">
-        <div class="dropdown" id="combined-dropdown">
-            <button class="dropbtn"><i class="fa fa-bars"></i>
-            </button>
-            <div class="dropdown-content">
-                <h3>NSO/IRLX</h3>
-                <a href="../rolloutmonitor.html">Home</a>
-                <a href="../rolloutmonitor/forecast.html">Forecast</a>
-                <a href="../rolloutmonitor/detail.html">Detailplanung</a>
-                <a href="../rolloutmonitor/installation.html">Rollout Status</a>
-                <hr>
-                <a href="../archiv/archiv_2024.html">Archiv 2024</a>
-                <a href="../archiv/archiv_2023.html">Archiv 2023</a>
-                <a href="../archiv/archiv_2022.html">Archiv 2022</a>
-                <hr>
-                <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
-                <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
-                <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">NSO/IRLX
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="../rolloutmonitor.html">Home</a>
-                <a href="../rolloutmonitor/forecast.html">Forecast</a>
-                <a href="../rolloutmonitor/detail.html">Detailplanung</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">Rollout Planung
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="../dashboards.html">Home</a>
-                <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
-                <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
-                <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
-            </div>
-        </div>
-        <div class="dropdown">
-          <button class="dropbtn">Archiv
-              <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-content">
-              <a href="../archiv.html">Home</a>
-              <a href="../archiv/archiv_2024.html">Archiv 2024</a>
-              <a href="../archiv/archiv_2023.html">Archiv 2023</a>
-              <a href="../archiv/archiv_2022.html">Archiv 2022</a>
-          </div>
-        </div>
-    </div>
-</nav>
-
+<app-nav>
+</app-nav>
 
 <body onload="openForm()">
     
@@ -360,7 +281,86 @@
         </div>
     </section id="home">
 
+    <div class="project-grid">   
+        <div class="project-box">
+            <div class="box-line">
+                <div class ="title">
+                    <b>N</b>ew <b>S</b>tore <b>O</b>pening                    
+                </div>
+            </div>
+            <div class="kpis" id="top">
+                <div class ="kpi-box">
+                    <div class ="kpi-value" id="total-nso">
+                        10                                      
+                    </div>
+                    <div class ="kpi-title">
+                        Target              
+                    </div>
+                </div>
+            </div>
 
+            <div class = "completed-planned-box">
+                <div class="kpis" id = "chart-nso">
+                    <div class ="kpi-box" id="completed">
+                        <div class ="kpi-value" id="completed-nso">
+                            10                                      
+                        </div>
+
+                        <hr class = "completed-divider">
+                        <div class ="kpi-title">
+                            Completed              
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="NSO-chart" width="350" height="200"></canvas>
+                </div>
+            </div>
+
+
+        </div>
+
+        <div class="project-box">
+            <div class="box-line">
+                <div class ="title">
+                    <b>I</b>n <b>R</b>eal <b>L</b>ife E<b>X</b>perience                    
+                </div>
+            </div>
+            <div class="kpis" id = "top">
+                <div class ="kpi-box">
+                    <div class ="kpi-value" id="total-irlx">
+                        10                                      
+                    </div>
+
+                    <div class ="kpi-title">
+                        Target              
+                    </div>
+                </div>
+            </div>
+
+            <div class = "completed-planned-box">
+                <div class="kpis" id = "chart-irlx">
+                    <div class ="kpi-box" id="completed">
+                        <div class ="kpi-value" id="completed-irlx">
+                            10                                      
+                        </div>
+
+                        <hr class = "completed-divider">
+                        <div class ="kpi-title">
+                            Completed              
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+
+                    <canvas id="IRLX-chart" width="350" height="200"></canvas>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <script>
@@ -389,25 +389,17 @@
                     unplanned_value = item[11];
                 });
 
-                // get the element with class ="kpi-value" and id = "planned"
-                const planned = document.querySelector(".kpi-value#planned-nso");
-                // set the innerHTML of the element to the value of the planned_value variable
-                planned.innerHTML = planned_value;
+                // get the element with class ="kpi-value" and id = "total"
+                const total = document.querySelector(".kpi-value#total-nso");
+                // set the innerHTML of the element to the value of the target_value variable
+                total.innerHTML = target_value;
 
                 // get the element with class ="kpi-value" and id = "completed"
                 const completed = document.querySelector(".kpi-value#completed-nso");
                 // set the innerHTML of the element to the value of the completed_value variable
                 completed.innerHTML = completed_value;
 
-                // get the element with class ="kpi-value" and id = "unplanned"
-                const unplanned = document.querySelector(".kpi-value#unplanned-nso");
-                // set the innerHTML of the element to the value of the unplanned_value variable
-                unplanned.innerHTML = unplanned_value;
 
-                // get the element with class ="kpi-value" and id = "total"
-                const total = document.querySelector(".kpi-value#total-nso");
-                // set the innerHTML of the element to the value of the target_value variable
-                total.innerHTML = target_value;
             }
         });}
 
@@ -436,25 +428,16 @@
                     unplanned_value = item[11];
                 });
 
-                // get the element with class ="kpi-value" and id = "planned"
-                const planned = document.querySelector(".kpi-value#planned-irlx");
-                // set the innerHTML of the element to the value of the planned_value variable
-                planned.innerHTML = planned_value;
+                // get the element with class ="kpi-value" and id = "total"
+                const total = document.querySelector(".kpi-value#total-irlx");
+                // set the innerHTML of the element to the value of the target_value variable
+                total.innerHTML = target_value;
 
                 // get the element with class ="kpi-value" and id = "completed"
                 const completed = document.querySelector(".kpi-value#completed-irlx");
                 // set the innerHTML of the element to the value of the completed_value variable
                 completed.innerHTML = completed_value;
 
-                // get the element with class ="kpi-value" and id = "unplanned"
-                const unplanned = document.querySelector(".kpi-value#unplanned-irlx");
-                // set the innerHTML of the element to the value of the unplanned_value variable
-                unplanned.innerHTML = unplanned_value;
-
-                // get the element with class ="kpi-value" and id = "total"
-                const total = document.querySelector(".kpi-value#total-irlx");
-                // set the innerHTML of the element to the value of the target_value variable
-                total.innerHTML = target_value;
             }
         });
         }
@@ -567,7 +550,7 @@
                             datasets: [{
                                 label: 'My Dataset',
                                 data: values,
-                                backgroundColor: [...Array(month).fill(completedColor), ...Array(unplanned_month_nso - month -1).fill(plannedColor), ...Array(12 - unplanned_month_nso +1).fill(unplannedColor)],
+                                backgroundColor: [...Array(12).fill(completedColor)],
                                 borderWidth: 1
                             }]
                         },
@@ -683,7 +666,7 @@
                             datasets: [{
                                 label: 'My Dataset',
                                 data: values,
-                                backgroundColor: [...Array(month).fill(completedColor), ...Array(unplanned_month_irlx - month -1).fill(plannedColor), ...Array(12 - unplanned_month_irlx +1).fill(unplannedColor)],
+                                backgroundColor: [...Array(12).fill(completedColor)],
                                 borderWidth: 1
                             }]
                         },
@@ -820,6 +803,8 @@
             return cookieValue
         }
     </script>
+
+
 
 </body>
 
