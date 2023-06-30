@@ -110,6 +110,8 @@
         }
 
         .kpis {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             text-align: center;
             margin: 0 !important;
             margin-top: 1.5rem !important;
@@ -132,6 +134,12 @@
 
         .kpi-box#unplanned {
             margin-left: .5rem !important;
+        }
+
+        #top {
+            margin-left: 18rem !important;
+            margin-right: 18rem !important;
+            display: inline !important;
         }
 
         #top.kpi-value{
@@ -193,14 +201,6 @@
             color: #BA1B1D;
         }
 
-        .kpis #unplanned-irlx{
-            font-size: 4.5rem;
-        }
-
-        .kpis #unplanned-nso{
-            font-size: 4.5rem;
-        }
-
         .kpis #completed {
             color: #4FB477;
         }
@@ -238,20 +238,16 @@
             background-color: #BA1B1D;
         }
 
-        @media (max-width: 1900px) {
-            .kpis {
-                margin-left: 7rem !important;
-                margin-right: 7rem !important;
-            }
-        } 
-
         @media (max-width: 1400px) {
             .project-grid {
                 grid-template-columns: repeat(1, 1fr);
             }
-            .kpis {
-                margin-left: 14rem !important;
-                margin-right: 14rem !important;
+        }   
+
+        @media (max-width: 1800px) {
+            #top-irlx {
+                margin-left: 9.5rem !important;
+                margin-right: 9.5rem !important;
             }
         }   
 
@@ -322,7 +318,7 @@
                     <b>N</b>ew <b>S</b>tore <b>O</b>pening                    
                 </div>
             </div>
-            <div class="kpis" id = "top-irlx">
+            <div class="kpis" id="top">
                 <div class ="kpi-box">
                     <div class ="kpi-value" id="total-nso">
                         10                                      
@@ -331,20 +327,13 @@
                     <div class ="kpi-title">
                         Target              
                     </div>
-                </div>
 
-                <div class ="kpi-box" id="unplanned">
-                    <div class ="kpi-value" id="unplanned-nso">
-                        10                                      
-                    </div>
-                    <div class ="kpi-title">
-                        Unplanned              
-                    </div>
                 </div>
             </div>
 
             <div class = "completed-planned-box">
                 <div class="kpis" id = "chart-nso">
+
                     <div class ="kpi-box" id="planned">
                         <div class ="kpi-value" id = "planned-nso">
                             20              
@@ -353,6 +342,18 @@
                         <hr class = "planned-divider">
                         <div class ="kpi-title">
                             Planned             
+                        </div>
+
+                    </div>
+
+                    <div class ="kpi-box unplanned-nso" id="unplanned">
+                        <div class ="kpi-value" id="unplanned-nso">
+                            10                                      
+                        </div>
+
+                        <hr class = "unplanned-divider">
+                        <div class ="kpi-title">
+                            Unplanned              
                         </div>
                     </div>
                 </div>
@@ -373,7 +374,7 @@
                     <b>I</b>n <b>R</b>eal <b>L</b>ife E<b>X</b>perience                    
                 </div>
             </div>
-            <div class="kpis" id = "top-irlx">
+            <div class="kpis" id="top">
                 <div class ="kpi-box">
                     <div class ="kpi-value" id="total-irlx">
                         10                                      
@@ -382,15 +383,7 @@
                     <div class ="kpi-title">
                         Target              
                     </div>
-                </div>
 
-                <div class ="kpi-box" id="unplanned">
-                    <div class ="kpi-value" id="unplanned-irlx">
-                        10                                      
-                    </div>
-                    <div class ="kpi-title">
-                        Unplanned              
-                    </div>
                 </div>
             </div>
 
@@ -406,6 +399,17 @@
                             Planned             
                         </div>
 
+                    </div>
+
+                    <div class ="kpi-box unplanned-irlx" id="unplanned">
+                        <div class ="kpi-value" id="unplanned-irlx">
+                            10                                      
+                        </div>
+
+                        <hr class = "unplanned-divider">
+                        <div class ="kpi-title">
+                            Unplanned              
+                        </div>
                     </div>
                 </div>
 
@@ -425,39 +429,46 @@
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B3:M3?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B6:M8?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
                 const data = response.values;
-
-                var target_value = 0;
-                var completed_value = 0;
-                var planned_value = 0;
-                var unplanned_value = 0;
+                const completedData = data[0];
+                const plannedData = data[1];
+                const unplannedData = data[2];
 
 
-                data.forEach(function (item) {
-                    target_value = item[2];
-                    completed_value = item[5];
-                    planned_value = item[8];
-                    unplanned_value = item[11];
-                });
+                // Assuming you have the array called 'data' that contains the values
+
+                const completedDataNew = completedData.map(value => value === '' ? 0 : value);
+                const plannedDataNew = plannedData.map(value => value === '' ? 0 : value);
+
+                if (typeof unplannedData !== 'undefined') {
+                    const unplannedDataNew = unplannedData.map(value => value === '' ? 0 : value);
+                    unplanned_value = unplannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
+                // get the element with class ="kpi-value" and id = "unplanned"
+                const unplanned = document.querySelector(".kpi-value#unplanned-nso");
+                // set the innerHTML of the element to the value of the unplanned_value variable
+                unplanned.innerHTML = unplanned_value;
+                } else {
+                    unplanned_value = 0;
+                    const elements = document.getElementsByClassName('unplanned-nso');
+                    elements[0].innerHTML = '';
+                }                
+
+                completed_value = completedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
+                planned_value = plannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);;
 
                 // get the element with class ="kpi-value" and id = "planned"
                 const planned = document.querySelector(".kpi-value#planned-nso");
                 // set the innerHTML of the element to the value of the planned_value variable
                 planned.innerHTML = planned_value;
 
-                // get the element with class ="kpi-value" and id = "unplanned"
-                const unplanned = document.querySelector(".kpi-value#unplanned-nso");
-                // set the innerHTML of the element to the value of the unplanned_value variable
-                unplanned.innerHTML = unplanned_value;
-
                 // get the element with class ="kpi-value" and id = "total"
                 const total = document.querySelector(".kpi-value#total-nso");
                 // set the innerHTML of the element to the value of the target_value variable
-                total.innerHTML = target_value;
+                total.innerHTML = planned_value+completed_value+unplanned_value;
             }
         });}
 
@@ -467,39 +478,46 @@
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B20:M20?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B25:M27?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
+
                 const data = response.values;
-
-                var target_value = 0;
-                var completed_value = 0;
-                var planned_value = 0;
-                var unplanned_value = 0;
+                const completedData = data[0];
+                const plannedData = data[1];
+                const unplannedData = data[2];
 
 
-                data.forEach(function (item) {
-                    target_value = item[2];
-                    completed_value = item[5];
-                    planned_value = item[8];
-                    unplanned_value = item[11];
-                });
+                target_value = 100;
+                const completedDataNew = completedData.map(value => value === '' ? 0 : value);
+                const plannedDataNew = plannedData.map(value => value === '' ? 0 : value);
+                
+                if (typeof unplannedData !== 'undefined') {
+                    const unplannedDataNew = unplannedData.map(value => value === '' ? 0 : value);
+                    unplanned_value = unplannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
+                                    // get the element with class ="kpi-value" and id = "unplanned"
+                const unplanned = document.querySelector(".kpi-value#unplanned-irlx");
+                // set the innerHTML of the element to the value of the unplanned_value variable
+                unplanned.innerHTML = unplanned_value;
+                } else {
+                    unplanned_value = 0;
+                    const elements = document.getElementsByClassName('unplanned-irlx');
+                    elements[0].innerHTML = '';
+                }                
+
+                completed_value = completedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
+                planned_value = plannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);;
 
                 // get the element with class ="kpi-value" and id = "planned"
                 const planned = document.querySelector(".kpi-value#planned-irlx");
                 // set the innerHTML of the element to the value of the planned_value variable
                 planned.innerHTML = planned_value;
 
-                // get the element with class ="kpi-value" and id = "unplanned"
-                const unplanned = document.querySelector(".kpi-value#unplanned-irlx");
-                // set the innerHTML of the element to the value of the unplanned_value variable
-                unplanned.innerHTML = unplanned_value;
-
                 // get the element with class ="kpi-value" and id = "total"
                 const total = document.querySelector(".kpi-value#total-irlx");
                 // set the innerHTML of the element to the value of the target_value variable
-                total.innerHTML = target_value;
+                total.innerHTML = planned_value+completed_value+unplanned_value;
             }
         });
         }
@@ -526,100 +544,116 @@
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B6:M6?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B6:M8?key=${API_KEY}`,
                 type: 'GET',
-                success: function (response) {
-                    // The response from the API includes the data for the table in the "values" property
+                success: function(response) {
                     const data = response.values;
-                    var values = [];
-
-                    data.forEach(function (item) {
-                        item.forEach(function (value) {values.push(value)});
-                    });
+                    const completedData = data[0];
+                    const plannedData = data[1];
+                    const unplannedData = data[2];
 
                     const ctx = document.getElementById('NSO-chart').getContext('2d');
 
                     const options = {
-                        legend: {
-                            display: false // Hide the legend
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                        ticks: {
+                            display: true
                         },
-
-                        
-                        scales: {
-                            xAxes: [{
-                                ticks: {
-                                        display: true // show tick marks
-                                    },
-                                    gridLines: {
-                                        display: false // hide vertical grid lines
-                                    }
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                        display: false, // hide y-axis tick marks and labels
-                                        },
-                                    gridLines: {
-                                        display: true, // show the first grid line
-                                        color: 'rgba(0, 0, 0, 0)', // set the color of the grid lines
-                                        zeroLineColor: 'rgba(0, 0, 0, 1)', // set the color of the first grid line
-                                        drawBorder: false, // hide the y-axis border
-                                        drawTicks: false // hide the y-axis tick marks
-                                    }
-                            }],
-                        },
-                        plugins: {
-                            tooltip: {
-                            enabled: false // Disable the tooltip
-                            }
-                        },
-                        
-                        layout: {
-                            padding: {
-                                top: 30,
-                                bottom: 20
-                            }
-                        },
-                        plugins: [{
-                            afterDraw: function(chart) {
-                            const ctx = chart.ctx;
-                            const textOptions = chart.options.plugins.customText;
-                            
-                            ctx.save();
-                            ctx.fillStyle = textOptions.color;
-                            ctx.font = `${textOptions.font.weight} ${textOptions.font.size}px ${textOptions.font.family}`;
-                            ctx.fillText(textOptions.text, textOptions.position.x, textOptions.position.y);
-                            ctx.restore();
-                            }
-                        }],
-                        plugins: {
-                            datalabels: {
-                            anchor: 'end', // Position the value labels at the end of the bars
-                            align: 'end',
-                            display: true,
-                            color: 'black',
-                            font: {
-                                size: 14,
-                                weight: 'bold',
-                            },
-                            },
+                        gridLines: {
+                            display: false
                         }
-                        };
-
-                    const myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: month_labels,
-                            datasets: [{
-                                label: 'My Dataset',
-                                data: values,
-                                backgroundColor: [...Array(12).fill(plannedColor)],
-                                borderWidth: 1
-                            }]
+                        }],
+                        yAxes: [{
+                            stacked: true,
+                        ticks: {
+                            display: false
                         },
-                        options: options
-                        });
+                        gridLines: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0)',
+                            zeroLineColor: 'rgba(0, 0, 0, 1)',
+                            drawBorder: false,
+                            drawTicks: false
+                        }
+                        }]
+                    },
+                    plugins: {
+                        tooltip: {
+                        enabled: false
+                        },
+                        customText: {
+                        color: 'black',
+                        font: {
+                            size: 14,
+                            weight: 'bold',
+                            family: 'Arial'
+                        },
+                        position: {
+                            x: 0,
+                            y: 0
+                        },
+                        text: ''
+                        },
+                        datalabels: {
+                        display: function(context) {
+                            const index = context.dataIndex;
+                            return (
+                                completedData[index] !== '0' ||
+                                plannedData[index] !== '0' ||
+                                unplannedData[index] !== '0' ||
+                                (completedData[index] === '0' && plannedData[index] === '0' && unplannedData[index] === '0' )
+                            );
+                        },
+
+                        anchor: 'end',
+                        align: 'start',
+                        color: 'white',
+                        font: {
+                            size: 19,
+                            weight: 'bold',
+                            family: 'Arial'
+                        }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                        top: 30,
+                        bottom: 20
+                        }
+                    }
+                    };
+
+                    
+                    const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: month_labels,
+                        datasets: [{
+                        label: 'Completed',
+                        backgroundColor: completedColor,
+                        data: completedData,
+                        borderWidth: 1
+                        }, {
+                        label: 'Planned',
+                        data: plannedData,
+                        backgroundColor: plannedColor,
+                        borderWidth: 1
+                        }, {
+                        label: 'Unplanned',
+                        data: unplannedData,
+                        backgroundColor: unplannedColor,
+                        borderWidth: 1
+                        }]
+                    },
+                    options: options
+                    });
                 }
-            });
+                });
         }
     }
 
@@ -642,164 +676,223 @@
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B23:M23?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B25:M27?key=${API_KEY}`,
                 type: 'GET',
-                success: function (response) {
-                    // The response from the API includes the data for the table in the "values" property
+                success: function(response) {
                     const data = response.values;
-                    var values = [];
-
-                    data.forEach(function (item) {
-                        item.forEach(function (value) {values.push(value)});
-                    });
+                    const completedData = data[0];
+                    const plannedData = data[1];
+                    const unplannedData = data[2];
 
                     const ctx = document.getElementById('IRLX-chart').getContext('2d');
 
                     const options = {
-                        legend: {
-                            display: false // Hide the legend
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        xAxes: [{
+                            stacked: true,
+                        ticks: {
+                            display: true
                         },
-
-                        
-                        scales: {
-                            xAxes: [{
-                                ticks: {
-                                        display: true // show tick marks
-                                    },
-                                    gridLines: {
-                                        display: false // hide vertical grid lines
-                                    }
-                            }],
-                            yAxes: [{
-                                ticks: {
-                                        display: false, // hide y-axis tick marks and labels
-                                        },
-                                    gridLines: {
-                                        display: true, // show the first grid line
-                                        color: 'rgba(0, 0, 0, 0)', // set the color of the grid lines
-                                        zeroLineColor: 'rgba(0, 0, 0, 1)', // set the color of the first grid line
-                                        drawBorder: false, // hide the y-axis border
-                                        drawTicks: false // hide the y-axis tick marks
-                                    }
-                            }],
-                        },
-                        plugins: {
-                            tooltip: {
-                            enabled: false // Disable the tooltip
-                            }
-                        },
-                        
-                        layout: {
-                            padding: {
-                                top: 30,
-                                bottom: 20,
-                            }
-                        },
-                        plugins: [{
-                            afterDraw: function(chart) {
-                            const ctx = chart.ctx;
-                            const textOptions = chart.options.plugins.customText;
-                            
-                            ctx.save();
-                            ctx.fillStyle = textOptions.color;
-                            ctx.font = `${textOptions.font.weight} ${textOptions.font.size}px ${textOptions.font.family}`;
-                            ctx.fillText(textOptions.text, textOptions.position.x, textOptions.position.y);
-                            ctx.restore();
-                            }
-                        }],
-                        plugins: {
-                            datalabels: {
-                            anchor: 'end', // Position the value labels at the end of the bars
-                            align: 'end',
-                            display: true,
-                            color: 'black',
-                            font: {
-                                size: 14,
-                                weight: 'bold',
-                            },
-                            },
+                        gridLines: {
+                            display: false
                         }
-                        };
-
-                    const myChart = new Chart(ctx, {
-                        type: 'bar',
-                        data: {
-                            labels: month_labels,
-                            datasets: [{
-                                label: 'My Dataset',
-                                data: values,
-                                backgroundColor: [...Array(12).fill(plannedColor)],
-                                borderWidth: 1
-                            }]
+                        }],
+                        yAxes: [{
+                            stacked: true,
+                        ticks: {
+                            display: false
                         },
-                        options: options
-                        });
+                        gridLines: {
+                            display: true,
+                            color: 'rgba(0, 0, 0, 0)',
+                            zeroLineColor: 'rgba(0, 0, 0, 1)',
+                            drawBorder: false,
+                            drawTicks: false
+                        }
+                        }]
+                    },
+                    plugins: {
+                        tooltip: {
+                        enabled: false
+                        },
+                        customText: {
+                        color: 'black',
+                        font: {
+                            size: 14,
+                            weight: 'bold',
+                            family: 'Arial'
+                        },
+                        position: {
+                            x: 0,
+                            y: 0
+                        },
+                        text: ''
+                        },
+                        datalabels: {
+                        display: function(context) {
+                            const index = context.dataIndex;
+                            return (
+                                completedData[index] !== '0' ||
+                                plannedData[index] !== '0' ||
+                                unplannedData[index] !== '0' ||
+                                (completedData[index] === '0' && plannedData[index] === '0' && unplannedData[index] === '0' )
+                            );
+                        },
+                        formatter: function(value) {
+                            return value !== 0 ? value : '';
+                        },
+
+                        anchor: 'end',
+                        align: 'start',
+                        color: 'white',
+                        font: {
+                            size: 19,
+                            weight: 'bold',
+                            family: 'Arial'
+                        }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                        top: 30,
+                        bottom: 20
+                        }
+                    }
+                    };
+
+                    
+                    const myChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: month_labels,
+                        datasets: [{
+                        label: 'Completed',
+                        backgroundColor: completedColor,
+                        data: completedData,
+                        borderWidth: 1
+                        }, {
+                        label: 'Planned',
+                        data: plannedData,
+                        backgroundColor: plannedColor,
+                        borderWidth: 1
+                        }, {
+                        label: 'Unplanned',
+                        data: unplannedData,
+                        backgroundColor: unplannedColor,
+                        borderWidth: 1
+                        }]
+                    },
+                    options: options
+                    });
                 }
-            });
+                });
         }
     }
 </script>
-
-
-    <script>
-        var unplanned_month_nso = 0;
-        var unplanned_month_irlx = 0;
-        // Write a function that sets the grid-template-columns property of the div with the id chart to the value of the input
-        function setGridTemplateColumnsNSO() {
-
-        const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-        const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-        $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!N6?key=${API_KEY}`,
-            type: 'GET',
-            success: function (response) {
-                // The response from the API includes the data for the table in the "values" property
-                const data = response.values;
-
-                data.forEach(function (item) {
-                    unplanned_month_nso = item[0];
-                });
-                const chartDiv = document.getElementById("chart-nso");
-                const today = new Date();
-                const currentMonth = today.getMonth();
-                const planned_month = unplanned_month_nso - currentMonth -1;
-                const unplanned_month_nso_nr = 12 - unplanned_month_nso +1;
-
-                chartDiv.style.gridTemplateColumns = `${currentMonth}fr ${planned_month}fr ${unplanned_month_nso_nr}fr`;
-
-                loadNSOchart();
-            }
-        });
+<script>
+    function getLastNumberIndex(arr) {
+        
+        for (let i = 0; i <= 12; i++) {
+          if (arr[i] !== '') {
+            return i;
+          }
         }
-
-        function setGridTemplateColumnsIRLX() {
-
-        const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-        const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-        $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!N23?key=${API_KEY}`,
-            type: 'GET',
-            success: function (response) {
-                // The response from the API includes the data for the table in the "values" property
-                const data = response.values;
-
-                data.forEach(function (item) {
-                    unplanned_month_irlx = item[0];
-                });
-                const chartDiv = document.getElementById("chart-irlx");
-                const today = new Date();
-                const currentMonth = today.getMonth();
-                const planned_month = unplanned_month_irlx - currentMonth -1;
-                const unplanned_month_irlx_nr = 12 - unplanned_month_irlx + 4;
-
-                chartDiv.style.gridTemplateColumns = `${currentMonth}fr ${planned_month}fr`;
-                loadIRLXchart();
-            }
-        });
-        }
+        return -1; // Return -1 if no number is found
+      }
     </script>
+
+<script>
+    var unplanned_month_nso = 0;
+    var unplanned_month_irlx = 0;
+    // Write a function that sets the grid-template-columns property of the div with the id chart to the value of the input
+    function setGridTemplateColumnsNSO() {
+
+    const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+    const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
+
+    $.ajax({
+        url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B6:M8?key=${API_KEY}`,
+        type: 'GET',
+        success: function (response) {
+            // The response from the API includes the data for the table in the "values" property
+            const data = response.values;
+            const completedData = data[0];
+            const plannedData = data[1];
+            const unplannedData = data[2];
+            const today = new Date();
+            const currentMonth = today.getMonth() + 1;
+
+            var completed_month = 0;
+
+            if (typeof unplannedData ==="undefined") {
+                var unplanned_month_nso_nr = 13;
+            }
+
+            else {
+                var unplanned_month_nso_nr = getLastNumberIndex(unplannedData)+1;
+            }
+            
+            const planned_month = unplanned_month_nso_nr - completed_month - 1;
+
+            const chartDiv = document.getElementById("chart-nso");
+
+            console.log("Completed NSO:" + completed_month);
+            console.log("Planned NSO:" + planned_month);
+            console.log("Unplanned NSO:" + unplanned_month_nso_nr);
+
+            chartDiv.style.gridTemplateColumns = `${planned_month}fr ${13-unplanned_month_nso_nr}fr`;
+
+            loadNSOchart();
+        }
+    });
+    }
+
+    function setGridTemplateColumnsIRLX() {
+
+    const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+    const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
+
+    $.ajax({
+        url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B25:M27?key=${API_KEY}`,
+        type: 'GET',
+        success: function (response) {
+            // The response from the API includes the data for the table in the "values" property
+            const data = response.values;
+
+            const completedData = data[0];
+            const plannedData = data[1];
+            const unplannedData = data[2];
+
+            const today = new Date();
+            const currentMonth = today.getMonth() + 1;
+
+            var completed_month = 0;
+
+            if (typeof unplannedData ==="undefined") {
+                var unplanned_month_irlx_nr = 13;
+            }
+
+            else {
+                var unplanned_month_irlx_nr = getLastNumberIndex(unplannedData)+1;
+            }
+            
+            const planned_month = unplanned_month_irlx_nr - completed_month - 1;
+
+            const chartDiv = document.getElementById("chart-irlx");
+
+            console.log("Completed IRLX:" +completed_month);
+            console.log("Planned IRLX:" + planned_month);
+            console.log("Unplanned IRLX:" + unplanned_month_irlx_nr);
+
+            chartDiv.style.gridTemplateColumns = `${planned_month}fr ${13-unplanned_month_irlx_nr}fr`;
+            loadIRLXchart();
+        }
+    });
+    }
+</script>
 
     
 
