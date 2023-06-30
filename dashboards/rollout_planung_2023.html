@@ -606,6 +606,7 @@
                         }
                         }],
                         yAxes: [{
+                            stacked: true,
                         ticks: {
                             display: false
                         },
@@ -737,6 +738,7 @@
                         }
                         }],
                         yAxes: [{
+                            stacked: true,
                         ticks: {
                             display: false
                         },
@@ -859,17 +861,18 @@ function getLastNumberIndex(arr) {
                 const plannedData = data[1];
                 const unplannedData = data[2];
                 const today = new Date();
-                const currentMonth = today.getMonth();
+                const currentMonth = today.getMonth() + 1;
 
                 var completed_month = 0;
 
-
-                if (completedData[currentMonth+1] == "") {
+                if (typeof completedData[currentMonth]==="undefined") {
                     completed_month = currentMonth;
                 }
                 else{
                     completed_month = currentMonth+1;
                 }
+
+
 
                 const unplanned_month_nso_nr = getLastNumberIndex(unplannedData)+1;
                 const planned_month = unplanned_month_nso_nr - completed_month - 1;
@@ -878,9 +881,7 @@ function getLastNumberIndex(arr) {
                 console.log(planned_month);
                 console.log(unplanned_month_nso_nr);
 
-
                 const chartDiv = document.getElementById("chart-nso");
-
 
                 chartDiv.style.gridTemplateColumns = `${completed_month}fr ${planned_month}fr ${13-unplanned_month_nso_nr}fr`;
 
