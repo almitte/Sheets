@@ -872,14 +872,8 @@ function getLastNumberIndex(arr) {
                     completed_month = currentMonth+1;
                 }
 
-
-
                 const unplanned_month_nso_nr = getLastNumberIndex(unplannedData)+1;
                 const planned_month = unplanned_month_nso_nr - completed_month - 1;
-
-                console.log(completed_month);
-                console.log(planned_month);
-                console.log(unplanned_month_nso_nr);
 
                 const chartDiv = document.getElementById("chart-nso");
 
