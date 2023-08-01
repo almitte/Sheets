@@ -46,6 +46,8 @@ class Navbar extends HTMLElement{
                     <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
                     <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
+                    <hr>
+                    <a href="../dashboards/servermigration_2023_r350.html">Servermigration 2023 R350</a>
                 </div>
             </div>
             <div class="dropdown">
