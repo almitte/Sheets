@@ -144,11 +144,12 @@
             <thead>
               <tr>
                 <th class="status">Status</th>
-                <th class="medium">Store</th>
-                <th class="long">Adresse</th>
+                <th class="short">Store</th>
+                <th class="medium">Adresse</th>
                 <th class="short">Art</th>
                 <th class="medium">Variante</th>
                 <th class="medium">F/C</th>
+                <th class="medium">Serverraum</th>
                 <th class="short">DL</th>
                 <th class="medium">Schließung</th>
                 <th class="medium">Eröffnung</th>
@@ -177,7 +178,7 @@
 
         // Make a GET request to the Google Sheets API to retrieve the data for the table
         $.ajax({
-          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Forecast!A1:K100?key=${API_KEY}`,
+          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Forecast!A1:L100?key=${API_KEY}`,
           type: 'GET',
           success: function (response) {
             // The response from the API includes the data for the table in the "values" property
@@ -240,6 +241,7 @@
               <td>${item[8]}</td>
               <td>${item[9]}</td>
               <td>${item[10]}</td>
+              <td>${item[11]}</td>
             </tr>
           `);
             });
