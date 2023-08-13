@@ -361,6 +361,18 @@
 
                     </div>
 
+                    <div class ="kpi-box" id="unplanned">
+                        <div class ="kpi-value" id = "unplanned-nso">
+                            20              
+                        </div>
+
+                        <hr class = "unplanned-divider">
+                        <div class ="kpi-title">
+                            Unplanned             
+                        </div>
+
+                    </div>
+
                 </div>
 
                 <div class="chart-container">
@@ -381,7 +393,7 @@
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!D2:F2?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!D2:G2?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -389,6 +401,8 @@
                 const target = data[0][0];
                 const plannedValue = data[0][1];
                 const completedValue = data[0][2];
+                const unplannedValue = data[0][3];
+
 
                 // get the element with class ="kpi-value" and id = "planned"
                 const planned = document.querySelector(".kpi-value#planned-nso");
@@ -399,6 +413,11 @@
                 const completed = document.querySelector(".kpi-value#completed-nso");
                 // set the innerHTML of the element to the value of the completed_value variable
                 completed.innerHTML = completedValue;
+
+                // get the element with class ="kpi-value" and id = "completed"
+                const unplanned = document.querySelector(".kpi-value#unplanned-nso");
+                // set the innerHTML of the element to the value of the completed_value variable
+                completed.innerHTML = unplannedValue;
 
                 // get the element with class ="kpi-value" and id = "total"
                 const total = document.querySelector(".kpi-value#total-nso");
@@ -425,13 +444,14 @@
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:W7?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:W8?key=${API_KEY}`,
                 type: 'GET',
                 success: function(response) {
                     const data = response.values;
                     const week_labels = data[0];
                     const completedData = data[2];
                     const plannedData = data[3];
+                    const unplannedData = data[4];
 
                     const ctx = document.getElementById('NSO-chart').getContext('2d');
 
@@ -486,7 +506,8 @@
                             return (
                                 completedData[index] !== '0' ||
                                 plannedData[index] !== '0' ||
-                                (completedData[index] === '0' && plannedData[index] === '0')
+                                unplannedData[index] !== '0' ||
+                                (completedData[index] === '0' && plannedData[index] === '0' && unplannedData[index] === '0')
                             );
                         },
 
@@ -523,7 +544,12 @@
                         data: plannedData,
                         backgroundColor: plannedColor,
                         borderWidth: 1
-                        }]
+                        }, {
+                        label: 'Unplanned',
+                        data: unplannedData,
+                        backgroundColor: unplannedColor,
+                        borderWidth: 1
+                        } ]
                     },
                     options: options
                     });
@@ -556,15 +582,18 @@ function getLastNumberIndex(arr) {
         const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:W7?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:W9?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
                 const data = response.values;
                 const completedData = data[0];
                 const plannedData = data[1];
+                const unplannedData = data[2];
 
                 var completed_week = completedData.length;
+                var planned_week = plannedData.length;
+                var unplanned_week = unplannedData.length;
 
                 // print completed week to console
                 console.log(completedData);
@@ -572,7 +601,7 @@ function getLastNumberIndex(arr) {
 
                 const chartDiv = document.getElementById("chart-nso");
 
-                chartDiv.style.gridTemplateColumns = `${completed_week}fr ${21-completed_week}fr`;
+                chartDiv.style.gridTemplateColumns = `${completed_week}fr ${planned_week - completed_week}fr ${unplanned_week - planned_week}fr `;
 
                 loadNSOchart();
             }
