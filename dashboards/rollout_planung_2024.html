@@ -829,23 +829,13 @@
 
             var completed_month = 0;
 
-            if (typeof unplannedData ==="undefined") {
-                var unplanned_month_nso_nr = 13;
-                var planned_month = 0;
-            }
 
-            else {
-                var unplanned_month_nso_nr = getFirstNumberIndex(unplannedData) + 1;
-                var planned_month = plannedData.length;
-            }
+            var completed_month = completedData.length < 2 ? 2 : completedData.length;
+            var planned_month = plannedData.length - 1 < 2 ? 2 : plannedData.length - completed_month- 1;
+            var unplanned_month = 13-plannedData.length < 2 ? 2 : 13-plannedData.length;
             
             const chartDiv = document.getElementById("chart-nso");
-
-            console.log("Completed NSO:" + completed_month);
-            console.log("Planned NSO:" + planned_month);
-            console.log("Unplanned NSO:" + unplanned_month_nso_nr);
-
-            chartDiv.style.gridTemplateColumns = `${planned_month}fr ${13-unplanned_month_nso_nr-planned_month}fr`;
+            chartDiv.style.gridTemplateColumns = `${planned_month}fr ${unplanned_month}fr`;
 
             loadNSOchart();
         }
@@ -868,28 +858,15 @@
             const plannedData = data[1];
             const unplannedData = data[2];
 
-            const today = new Date();
-            const currentMonth = today.getMonth() + 1;
-
             var completed_month = 0;
 
-            if (typeof unplannedData ==="undefined") {
-                var unplanned_month_irlx_nr = 13;
-                var planned_month = 0;
-            }
-
-            else {
-                var unplanned_month_irlx_nr = getFirstNumberIndex(unplannedData) + 1;
-                var planned_month = plannedData.length;
-            }
+            var completed_month = completedData.length < 2 ? 2 : completedData.length;
+            var planned_month = plannedData.length - 1 < 2 ? 2 : plannedData.length - completed_month- 1;
+            var unplanned_month = 13-plannedData.length < 2 ? 2 : 13-plannedData.length;
 
             const chartDiv = document.getElementById("chart-irlx");
+            chartDiv.style.gridTemplateColumns = `${planned_month}fr ${unplanned_month}fr`;
 
-            console.log("Completed IRLX:" + completed_month);
-            console.log("Planned IRLX:" + planned_month);
-            console.log("Unplanned IRLX:" + unplanned_month_irlx_nr);
-
-            chartDiv.style.gridTemplateColumns = `${planned_month}fr ${13-unplanned_month_irlx_nr-planned_month}fr`;
             loadIRLXchart();
         }
     });

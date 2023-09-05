@@ -82,7 +82,7 @@
 
         .project-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
             grid-gap: 1rem;
         }
 
@@ -111,7 +111,7 @@
 
         .kpis {
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-columns: 1fr 1fr;
             text-align: center;
             margin: 0 !important;
             margin-top: 1.5rem !important;
@@ -301,7 +301,7 @@
     <section id="home">
         <div class="header">
             <h1>
-                Rollout Planung 2023
+                Servermigration 2024
             </h1>
             <div class="refresh-search-container">
                 <!-- Refresh button -->
@@ -317,7 +317,7 @@
         <div class="project-box">
             <div class="box-line">
                 <div class ="title">
-                    <b>N</b>ew<b>S</b>tore<b>O</b>pening                    
+                    Status Servermigration R350                 
                 </div>
             </div>
             <div class="kpis" id="top">
@@ -327,7 +327,7 @@
                     </div>
 
                     <div class ="kpi-title">
-                        Target              
+                        Target (Restaurants)
                     </div>
 
                 </div>
@@ -362,207 +362,75 @@
                     </div>
 
                     <div class ="kpi-box" id="unplanned">
-                        <div class ="kpi-value" id="unplanned-nso">
-                            10                                      
+                        <div class ="kpi-value" id = "unplanned-nso">
+                            20              
                         </div>
 
                         <hr class = "unplanned-divider">
                         <div class ="kpi-title">
-                            Unplanned              
+                            Unplanned             
                         </div>
 
                     </div>
+
                 </div>
 
                 <div class="chart-container">
 
-                    <canvas id="NSO-chart" width="350" height="200"></canvas>
+                    <canvas id="NSO-chart" width="350" height="100"></canvas>
 
                 </div>
             </div>
 
 
-        </div>
-
-        <div class="project-box">
-            <div class="box-line">
-                <div class ="title">
-                    <b>I</b>n<b>R</b>eal<b>L</b>ifeE<b>X</b>perience                    
-                </div>
-            </div>
-            <div class="kpis" id = "top-irlx">
-                <div class ="kpi-box">
-                    <div class ="kpi-value" id="total-irlx">
-                        10                                      
-                    </div>
-
-                    <div class ="kpi-title">
-                        Target              
-                    </div>
-                </div>
-
-                <div class ="kpi-box" id="unplanned">
-                    <div class ="kpi-value" id="unplanned-irlx">
-                        10                                      
-                    </div>
-                    <div class ="kpi-title">
-                        Unplanned              
-                    </div>
-                </div>
-            </div>
-
-            <div class = "completed-planned-box">
-                <div class="kpis" id = "chart-irlx">
-                    <div class ="kpi-box" id="completed">
-                        <div class ="kpi-value" id="completed-irlx">
-                            10                                      
-                        </div>
-
-                        <hr class = "completed-divider">
-                        <div class ="kpi-title">
-                            Completed              
-                        </div>
-
-
-
-                    </div>
-
-                    <div class ="kpi-box" id="planned">
-                        <div class ="kpi-value" id = "planned-irlx">
-                            20              
-                        </div>
-
-                        <hr class = "planned-divider">
-                        <div class ="kpi-title">
-                            Planned             
-                        </div>
-
-                    </div>
-                </div>
-
-                <div class="chart-container">
-
-                    <canvas id="IRLX-chart" width="350" height="200"></canvas>
-
-                </div>
-            </div>
         </div>
     </div>
 
     <script>
         function loadNSOKPIValues() {
-            const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+            const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
             const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B6:M8?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!D2:G2?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
                 const data = response.values;
-                const completedData = data[0];
-                const plannedData = data[1];
-                const unplannedData = data[2];
+                const target = data[0][0];
+                const plannedValue = data[0][1];
+                const completedValue = data[0][2];
+                const unplannedValue = data[0][3];
 
-
-                // Assuming you have the array called 'data' that contains the values
-
-                const completedDataNew = completedData.map(value => value === '' ? 0 : value);
-                const plannedDataNew = plannedData.map(value => value === '' ? 0 : value);
-
-                if (typeof unplannedData !== 'undefined') {
-                    const unplannedDataNew = unplannedData.map(value => value === '' ? 0 : value);
-                    unplanned_value = unplannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
-                } else {
-                    unplanned_value = 0;
-                }                
-
-                completed_value = completedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
-                planned_value = plannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);;
 
                 // get the element with class ="kpi-value" and id = "planned"
                 const planned = document.querySelector(".kpi-value#planned-nso");
                 // set the innerHTML of the element to the value of the planned_value variable
-                planned.innerHTML = planned_value;
+                planned.innerHTML = plannedValue;
 
                 // get the element with class ="kpi-value" and id = "completed"
                 const completed = document.querySelector(".kpi-value#completed-nso");
                 // set the innerHTML of the element to the value of the completed_value variable
-                completed.innerHTML = completed_value;
+                completed.innerHTML = completedValue;
 
-                // get the element with class ="kpi-value" and id = "unplanned"
+                // get the element with class ="kpi-value" and id = "completed"
                 const unplanned = document.querySelector(".kpi-value#unplanned-nso");
-                // set the innerHTML of the element to the value of the unplanned_value variable
-                unplanned.innerHTML = unplanned_value;
+                // set the innerHTML of the element to the value of the completed_value variable
+                unplanned.innerHTML = unplannedValue;
 
                 // get the element with class ="kpi-value" and id = "total"
                 const total = document.querySelector(".kpi-value#total-nso");
                 // set the innerHTML of the element to the value of the target_value variable
-                total.innerHTML = planned_value+completed_value+unplanned_value;
+                total.innerHTML = target;
             }
         });}
-
-        function loadIRLXKPIValues() {
-            const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-            const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-        
-
-        $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B25:M27?key=${API_KEY}`,
-            type: 'GET',
-            success: function (response) {
-                // The response from the API includes the data for the table in the "values" property
-
-                const data = response.values;
-                const completedData = data[0];
-                const plannedData = data[1];
-                const unplannedData = data[2];
-
-
-                target_value = 100;
-                const completedDataNew = completedData.map(value => value === '' ? 0 : value);
-                const plannedDataNew = plannedData.map(value => value === '' ? 0 : value);
-                
-                if (typeof unplannedData !== 'undefined') {
-                    const unplannedDataNew = unplannedData.map(value => value === '' ? 0 : value);
-                    unplanned_value = unplannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
-                } else {
-                    unplanned_value = 0;
-                }
-
-                completed_value = completedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
-                planned_value = plannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);;
-
-                // get the element with class ="kpi-value" and id = "planned"
-                const planned = document.querySelector(".kpi-value#planned-irlx");
-                // set the innerHTML of the element to the value of the planned_value variable
-                planned.innerHTML = planned_value;
-
-                // get the element with class ="kpi-value" and id = "completed"
-                const completed = document.querySelector(".kpi-value#completed-irlx");
-                // set the innerHTML of the element to the value of the completed_value variable
-                completed.innerHTML = completed_value;
-
-                // get the element with class ="kpi-value" and id = "unplanned"
-                const unplanned = document.querySelector(".kpi-value#unplanned-irlx");
-                // set the innerHTML of the element to the value of the unplanned_value variable
-                unplanned.innerHTML = unplanned_value;
-
-                // get the element with class ="kpi-value" and id = "total"
-                const total = document.querySelector(".kpi-value#total-irlx");
-                // set the innerHTML of the element to the value of the target_value variable
-                total.innerHTML = planned_value+completed_value+unplanned_value;
-            }
-        });
-        }
-
     </script>
 
 <script>
     function loadNSOchart() {
         if (checkPassword()) {// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-            const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+            const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
             // Replace YOUR_API_KEY with your Google API key
             const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
@@ -570,22 +438,20 @@
             var today = new Date();
             var month = today.getMonth();
 
-            const month_labels = ["January", "February", "March", "April", "May", "June", "July", "August",
-                "September", "October", "November", "December"];
-
             const completedColor= "rgba(79, 180, 119, 1)";             
             const plannedColor = "rgba(247, 179, 43, 1)";
             const unplannedColor = "rgba(186,27,29, 1)";                
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B6:M8?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:W8?key=${API_KEY}`,
                 type: 'GET',
                 success: function(response) {
                     const data = response.values;
-                    const completedData = data[0];
-                    const plannedData = data[1];
-                    const unplannedData = data[2];
+                    const week_labels = data[0];
+                    const completedData = data[2];
+                    const plannedData = data[3];
+                    const unplannedData = data[4];
 
                     const ctx = document.getElementById('NSO-chart').getContext('2d');
 
@@ -641,7 +507,7 @@
                                 completedData[index] !== '0' ||
                                 plannedData[index] !== '0' ||
                                 unplannedData[index] !== '0' ||
-                                (completedData[index] === '0' && plannedData[index] === '0' && unplannedData[index] === '0' )
+                                (completedData[index] === '0' && plannedData[index] === '0' && unplannedData[index] === '0')
                             );
                         },
 
@@ -667,7 +533,7 @@
                     const myChart = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: month_labels,
+                        labels: week_labels,
                         datasets: [{
                         label: 'Completed',
                         backgroundColor: completedColor,
@@ -683,7 +549,7 @@
                         data: unplannedData,
                         backgroundColor: unplannedColor,
                         borderWidth: 1
-                        }]
+                        } ]
                     },
                     options: options
                     });
@@ -692,146 +558,12 @@
         }
     }
 
-    function loadIRLXchart() {
-        if (checkPassword()) {// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-            const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-            // Replace YOUR_API_KEY with your Google API key
-            const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-            //Get number of month of todays date
-            var today = new Date();
-            var month = today.getMonth();
-
-            const month_labels = ["January", "February", "March", "April", "May", "June", "July", "August",
-                "September", "October", "November", "December"];
-
-            const completedColor= "rgba(79, 180, 119, 1)";             
-            const plannedColor = "rgba(247, 179, 43, 1)";
-            const unplannedColor = "rgba(186,27,29, 1)";                
-
-            // Make a GET request to the Google Sheets API to retrieve the data for the table
-            $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B25:M27?key=${API_KEY}`,
-                type: 'GET',
-                success: function(response) {
-                    const data = response.values;
-                    const completedData = data[0];
-                    const plannedData = data[1];
-                    const unplannedData = data[2];
-
-                    const ctx = document.getElementById('IRLX-chart').getContext('2d');
-
-                    const options = {
-                    legend: {
-                        display: false
-                    },
-                    scales: {
-                        xAxes: [{
-                            stacked: true,
-                        ticks: {
-                            display: true
-                        },
-                        gridLines: {
-                            display: false
-                        }
-                        }],
-                        yAxes: [{
-                            stacked: true,
-                        ticks: {
-                            display: false
-                        },
-                        gridLines: {
-                            display: true,
-                            color: 'rgba(0, 0, 0, 0)',
-                            zeroLineColor: 'rgba(0, 0, 0, 1)',
-                            drawBorder: false,
-                            drawTicks: false
-                        }
-                        }]
-                    },
-                    plugins: {
-                        tooltip: {
-                        enabled: false
-                        },
-                        customText: {
-                        color: 'black',
-                        font: {
-                            size: 14,
-                            weight: 'bold',
-                            family: 'Arial'
-                        },
-                        position: {
-                            x: 0,
-                            y: 0
-                        },
-                        text: ''
-                        },
-                        datalabels: {
-                        display: function(context) {
-                            const index = context.dataIndex;
-                            return (
-                                completedData[index] !== '0' ||
-                                plannedData[index] !== '0' ||
-                                unplannedData[index] !== '0' ||
-                                (completedData[index] === '0' && plannedData[index] === '0' && unplannedData[index] === '0' )
-                            );
-                        },
-                        formatter: function(value) {
-                            return value !== 0 ? value : '';
-                        },
-
-                        anchor: 'end',
-                        align: 'start',
-                        color: 'white',
-                        font: {
-                            size: 19,
-                            weight: 'bold',
-                            family: 'Arial'
-                        }
-                        }
-                    },
-                    layout: {
-                        padding: {
-                        top: 30,
-                        bottom: 20
-                        }
-                    }
-                    };
-
-                    
-                    const myChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: month_labels,
-                        datasets: [{
-                        label: 'Completed',
-                        backgroundColor: completedColor,
-                        data: completedData,
-                        borderWidth: 1
-                        }, {
-                        label: 'Planned',
-                        data: plannedData,
-                        backgroundColor: plannedColor,
-                        borderWidth: 1
-                        }, {
-                        label: 'Unplanned',
-                        data: unplannedData,
-                        backgroundColor: unplannedColor,
-                        borderWidth: 1
-                        }]
-                    },
-                    options: options
-                    });
-                }
-                });
-        }
-    }
 </script>
 
 <script>
 function getLastNumberIndex(arr) {
     
-    for (let i = 0; i <= 12; i++) {
+    for (let i = 0; i <= 21; i++) {
       if (arr[i] !== '') {
         return i;
       }
@@ -846,11 +578,11 @@ function getLastNumberIndex(arr) {
         // Write a function that sets the grid-template-columns property of the div with the id chart to the value of the input
         function setGridTemplateColumnsNSO() {
 
-        const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
+        const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
         const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B6:M8?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:W9?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -858,50 +590,20 @@ function getLastNumberIndex(arr) {
                 const completedData = data[0];
                 const plannedData = data[1];
                 const unplannedData = data[2];
-                const today = new Date();
 
-                var completed_month = completedData.length < 2 ? 2 : completedData.length;
-                var planned_month = plannedData.length - 1 < 2 ? 2 : plannedData.length - completed_month- 1;
-                var unplanned_month = 13-plannedData.length < 2 ? 2 : 13-plannedData.length;
+                var completed_week = completedData.length;
+                var planned_week = plannedData.length;
+                var unplanned_week = unplannedData.length;
 
-                console.log("Completed Month" + completed_month);
-                console.log("Planned Month" + planned_month);
-                console.log("UnPlanned Month" + unplanned_month);
+                // print completed week to console
+                console.log(completedData);
+
 
                 const chartDiv = document.getElementById("chart-nso");
-                chartDiv.style.gridTemplateColumns = `${completed_month}fr ${planned_month}fr ${unplanned_month}fr`;
+
+                chartDiv.style.gridTemplateColumns = `${completed_week}fr ${planned_week - completed_week}fr ${unplanned_week - planned_week}fr `;
 
                 loadNSOchart();
-            }
-        });
-        }
-
-        function setGridTemplateColumnsIRLX() {
-
-        const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-        const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-        $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B25:M27?key=${API_KEY}`,
-            type: 'GET',
-            success: function (response) {
-                // The response from the API includes the data for the table in the "values" property
-                const data = response.values;
-
-                const completedData = data[0];
-                const plannedData = data[1];
-
-                // check if unplannedData is undefined, if yes it to an empty array
-                const unplannedData = typeof data[2] === 'undefined' ? new Array(13) : data[2];
-
-                var completed_month = completedData.length < 2 ? 2 : completedData.length;
-                var planned_month = plannedData.length - 1 < 2 ? 2 : plannedData.length - completed_month- 1;
-                var unplanned_month = 13-plannedData.length < 2 ? 2 : 13-plannedData.length;
-
-                const chartDiv = document.getElementById("chart-irlx");
-                chartDiv.style.gridTemplateColumns = `${completed_month}fr ${planned_month}fr`;
-
-                loadIRLXchart();
             }
         });
         }
@@ -915,9 +617,7 @@ function getLastNumberIndex(arr) {
             if (checkPassword()) {
                 passwordIsCorrect = true;
                 setGridTemplateColumnsNSO();
-                setGridTemplateColumnsIRLX();
                 loadNSOKPIValues();
-                loadIRLXKPIValues();
                 
                 form.remove();
             } else {
@@ -934,9 +634,7 @@ function getLastNumberIndex(arr) {
                         form.remove();
 
                         setGridTemplateColumnsNSO();
-                        setGridTemplateColumnsIRLX();
                         loadNSOKPIValues();
-                        loadIRLXKPIValues();
                 
 
                     } else {
