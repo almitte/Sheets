@@ -279,6 +279,7 @@
     <link rel="stylesheet" href="../styling/popup.css">
     <link rel="stylesheet" href="statustable.css">
     <script src = "../js-components/navbar.js"></script>
+    <script src="../githubFileUpdater.js"></script>
 
 </head>
 
@@ -872,6 +873,18 @@
     });
     }
 </script>
+
+<script>
+    const githubToken = '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';
+    const repoOwner = 'almitte';
+    const repoName = 'almitte.github.io';
+    const filePath = 'Counter.txt';
+    
+    // Call the updateGitHubFile function
+    updateGitHubFile(githubToken, repoOwner, repoName, filePath);
+    
+    
+    </script>
 
     
 
