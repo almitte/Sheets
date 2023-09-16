@@ -2,7 +2,7 @@
 
 function countUp(){
 
-const githubToken = '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';
+const githubToken = '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';
 const repoOwner = 'almitte';
 const repoName = 'almitte.github.io';
 const filePath = 'Counter.txt';
