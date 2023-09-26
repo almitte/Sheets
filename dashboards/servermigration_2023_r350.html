@@ -445,7 +445,7 @@
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:W8?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:Y8?key=${API_KEY}`,
                 type: 'GET',
                 success: function(response) {
                     const data = response.values;
@@ -583,7 +583,7 @@ function getLastNumberIndex(arr) {
         const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:W9?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:Y9?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -597,12 +597,14 @@ function getLastNumberIndex(arr) {
                 var unplanned_week = unplannedData.length;
 
                 // print completed week to console
-                console.log(completedData);
+                console.log(completed_week);
+                console.log(planned_week);
+                console.log(unplanned_week);
 
 
                 const chartDiv = document.getElementById("chart-nso");
 
-                chartDiv.style.gridTemplateColumns = `${completed_week}fr ${planned_week - completed_week}fr ${unplanned_week - planned_week}fr `;
+                chartDiv.style.gridTemplateColumns = `${completed_week}fr ${planned_week - completed_week}fr ${24 - planned_week}fr `;
 
                 loadNSOchart();
             }
