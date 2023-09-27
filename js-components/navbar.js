@@ -22,7 +22,6 @@ class Navbar extends HTMLElement{
                     <a href="../archiv/archiv_2023.html">Archiv 2023</a>
                     <a href="../archiv/archiv_2024.html">Archiv 2024</a>
                     <hr>
-                    <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
                     <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                     <hr>
@@ -46,7 +45,8 @@ class Navbar extends HTMLElement{
                 </button>
                 <div class="dropdown-content">
                     <a href="../dashboards.html">Home</a>
-                    <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
+                    <a href="../dashboards/gesamtplanung_2024.html">Gesamtplanung 2024</a>
+                    <hr>
                     <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                     <hr>
@@ -63,6 +63,8 @@ class Navbar extends HTMLElement{
                   <a href="../archiv/archiv_2022.html">Archiv 2022</a>
                   <a href="../archiv/archiv_2023.html">Archiv 2023</a>
                   <a href="../archiv/archiv_2024.html">Archiv 2024</a>
+                  <hr>
+                  <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
               </div>
             </div>
         </div>

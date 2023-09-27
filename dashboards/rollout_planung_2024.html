@@ -431,48 +431,30 @@
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B6:M8?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B3:M3?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
-                // The response from the API includes the data for the table in the "values" property
                 const data = response.values;
-                const completedData = data[0];
-                const plannedData = data[1];
-                const unplannedData = data[2];
-
-
-                // Assuming you have the array called 'data' that contains the values
-
-                const completedDataNew = completedData.map(value => value === '' ? 0 : value);
-                const plannedDataNew = plannedData.map(value => value === '' ? 0 : value);
-
-                if (typeof unplannedData !== 'undefined') {
-                    const unplannedDataNew = unplannedData.map(value => value === '' ? 0 : value);
-                    unplanned_value = unplannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
-                // get the element with class ="kpi-value" and id = "unplanned"
-                const unplanned = document.querySelector(".kpi-value#unplanned-nso");
-                // set the innerHTML of the element to the value of the unplanned_value variable
-                unplanned.innerHTML = unplanned_value;
-                } else {
-                    unplanned_value = 0;
-                    const elements = document.getElementsByClassName('unplanned-nso');
-                    elements[0].innerHTML = '';
-                }                
-
-                completed_value = completedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
-                planned_value = plannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);;
+                const target_value = data[0][2];
+                const completed_value = data[0][5];
+                const planned_value = data[0][8];
+                const unplanned_value = data[0][11];
 
                 // get the element with class ="kpi-value" and id = "planned"
                 const planned = document.querySelector(".kpi-value#planned-nso");
                 // set the innerHTML of the element to the value of the planned_value variable
                 planned.innerHTML = planned_value;
 
+                // get the element with class ="kpi-value" and id = "planned"
+                const unplanned = document.querySelector(".kpi-value#unplanned-nso");
+                // set the innerHTML of the element to the value of the planned_value variable
+                unplanned.innerHTML = unplanned_value;
+
                 // get the element with class ="kpi-value" and id = "total"
                 const total = document.querySelector(".kpi-value#total-nso");
                 // set the innerHTML of the element to the value of the target_value variable
-                total.innerHTML = planned_value+completed_value+unplanned_value;
-            }
-        });}
+                total.innerHTML = target_value;
+        }});}
 
         function loadIRLXKPIValues() {
             const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
@@ -480,46 +462,30 @@
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B25:M27?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B22:M22?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
-
                 const data = response.values;
-                const completedData = data[0];
-                const plannedData = data[1];
-                const unplannedData = data[2];
-
-
-                target_value = 100;
-                const completedDataNew = completedData.map(value => value === '' ? 0 : value);
-                const plannedDataNew = plannedData.map(value => value === '' ? 0 : value);
-                
-                if (typeof unplannedData !== 'undefined') {
-                    const unplannedDataNew = unplannedData.map(value => value === '' ? 0 : value);
-                    unplanned_value = unplannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
-                                    // get the element with class ="kpi-value" and id = "unplanned"
-                const unplanned = document.querySelector(".kpi-value#unplanned-irlx");
-                // set the innerHTML of the element to the value of the unplanned_value variable
-                unplanned.innerHTML = unplanned_value;
-                } else {
-                    unplanned_value = 0;
-                    const elements = document.getElementsByClassName('unplanned-irlx');
-                    elements[0].innerHTML = '';
-                }                
-
-                completed_value = completedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);
-                planned_value = plannedDataNew.reduce((accumulator, currentValue) => accumulator + parseInt(currentValue), 0);;
+                const target_value = data[0][2];
+                const completed_value = data[0][5];
+                const planned_value = data[0][8];
+                const unplanned_value = data[0][11];
 
                 // get the element with class ="kpi-value" and id = "planned"
                 const planned = document.querySelector(".kpi-value#planned-irlx");
                 // set the innerHTML of the element to the value of the planned_value variable
                 planned.innerHTML = planned_value;
 
+                // get the element with class ="kpi-value" and id = "planned"
+                const unplanned = document.querySelector(".kpi-value#unplanned-irlx");
+                // set the innerHTML of the element to the value of the planned_value variable
+                unplanned.innerHTML = unplanned_value;
+
                 // get the element with class ="kpi-value" and id = "total"
                 const total = document.querySelector(".kpi-value#total-irlx");
                 // set the innerHTML of the element to the value of the target_value variable
-                total.innerHTML = planned_value+completed_value+unplanned_value;
+                total.innerHTML = target_value;
             }
         });
         }

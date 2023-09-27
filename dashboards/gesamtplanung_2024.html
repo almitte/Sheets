@@ -130,6 +130,41 @@
 
         }
 
+        .legend {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
+            gap: 10px; /* Gap between legend items */
+            margin-top: 20px; /* 10px top margin for the legend */
+        }
+
+        /* Define the legend item */
+        .legend-item {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center items horizontally within columns */
+        }
+
+        .dot {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        /* Define the colors for each category */
+        .servermigration {
+            background-color: #E08E45; /* You can change this color manually */
+        }
+
+        .nso {
+            background-color: #7371fc; /* You can change this color manually */
+        }
+
+        .irlx {
+            background-color: #44bba4; /* You can change this color manually */
+        }
+
   
 
     </style>
@@ -193,9 +228,20 @@
 
     <div class="project-grid">   
         <div class="project-box">
+            <div class="legend">
+                <div class="legend-item">
+                    <span class="dot servermigration"></span> <b>Servermigration</b>
+                </div>
+                <div class="legend-item">
+                    <span class="dot irlx"></span> <b>IRLX</b>
+                </div>
+                <div class="legend-item">
+                    <span class="dot nso"></span> <b>NSO</b>
+                </div>
+            </div>
             <div class="chart-container">
                 <div class = "chart-container-body">
-                    <canvas id="chart" width="350" height="60"></canvas>
+                    <canvas id="chart" width="350" height="55"></canvas>
                 </div>
             </div>
         </div>
@@ -235,13 +281,15 @@
 
                     const options = {
                     legend: {
-                        display: false
+                        display: false,
+                        position: 'left',
                     },
                     scales: {
                         xAxes: [{
                             stacked: true,
                         ticks: {
-                            display: true
+                            display: true,
+                            beginAtZero: true
                         },
                         gridLines: {
                             display: false
@@ -314,18 +362,21 @@
                         labels: calenderweeks,
                         datasets: [{
                         label: 'Servermigration',
+                        minBarLength: 4,
                         backgroundColor: migrationColor,
                         data: servermigration,
                         borderWidth: 1
-                        }, {
-                        label: 'NSO',
-                        data: nso,
-                        backgroundColor: nsoColor,
-                        borderWidth: 1
-                        }, {
+                        },  {
                         label: 'IRLX',
                         data: irlx,
                         backgroundColor: irlxColor,
+                        minBarLength: 4,
+                        borderWidth: 1
+                        },{
+                        label: 'NSO',
+                        data: nso,
+                        backgroundColor: nsoColor,
+                        minBarLength: 4,
                         borderWidth: 1
                         }]
                     },
