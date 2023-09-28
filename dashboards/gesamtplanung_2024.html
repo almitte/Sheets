@@ -271,9 +271,28 @@
                     const servermigration = data[1];
                     const nso = data[2];
                     const irlx = data[3];
+                    // Create a new list to store the multiplied values
+                    var nso_min = [];
+                    var irlx_min = [];
+                    var servermigration_min = [];
+
+                    function round_up(old_list, new_list){
+                    // Multiply each value by 5 and store it in the new list
+                        for (var i = 0; i < old_list.length; i++) {
+                            var new_list_value = 0;
+                            if (old_list[i] == 0) {new_list_value = 0}
+                            else if (old_list[i] > 10) {new_list_value = old_list[0]}
+                            else if (old_list[i] <= 10) {new_list_value = 10}
+                            new_list.push(new_list_value);
+                        }
+                        return new_list;
+                    }
+
+                    nso_min = round_up(nso, nso_min);
+                    irlx_min = round_up(irlx, irlx_min);
+                    servermigration_min = round_up(servermigration, servermigration_min)
 
                     const ctx = document.getElementById('chart').getContext('2d');
-
 
                     var migrationColor = "rgba(224, 142, 69, 1)";
                     var nsoColor = "rgba(115, 113, 252, 1)"; 
@@ -327,15 +346,19 @@
                         text: ''
                         },
                         datalabels: {
-                        display: function(context) {
-                            const index = context.dataIndex;
-                            return (
-                                servermigration[index] !== '0' ||
-                                nso[index] !== '0' ||
-                                irlx[index] !== '0' ||
-                                (servermigration[index] === '0' && nso[index] === '0' && irlx[index] === '0' )
-                            );
-                        },
+                            formatter: function (value, context) {
+                            // Display nso[index] as the label on the bars for the "nso_min" dataset
+                            if (context.dataset.label === "NSO") {
+                                return nso[context.dataIndex];
+                            }
+                            if (context.dataset.label === "IRLX") {
+                                return irlx[context.dataIndex];
+                            }
+                            if (context.dataset.label === "Servermigration") {
+                                return servermigration[context.dataIndex];
+                            }
+                            return value;
+                            },
 
                         anchor: 'end',
                         align: 'start',
@@ -362,21 +385,18 @@
                         labels: calenderweeks,
                         datasets: [{
                         label: 'Servermigration',
-                        minBarLength: 4,
                         backgroundColor: migrationColor,
-                        data: servermigration,
+                        data: servermigration_min,
                         borderWidth: 1
                         },  {
                         label: 'IRLX',
-                        data: irlx,
+                        data: irlx_min,
                         backgroundColor: irlxColor,
-                        minBarLength: 4,
                         borderWidth: 1
                         },{
                         label: 'NSO',
-                        data: nso,
+                        data: nso_min,
                         backgroundColor: nsoColor,
-                        minBarLength: 4,
                         borderWidth: 1
                         }]
                     },
