@@ -215,9 +215,9 @@
 
               try {// Determine the class name for the "status" cell based on its value
                 var varianteClass = "";
-                if (item[4] == "NSO") {
+                if (item[5] == "NSO") {
                   varianteClass = "nso";
-                } else if (item[4] == "IRLX") {
+                } else if (item[5] == "IRLX") {
                   varianteClass = "irlx";
                 } else { varianteClass = "else" }
               }
@@ -233,10 +233,10 @@
               <td>${item[1]}</td>
               <td>${item[2]}</td>
               <td>${item[3]}</td>
+              <td>${item[4]}</td>
               <td class="${varianteClass}" disabled>
-                <button>${item[4]}</button>
+                <button>${item[5]}</button>
               </td>
-              <td>${item[5]}</td>
               <td>${item[6]}</td>
               <td>${item[7]}</td>
               <td>${item[8]}</td>
