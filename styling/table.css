@@ -106,6 +106,10 @@ th:first-child {
 	width: 6%;
 }
 
+.bigtable th.comment {
+	width: 10%;
+}
+
 .bigtable th.status {
 	width: 3%;
 }
