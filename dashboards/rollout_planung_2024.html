@@ -802,7 +802,7 @@
             var unplanned_month = 13-plannedData.length < 2 ? 2 : 13-plannedData.length;
             
             const chartDiv = document.getElementById("chart-nso");
-            chartDiv.style.gridTemplateColumns = `${planned_month}fr ${unplanned_month}fr`;
+            chartDiv.style.gridTemplateColumns = `1fr 1fr`;
 
             loadNSOchart();
         }
@@ -832,7 +832,7 @@
             var unplanned_month = 13-plannedData.length < 2 ? 2 : 13-plannedData.length;
 
             const chartDiv = document.getElementById("chart-irlx");
-            chartDiv.style.gridTemplateColumns = `${planned_month}fr ${unplanned_month}fr`;
+            chartDiv.style.gridTemplateColumns = `1fr 1fr`;
 
             loadIRLXchart();
         }
