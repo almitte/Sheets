@@ -26,7 +26,6 @@ class Navbar extends HTMLElement{
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                     <hr>
                     <a href="../dashboards/servermigration_2023_r350.html">Servermigration 2023 R350</a>
-                    <a href="../dashboards/servermigration_2024_r350.html">Servermigration 2024 R350</a>
                 </div>
             </div>
             <div class="dropdown">
@@ -51,7 +50,6 @@ class Navbar extends HTMLElement{
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                     <hr>
                     <a href="../dashboards/servermigration_2023_r350.html">Servermigration 2023 R350</a>
-                    <a href="../dashboards/servermigration_2024_r350.html">Servermigration 2024 R350</a>
                 </div>
             </div>
             <div class="dropdown">
