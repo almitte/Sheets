@@ -68,6 +68,13 @@
       }
     }
 
+    .kpi-div{
+        display:flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center !important;
+    }
+
         .header {
             display: flex;
             flex-direction: row;
@@ -337,15 +344,30 @@
             <div class = "completed-planned-box">
                 <div class="kpis" id = "chart-nso">
                     <div class ="kpi-box" id="completed">
-                        <div class ="kpi-value" id="completed-nso">
-                            10                                      
+                        <div class="kpi-div">
+                            <div class ="kpi-value" id="completed-nso">
+                                10                                      
+                            </div>
+                            <div class ="kpi-value" id="completed-r340">
+                                10                                      
+                            </div>
+                            <div class ="kpi-value" id="completed-r350">
+                                10                                      
+                            </div>
                         </div>
 
                         <hr class = "completed-divider">
-                        <div class ="kpi-title">
-                            Completed              
+                        <div class="kpi-div">
+                            <div class ="kpi-title">
+                                Completed              
+                            </div>
+                            <div class ="kpi-title">
+                                R340-SSD              
+                            </div>
+                            <div class ="kpi-title">
+                                R350              
+                            </div>
                         </div>
-
 
 
                     </div>
@@ -445,7 +467,7 @@
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:Y8?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:AA8?key=${API_KEY}`,
                 type: 'GET',
                 success: function(response) {
                     const data = response.values;
