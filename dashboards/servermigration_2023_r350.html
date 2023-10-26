@@ -69,11 +69,23 @@
     }
 
     .kpi-div{
-        display:flex;
-        flex-direction: row;
+        display:grid;
         justify-content: space-between;
         align-items: center !important;
+        grid-template-columns: 1fr 1fr 1fr;
     }
+
+    #completed-r340{
+        font-size : 2.5rem;
+        color: #5dd28c;
+
+    }
+
+    #completed-r350{
+        font-size : 2.5rem;
+    }
+
+
 
         .header {
             display: flex;
@@ -416,7 +428,7 @@
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!D2:G2?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!D2:K2?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -425,12 +437,24 @@
                 const plannedValue = data[0][1];
                 const completedValue = data[0][2];
                 const unplannedValue = data[0][3];
+                const completedR340 = data[0][4];
+                const completedR350 = data[0][5];
 
 
                 // get the element with class ="kpi-value" and id = "planned"
                 const planned = document.querySelector(".kpi-value#planned-nso");
                 // set the innerHTML of the element to the value of the planned_value variable
                 planned.innerHTML = plannedValue;
+
+                // get the element with class ="kpi-value" and id = "planned"
+                const R340 = document.querySelector(".kpi-value#completed-r340");
+                // set the innerHTML of the element to the value of the planned_value variable
+                R340.innerHTML = completedR340;
+
+                // get the element with class ="kpi-value" and id = "planned"
+                const r350 = document.querySelector(".kpi-value#completed-r350");
+                // set the innerHTML of the element to the value of the planned_value variable
+                r350.innerHTML = completedR350;
 
                 // get the element with class ="kpi-value" and id = "completed"
                 const completed = document.querySelector(".kpi-value#completed-nso");
@@ -467,16 +491,36 @@
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:AA8?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:P8?key=${API_KEY}`,
                 type: 'GET',
                 success: function(response) {
                     const data = response.values;
                     const week_labels = data[0];
-                    const completedData = data[2];
-                    const plannedData = data[3];
-                    const unplannedData = data[4];
+                    var completedData = data[2];
+                    var plannedData = data[3];
+                    var unplannedData = data[4];
 
                     const ctx = document.getElementById('NSO-chart').getContext('2d');
+
+                    var completed_min = [];
+                    var planned_min = [];
+                    var unplanned_min = [];
+
+                    function round_up(old_list, new_list){
+                    // Multiply each value by 5 and store it in the new list
+                        for (var i = 0; i < old_list.length; i++) {
+                            var new_list_value = 0;
+                            if (old_list[i] == 0) {new_list_value = 0}
+                            else if (old_list[i] > 10) {new_list_value = old_list[i]}
+                            else if (old_list[i] <= 10) {new_list_value = 10}
+                            new_list.push(new_list_value);
+                        }
+                        return new_list;
+                    }
+
+                    completed_min = round_up(completedData, completed_min);
+                    planned_min = round_up(plannedData, planned_min);
+                    unplanned_min = round_up(unplannedData, unplanned_min)
 
                     const options = {
                     legend: {
@@ -524,15 +568,19 @@
                         text: ''
                         },
                         datalabels: {
-                        display: function(context) {
-                            const index = context.dataIndex;
-                            return (
-                                completedData[index] !== '0' ||
-                                plannedData[index] !== '0' ||
-                                unplannedData[index] !== '0' ||
-                                (completedData[index] === '0' && plannedData[index] === '0' && unplannedData[index] === '0')
-                            );
-                        },
+                            formatter: function (value, context) {
+                            // Display nso[index] as the label on the bars for the "nso_min" dataset
+                            if (context.dataset.label === "Completed") {
+                                return completedData[context.dataIndex];
+                            }
+                            if (context.dataset.label === "Planned") {
+                                return plannedData[context.dataIndex];
+                            }
+                            if (context.dataset.label === "Unplanned") {
+                                return unplannedData[context.dataIndex];
+                            }
+                            return value;
+                            },
 
                         anchor: 'end',
                         align: 'start',
@@ -551,7 +599,6 @@
                         }
                     }
                     };
-
                     
                     const myChart = new Chart(ctx, {
                     type: 'bar',
@@ -560,16 +607,16 @@
                         datasets: [{
                         label: 'Completed',
                         backgroundColor: completedColor,
-                        data: completedData,
+                        data: completed_min,
                         borderWidth: 1
                         }, {
                         label: 'Planned',
-                        data: plannedData,
+                        data: planned_min,
                         backgroundColor: plannedColor,
                         borderWidth: 1
                         }, {
                         label: 'Unplanned',
-                        data: unplannedData,
+                        data: unplanned_min,
                         backgroundColor: unplannedColor,
                         borderWidth: 1
                         } ]
