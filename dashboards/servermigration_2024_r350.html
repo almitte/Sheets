@@ -583,7 +583,7 @@ function getLastNumberIndex(arr) {
         const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B63:W66?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B63:W68?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -602,7 +602,7 @@ function getLastNumberIndex(arr) {
                 console.log ("unplanned week: " + unplanned_week);
 
                 const chartDiv = document.getElementById("chart-nso");
-                chartDiv.style.gridTemplateColumns = `${completed_week}fr ${planned_week}fr ${unplanned_week}fr `;
+                chartDiv.style.gridTemplateColumns = `1fr 1fr 1fr`;
 
                 loadNSOchart();
             }

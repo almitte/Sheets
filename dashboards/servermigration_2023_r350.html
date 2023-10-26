@@ -318,7 +318,7 @@
         <div class="project-box">
             <div class="box-line">
                 <div class ="title">
-                    Status Servermigration R350                 
+                    Status Servermigration (R340-SSD/R350)               
                 </div>
             </div>
             <div class="kpis" id="top">
@@ -583,7 +583,7 @@ function getLastNumberIndex(arr) {
         const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:Y9?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:AA9?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -604,7 +604,7 @@ function getLastNumberIndex(arr) {
 
                 const chartDiv = document.getElementById("chart-nso");
 
-                chartDiv.style.gridTemplateColumns = `${completed_week}fr ${planned_week - completed_week}fr ${24 - planned_week}fr `;
+                chartDiv.style.gridTemplateColumns = `1fr 1fr 1fr`;
                 
 
                 loadNSOchart();
