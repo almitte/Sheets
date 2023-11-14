@@ -508,9 +508,14 @@
                 success: function(response) {
                     const data = response.values;
                     const week_labels = data[0];
-                    var completedData = data[2];
-                    var plannedData = data[3];
-                    var unplannedData = data[4];
+                    // Check for data[2] and assign to completedData
+                    var completedData = data[2] ? data[2] : [];
+
+                    // Check for data[3] and assign to plannedData
+                    var plannedData = data[3] ? data[3] : [];
+
+                    // Check for data[4] and assign to unplannedData
+                    var unplannedData = data[4] ? data[4] : [];
 
                     const ctx = document.getElementById('NSO-chart').getContext('2d');
 
