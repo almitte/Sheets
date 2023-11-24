@@ -715,7 +715,7 @@
                 const planned_month = unplanned_month_nso - currentMonth -1;
                 const unplanned_month_nso_nr = 12 - unplanned_month_nso +1;
 
-                chartDiv.style.gridTemplateColumns = `${currentMonth}fr ${planned_month}fr ${unplanned_month_nso_nr}fr`;
+                chartDiv.style.gridTemplateColumns = `1fr 1fr 1fr`;
 
                 loadNSOchart();
             }
@@ -743,7 +743,7 @@
                 const planned_month = unplanned_month_irlx - currentMonth -1;
                 const unplanned_month_irlx_nr = 12 - unplanned_month_irlx + 4;
 
-                chartDiv.style.gridTemplateColumns = `${currentMonth}fr ${planned_month}fr`;
+                chartDiv.style.gridTemplateColumns = `1fr 1fr`;
                 loadIRLXchart();
             }
         });

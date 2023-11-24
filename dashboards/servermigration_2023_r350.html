@@ -68,6 +68,23 @@
       }
     }
 
+    .kpi-div{
+        display:grid;
+        justify-content: space-between;
+        align-items: center !important;
+        grid-template-columns: 2fr 0.05fr 1fr 1fr;
+    }
+
+    #completed-r340{
+        font-size : 2.5rem;
+        color: #4FB477;
+
+    }
+
+    #completed-r350{
+        font-size : 2.5rem;
+    }
+
         .header {
             display: flex;
             flex-direction: row;
@@ -206,7 +223,8 @@
         }
 
         .kpis #completed {
-            color: #4FB477;
+            
+            color: #3d8056;
         }
 
         .kpis #planned {
@@ -301,8 +319,8 @@
 
     <section id="home">
         <div class="header">
-            <h1>
-                Servermigration 2023
+            <h1 id ="bestellstatus">
+                Bestellstatus: X / X
             </h1>
             <div class="refresh-search-container">
                 <!-- Refresh button -->
@@ -318,7 +336,7 @@
         <div class="project-box">
             <div class="box-line">
                 <div class ="title">
-                    Status Servermigration R350                 
+                    Status Servermigration (R340-SSD/R350)               
                 </div>
             </div>
             <div class="kpis" id="top">
@@ -337,15 +355,36 @@
             <div class = "completed-planned-box">
                 <div class="kpis" id = "chart-nso">
                     <div class ="kpi-box" id="completed">
-                        <div class ="kpi-value" id="completed-nso">
-                            10                                      
+                        <div class="kpi-div">
+                            <div class ="kpi-value" id="completed-nso">
+                                10                                      
+                            </div>
+                            <div class ="kpi-value">
+                                                                    
+                            </div>
+                            <div class ="kpi-value" id="completed-r340">
+                                10                                      
+                            </div>
+                            <div class ="kpi-value" id="completed-r350">
+                                10                                      
+                            </div>
                         </div>
 
                         <hr class = "completed-divider">
-                        <div class ="kpi-title">
-                            Completed              
+                        <div class="kpi-div">
+                            <div class ="kpi-title">
+                                Completed              
+                            </div>
+                            <div class ="kpi-value">
+                                                                    
+                            </div>
+                            <div class ="kpi-title">
+                                R340-SSD              
+                            </div>
+                            <div class ="kpi-title">
+                                R350              
+                            </div>
                         </div>
-
 
 
                     </div>
@@ -394,7 +433,7 @@
         
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!D2:G2?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!D2:K2?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -403,12 +442,31 @@
                 const plannedValue = data[0][1];
                 const completedValue = data[0][2];
                 const unplannedValue = data[0][3];
+                const completedR340 = data[0][4];
+                const completedR350 = data[0][5];
+                const bestellt = data[0][6];
+                const insgesamt = data[0][7];
 
 
                 // get the element with class ="kpi-value" and id = "planned"
                 const planned = document.querySelector(".kpi-value#planned-nso");
                 // set the innerHTML of the element to the value of the planned_value variable
                 planned.innerHTML = plannedValue;
+
+                // get the element with class ="kpi-value" and id = "planned"
+                const bestellstatus = document.querySelector("#bestellstatus");
+                const newText = "Bestellstatus: " + bestellt + " / " + insgesamt;
+                bestellstatus.textContent = newText;
+
+                // get the element with class ="kpi-value" and id = "planned"
+                const R340 = document.querySelector(".kpi-value#completed-r340");
+                // set the innerHTML of the element to the value of the planned_value variable
+                R340.innerHTML = completedR340;
+
+                // get the element with class ="kpi-value" and id = "planned"
+                const r350 = document.querySelector(".kpi-value#completed-r350");
+                // set the innerHTML of the element to the value of the planned_value variable
+                r350.innerHTML = completedR350;
 
                 // get the element with class ="kpi-value" and id = "completed"
                 const completed = document.querySelector(".kpi-value#completed-nso");
@@ -439,22 +497,47 @@
             var today = new Date();
             var month = today.getMonth();
 
-            const completedColor= "rgba(79, 180, 119, 1)";             
+            const completedColor= "rgba(61, 128, 86, 1)";             
             const plannedColor = "rgba(247, 179, 43, 1)";
             const unplannedColor = "rgba(186,27,29, 1)";                
 
             // Make a GET request to the Google Sheets API to retrieve the data for the table
             $.ajax({
-                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:Y8?key=${API_KEY}`,
+                url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:P8?key=${API_KEY}`,
                 type: 'GET',
                 success: function(response) {
                     const data = response.values;
                     const week_labels = data[0];
-                    const completedData = data[2];
-                    const plannedData = data[3];
-                    const unplannedData = data[4];
+                    // Check for data[2] and assign to completedData
+                    var completedData = data[2] ? data[2] : [];
+
+                    // Check for data[3] and assign to plannedData
+                    var plannedData = data[3] ? data[3] : [];
+
+                    // Check for data[4] and assign to unplannedData
+                    var unplannedData = data[4] ? data[4] : [];
 
                     const ctx = document.getElementById('NSO-chart').getContext('2d');
+
+                    var completed_min = [];
+                    var planned_min = [];
+                    var unplanned_min = [];
+
+                    function round_up(old_list, new_list){
+                    // Multiply each value by 5 and store it in the new list
+                        for (var i = 0; i < old_list.length; i++) {
+                            var new_list_value = 0;
+                            if (old_list[i] == 0) {new_list_value = 0}
+                            else if (old_list[i] > 10) {new_list_value = old_list[i]}
+                            else if (old_list[i] <= 10) {new_list_value = 10}
+                            new_list.push(new_list_value);
+                        }
+                        return new_list;
+                    }
+
+                    completed_min = round_up(completedData, completed_min);
+                    planned_min = round_up(plannedData, planned_min);
+                    unplanned_min = round_up(unplannedData, unplanned_min)
 
                     const options = {
                     legend: {
@@ -502,15 +585,19 @@
                         text: ''
                         },
                         datalabels: {
-                        display: function(context) {
-                            const index = context.dataIndex;
-                            return (
-                                completedData[index] !== '0' ||
-                                plannedData[index] !== '0' ||
-                                unplannedData[index] !== '0' ||
-                                (completedData[index] === '0' && plannedData[index] === '0' && unplannedData[index] === '0')
-                            );
-                        },
+                            formatter: function (value, context) {
+                            // Display nso[index] as the label on the bars for the "nso_min" dataset
+                            if (context.dataset.label === "Completed") {
+                                return completedData[context.dataIndex];
+                            }
+                            if (context.dataset.label === "Planned") {
+                                return plannedData[context.dataIndex];
+                            }
+                            if (context.dataset.label === "Unplanned") {
+                                return unplannedData[context.dataIndex];
+                            }
+                            return value;
+                            },
 
                         anchor: 'end',
                         align: 'start',
@@ -529,7 +616,6 @@
                         }
                     }
                     };
-
                     
                     const myChart = new Chart(ctx, {
                     type: 'bar',
@@ -537,17 +623,19 @@
                         labels: week_labels,
                         datasets: [{
                         label: 'Completed',
-                        backgroundColor: completedColor,
-                        data: completedData,
+                        backgroundColor: function(context) {
+                            return context.dataIndex === 0 ? "rgba(79, 180, 119, 1)" : completedColor;
+                            },
+                        data: completed_min,
                         borderWidth: 1
                         }, {
                         label: 'Planned',
-                        data: plannedData,
+                        data: planned_min,
                         backgroundColor: plannedColor,
                         borderWidth: 1
                         }, {
                         label: 'Unplanned',
-                        data: unplannedData,
+                        data: unplanned_min,
                         backgroundColor: unplannedColor,
                         borderWidth: 1
                         } ]
@@ -583,7 +671,7 @@ function getLastNumberIndex(arr) {
         const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
 
         $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:Y9?key=${API_KEY}`,
+            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:AA9?key=${API_KEY}`,
             type: 'GET',
             success: function (response) {
                 // The response from the API includes the data for the table in the "values" property
@@ -604,7 +692,8 @@ function getLastNumberIndex(arr) {
 
                 const chartDiv = document.getElementById("chart-nso");
 
-                chartDiv.style.gridTemplateColumns = `${completed_week}fr ${planned_week - completed_week}fr ${24 - planned_week}fr `;
+                chartDiv.style.gridTemplateColumns = `2.5fr 1fr 1fr`;
+                
 
                 loadNSOchart();
             }

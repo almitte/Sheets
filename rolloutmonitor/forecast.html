@@ -154,7 +154,8 @@
                 <th class="short">KIOSKE</th>
                 <th class="short">Schließung</th>
                 <th class="short">Eröffnung</th>
-                <th class="short">KW Eröffnung</th>
+                <th class="short">RFM I</th>
+                <th class="short">RFM II</th>
                 <th class="comment">Bemerkung</th>
               </tr>
             </thead>
@@ -178,7 +179,7 @@
 
         // Make a GET request to the Google Sheets API to retrieve the data for the table
         $.ajax({
-          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Forecast!A1:L100?key=${API_KEY}`,
+          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Forecast!A1:M100?key=${API_KEY}`,
           type: 'GET',
           success: function (response) {
             // The response from the API includes the data for the table in the "values" property
@@ -242,6 +243,7 @@
               <td>${item[9]}</td>
               <td>${item[10]}</td>
               <td>${item[11]}</td>
+              <td>${item[12]}</td>
             </tr>
           `);
             });
