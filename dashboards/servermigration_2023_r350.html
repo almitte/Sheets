@@ -179,6 +179,7 @@
         #chart-nso {
             margin-left: 0 !important;
             margin-right: 0 !important;
+            grid-template-columns: 2.5fr 1fr 1fr;
         }
 
         #chart-nso .kpi-value {
@@ -661,60 +662,16 @@ function getLastNumberIndex(arr) {
   }
 </script>
 
-    <script>
-        var unplanned_month_nso = 0;
-        var unplanned_month_irlx = 0;
-        // Write a function that sets the grid-template-columns property of the div with the id chart to the value of the input
-        function setGridTemplateColumnsNSO() {
-
-        const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
-        const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-        $.ajax({
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B6:AA9?key=${API_KEY}`,
-            type: 'GET',
-            success: function (response) {
-                // The response from the API includes the data for the table in the "values" property
-                const data = response.values;
-                const completedData = data[0];
-                const plannedData = data[1];
-                const unplannedData = data[2];
-
-                var completed_week = completedData.length;
-                var planned_week = plannedData.length;
-                var unplanned_week = unplannedData.length;
-
-                // print completed week to console
-                console.log(completed_week);
-                console.log(planned_week);
-                console.log(unplanned_week);
-
-
-                const chartDiv = document.getElementById("chart-nso");
-
-                chartDiv.style.gridTemplateColumns = `2.5fr 1fr 1fr`;
-                
-
-                loadNSOchart();
-            }
-        });
-        }
-    </script>
-
 <script>
 countUp();
 </script>
-
-    
-
     <script>
         function openForm() {
             const form = document.querySelector(".form-container");
             if (checkPassword()) {
                 passwordIsCorrect = true;
-                setGridTemplateColumnsNSO();
                 loadNSOKPIValues();
-                
+                loadNSOchart();
                 form.remove();
             } else {
                 document.getElementById("myForm").style.display = "block";
@@ -728,10 +685,8 @@ countUp();
                     if (passwordInput.value === "mcdonalds") {
                         setCookie("passwordIsCorrect", "true", 30);
                         form.remove();
-
-                        setGridTemplateColumnsNSO();
+                        loadNSOchart();
                         loadNSOKPIValues();
-                
 
                     } else {
                         errorMark.style.display = "inline";
