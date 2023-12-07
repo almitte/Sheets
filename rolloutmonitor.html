@@ -1,203 +1,288 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-	@font-face {
-		font-family: "dashboardfont";
-		src: url("fonts/Roboto-Regular.ttf");
-	}
+	<style>
+		@font-face {
+			font-family: "dashboardfont";
+			src: url("fonts/Roboto-Regular.ttf");
+		}
 
-	* {
-		font-family: "dashboardfont", sans-serif !important;
-	}
+		* {
+			font-family: "dashboardfont", sans-serif !important;
+		}
 
-	:root {
-		--font-big-size: 2rem;
-		--font-medium-size: 1.5rem;
-		--font-small-size: 1rem;
-		--main-dark: #009879;
-		--main-medium: #006a60;
-		--main-light: #40b3a2;
-		--accent-bright: #ffc10b;
-		--accent-medium: #ffd23f;
-		--accent-light: #ffe57a;
-		--margin-big: 2rem;
-		--margin-medium: 1rem;
-		--magin-small: 0.5rem;
+		:root {
+			--font-big-size: 2rem;
+			--font-medium-size: 1.5rem;
+			--font-small-size: 1rem;
+			--main-dark: #009879;
+			--main-medium: #006a60;
+			--main-light: #40b3a2;
+			--accent-bright: #ffc10b;
+			--accent-medium: #ffd23f;
+			--accent-light: #ffe57a;
+			--margin-big: 2rem;
+			--margin-medium: 1rem;
+			--magin-small: 0.5rem;
 
-		--color: #ffc20bd0;
-	}
+			--color: #ffc20bd0;
+		}
 
-	.grid-container {
-		display: flex;
-		column-gap: 30px;
-		align-items: center;
-		justify-content: center;
-		flex-wrap: wrap;
-	}
+		.grid-container {
+			display: flex;
+			column-gap: 30px;
+			align-items: center;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
 
-	.grid-item {
-		display: inline-grid;
-	}
+		.grid-item {
+			display: inline-grid;
+		}
 
-	.contact-button {
-		border-radius: 26px;
-		background-color: #7371FC;
-		border: none;
-		margin-left: 5px;
-		font-size: 15px;
-		padding: 8px 16px;
-		color: white;
-	}
+		.contact-button {
+			border-radius: 26px;
+			background-color: #7371fc;
+			border: none;
+			margin-left: 5px;
+			font-size: 15px;
+			padding: 8px 16px;
+			color: white;
+		}
 
-	.game-button {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		border-radius: 26px;
-		background-color: rgb(192, 192, 192);
-		border: none;
-		margin-left: 5px;
-		font-size: 15px;
-		padding: 8px 16px;
-		color: #fc5130;
-		display: none;
-	}
+		.game-button {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			border-radius: 26px;
+			background-color: rgb(192, 192, 192);
+			border: none;
+			margin-left: 5px;
+			font-size: 15px;
+			padding: 8px 16px;
+			color: #fc5130;
+			display: none;
+		}
 
-	.game-button:hover {
-		font-weight: bold;
+		.game-button:hover {
+			font-weight: bold;
+		}
 
-	}
+		.contact-button:hover {
+			font-weight: bold;
+		}
 
-	.contact-button:hover {
-		font-weight: bold;
-	}
+		#login-popup {
+			display: none;
+			/* hidden by default */
+			position: fixed;
+			/* stay in place */
+			z-index: 1;
+			/* sit on top */
+			left: 0;
+			top: 0;
+			width: 100%;
+			/* full width */
+			height: 100%;
+			/* full height */
+			overflow: auto;
+			/* enable scroll if needed */
+			background-color: rgb(0, 0, 0);
+			/* fallback color */
+			background-color: rgba(0, 0, 0, 0.4);
+			/* black w/ opacity */
+		}
 
-	#login-popup {
-		display: none;
-		/* hidden by default */
-		position: fixed;
-		/* stay in place */
-		z-index: 1;
-		/* sit on top */
-		left: 0;
-		top: 0;
-		width: 100%;
-		/* full width */
-		height: 100%;
-		/* full height */
-		overflow: auto;
-		/* enable scroll if needed */
-		background-color: rgb(0, 0, 0);
-		/* fallback color */
-		background-color: rgba(0, 0, 0, 0.4);
-		/* black w/ opacity */
-	}
+		form {
+			background-color: #fefefe;
+			margin: 15% auto;
+			/* 15% from the top and centered */
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			/* Could be more or less, depending on screen size */
+		}
+	</style>
 
-	form {
-		background-color: #fefefe;
-		margin: 15% auto;
-		/* 15% from the top and centered */
-		padding: 20px;
-		border: 1px solid #888;
-		width: 80%;
-		/* Could be more or less, depending on screen size */
-	}
-</style>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Rollout Monitor</title>
+		<link rel="icon" href="images/Logo SOS IS GmbH Neu shadow_tif.webp" />
+		<link rel="stylesheet" href="dist/css/style.css" />
+		<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
+		<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+	</head>
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Rollout Monitor</title>
-	<link rel="icon" href="images/Logo SOS IS GmbH Neu shadow_tif.webp">
-	<link rel="stylesheet" href="dist/css/style.css">
-	<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
-	<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
-</head>
-
-<body onload="showGame()" class="is-boxed has-animations">
-
-
-	<div class="body-wrap boxed-container">
-
-		<main>
-
-
-			<section class="features section">
-				<div class="features-header text-center">
-					<div class="header"
-						style="background-color: var(--main-dark); margin-top: 20px; margin-left:70px; margin-right: 70px;margin-bottom: 20px; padding-top:20px; padding-bottom: 10px;border-radius: 42px;">
-						<a href="index.html"><img
-								src=" https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
-								alt="McDonald's logo"
-								style="display: block; margin: auto auto; width:100px; text-align: center;"></a>
-						<h2 style="margin:0px; color:white">McDonald's
-							Rollout Monitor</h2>
+	<body onload="showGame()" class="is-boxed has-animations">
+		<div class="body-wrap boxed-container">
+			<main>
+				<section class="features section">
+					<div class="features-header text-center">
+						<div
+							class="header"
+							style="
+								background-color: var(--main-dark);
+								margin-top: 20px;
+								margin-left: 70px;
+								margin-right: 70px;
+								margin-bottom: 20px;
+								padding-top: 20px;
+								padding-bottom: 10px;
+								border-radius: 42px;
+							"
+						>
+							<a href="index.html"
+								><img
+									src=" https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
+									alt="McDonald's logo"
+									style="
+										display: block;
+										margin: auto auto;
+										width: 100px;
+										text-align: center;
+									"
+							/></a>
+							<h2 style="margin: 0px; color: white">
+								McDonald's Rollout Monitor
+							</h2>
+						</div>
+						<p class="section-paragraph">
+							Dieses Dashboard soll Ihnen einen schnellen
+							Überblick über alle aktuellen und geplanten
+							Rolloutprojekte geben. <br />Weiterhin finden Sie
+							ein Archiv mit den abgeschlossenen Rolloutprojekten
+							der vergangenen Jahre.
+						</p>
+						<p class="section-paragraph">
+							Bei Fragen, Problemen oder Anregungen nutzen Sie
+							bitte eine der untenstehenden Kontaktmöglichkeiten.
+						</p>
 					</div>
-					<p class=" section-paragraph">Dieses Dashboard soll Ihnen einen schnellen Überblick
-						über
-						alle aktuellen und geplanten Rolloutprojekte geben. <br>Weiterhin finden Sie ein
-						Archiv mit den abgeschlossenen Rolloutprojekten der vergangenen
-						Jahre.</p>
-					<p class="section-paragraph"> Bei Fragen, Problemen oder Anregungen nutzen Sie bitte eine der
-						untenstehenden Kontaktmöglichkeiten.</p>
 
-				</div>
-
-				<div class="grid-container">
-					<div class="grid-item">
-						<div class="feature text-center is-revealing" style="text-align:center;">
-							<div class="feature-inner">
-								<div class="feature-icon" style="background:#FFD2DA; pointer-events: auto;">
-									<svg width="88" height="88" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-										style="padding:17px;">
-										<g fill="none" fill-rule="nonzero">
+					<div class="grid-container">
+						<div class="grid-item">
+							<div
+								class="feature text-center is-revealing"
+								style="text-align: center"
+							>
+								<div class="feature-inner">
+									<div
+										class="feature-icon"
+										style="
+											background: #ffd2da;
+											pointer-events: auto;
+										"
+									>
+										<svg
+											width="88"
+											height="88"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 48 48"
+											style="padding: 17px"
+										>
+											<g fill="none" fill-rule="nonzero">
+												<path
+													d="M32.49 15.51c-2.35-2.34-5.42-3.51-8.49-3.51v12l-8.49 8.49c4.69 4.69 12.28 4.69 16.97 0 4.69-4.69 4.69-12.29.01-16.98zm-8.49-11.51c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.96 20-20c0-11.05-8.95-20-20-20zm0 36c-8.84 0-16-7.16-16-16s7.16-16 16-16 16 7.16 16 16-7.16 16-16 16z"
+													fill="#FF6381"
+												/>
+											</g>
+										</svg>
+									</div>
+									<h4 class="feature-title h3-mobile mb-8">
+										Aktuelle Rolloutprojekte
+									</h4>
+									<p class="text-sm">
+										Detaillierte Übersicht der aktuellen
+										Rolloutprojekte
+									</p>
+									<button
+										class="go-to-button"
+										style="
+											margin-left: -70px;
+											position: absolute;
+											border: none;
+											color: white;
+											padding: 5px 20px;
+											text-align: center;
+											text-decoration: none;
+											font-size: 16px;
+											cursor: pointer;
+											border-radius: 25px;
+											font-weight: bold;
+											background-color: #ff6381;
+										"
+										onclick="location.href='rolloutmonitor/detail.html';"
+									>
+										Detailplanung
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="grid-item">
+							<div class="feature text-center is-revealing">
+								<div class="feature-inner">
+									<div
+										class="feature-icon"
+										style="background: #e0e1fe"
+									>
+										<svg
+											width="88"
+											height="88"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 153 145"
+											style="padding: 25px"
+										>
 											<path
-												d="M32.49 15.51c-2.35-2.34-5.42-3.51-8.49-3.51v12l-8.49 8.49c4.69 4.69 12.28 4.69 16.97 0 4.69-4.69 4.69-12.29.01-16.98zm-8.49-11.51c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.96 20-20c0-11.05-8.95-20-20-20zm0 36c-8.84 0-16-7.16-16-16s7.16-16 16-16 16 7.16 16 16-7.16 16-16 16z"
-												fill="#FF6381" />
-										</g>
-									</svg>
+												d="M138.702 12.2457C133.369 12.9785 128.94 13.5512 124.523 14.2069C121.545 14.6491 118.589 15.2428 115.612 15.696C114.564 15.9073 113.487 15.9359 112.428 15.7806C111.115 15.5114 109.954 14.6381 109.978 13.1771C109.969 12.1314 110.34 11.1184 111.021 10.3252C112.007 9.49923 113.168 8.90887 114.416 8.5988C116.684 7.93854 119.016 7.49816 121.323 6.97513C128.66 5.30244 135.998 3.62959 143.336 1.95648C148.98 0.661836 152.254 2.7629 152.601 8.52987C152.91 13.6774 152.671 18.864 152.531 24.0296C152.392 29.1952 152.115 34.3531 151.814 39.5103C151.666 40.8671 151.437 42.2139 151.13 43.5437C149.33 43.9405 148.626 43.0907 148.326 42.031C147.509 39.1368 146.789 36.2134 146.108 33.283C145.526 30.7863 145.057 28.2643 144.402 25.0963C143.062 26.4803 141.931 27.3865 141.122 28.5226C133.383 39.4047 125.721 50.3411 117.988 61.2278C114.371 66.3202 110.692 71.368 106.951 76.3705C105.575 78.2982 104.008 80.0816 102.273 81.6928C99.3875 84.2465 96.1334 84.3468 92.7603 82.1543C90.9622 80.9859 89.3503 79.5314 87.6505 78.2057C82.5666 74.2473 77.4096 70.399 71.4273 67.2116C70.3238 68.2169 69.276 69.2817 68.2896 70.4016C59.7451 81.217 51.2234 92.0506 42.7244 102.902C38.9949 107.641 35.299 112.409 31.4486 117.049C30.0752 118.697 28.4816 120.148 26.7126 121.36C24.5406 122.845 23.4424 122.326 20.9153 119.106C21.3507 117.985 21.8793 116.903 22.4954 115.869C35.4588 97.3431 48.4495 78.8355 61.4676 60.3469C66.9617 52.5616 69.9409 51.8023 78.1845 56.3925C83.0646 59.1112 87.6732 62.3154 92.391 65.3214C93.6458 66.1215 94.8527 66.996 96.3857 68.0447L138.702 12.2457Z"
+												fill="#8D92FA"
+											/>
+											<path
+												d="M144.14 142.413C144.066 142.143 144.02 141.866 143.977 141.61C143.862 140.939 143.754 140.306 143.22 140.047C141.836 139.388 140.393 138.862 138.909 138.476C129.118 135.849 118.923 135.273 109.317 134.908C107.402 134.835 105.488 134.761 103.574 134.685C86.5995 134.017 69.0464 133.326 51.7466 134.4C41.624 135.027 31.3236 135.557 21.3627 136.069C18.5879 136.212 15.8133 136.356 13.039 136.499C12.3738 136.517 11.7083 136.482 11.0487 136.395L10.528 136.343C10.4828 136.175 10.4368 136.017 10.3935 135.868C10.2698 135.532 10.2006 135.178 10.1885 134.82C10.5365 130.283 10.8967 125.746 11.2693 121.21C11.8301 114.268 12.4103 107.089 12.9109 100.022C14.7142 74.5715 14.8732 52.1354 13.3979 31.4315C12.6935 22.1438 11.0782 12.9479 8.57533 3.97664C8.30413 3.14344 7.91184 2.3546 7.41101 1.63579C7.22087 1.33284 7.03335 1.03404 6.86971 0.734974L6.60513 0.248535L6.08449 0.435019C3.54318 1.3445 3.55287 3.24527 3.56192 4.63312V4.93656C3.5257 15.286 3.49983 25.6346 3.48431 35.9827C3.47978 38.4775 3.49271 40.9723 3.50499 43.467C3.53022 48.4313 3.55611 53.5654 3.44033 58.6061C3.10334 73.5073 2.66028 87.8934 2.11632 105.148C1.86212 113.204 1.52901 121.461 1.12605 129.688C0.959171 133.097 0.979175 137.592 2.63048 142.132L2.69515 142.307L2.84263 142.421C5.98289 144.865 9.15811 144.875 11.7111 144.862C15.0051 144.862 18.2995 144.854 21.5943 144.839C25.4105 144.828 29.2266 144.819 33.0428 144.816C57.4637 144.821 81.8842 144.834 106.305 144.853H110.614C112.605 144.853 114.597 144.862 116.591 144.879C118.66 144.891 120.766 144.904 122.881 144.904C125.043 144.904 127.215 144.891 129.37 144.85C134.166 144.72 138.941 144.173 143.642 143.213L144.325 143.084L144.14 142.413Z"
+												fill="#4950F6"
+											/>
+											<defs>
+												<clipPath id="clip0">
+													<rect
+														fill="white"
+														height="48"
+														transform="translate(0.777344)"
+														width="48"
+													/>
+												</clipPath>
+											</defs>
+										</svg>
+									</div>
+									<h4 class="feature-title h3-mobile mb-8">
+										Geplante Rolloutprojekte
+									</h4>
+									<p class="text-sm">
+										Forecast der geplanten Rolloutprojekte
+									</p>
+									<button
+										class="go-to-button"
+										style="
+											margin-left: -50px;
+											position: absolute;
+											border: none;
+											color: white;
+											padding: 5px 20px;
+											text-align: center;
+											text-decoration: none;
+											font-size: 16px;
+											cursor: pointer;
+											border-radius: 25px;
+											font-weight: bold;
+											background-color: #4950f6;
+										"
+										onclick="location.href='rolloutmonitor/forecast.html';"
+									>
+										Forecast
+									</button>
 								</div>
-								<h4 class="feature-title h3-mobile mb-8">Aktuelle Rolloutprojekte</h4>
-								<p class="text-sm">Detaillierte Übersicht der aktuellen Rolloutprojekte</p>
-								<button class="go-to-button"
-									style="margin-left: -70px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#FF6381"
-									onclick="location.href='rolloutmonitor/detail.html';">Detailplanung</button>
-							</div>
-
-						</div>
-					</div>
-					<div class="grid-item">
-						<div class="feature text-center is-revealing">
-							<div class="feature-inner">
-								<div class="feature-icon" style="background:#E0E1FE;">
-									<svg width="88" height="88" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 153 145"
-										style="padding:25px;">
-										<path
-											d="M138.702 12.2457C133.369 12.9785 128.94 13.5512 124.523 14.2069C121.545 14.6491 118.589 15.2428 115.612 15.696C114.564 15.9073 113.487 15.9359 112.428 15.7806C111.115 15.5114 109.954 14.6381 109.978 13.1771C109.969 12.1314 110.34 11.1184 111.021 10.3252C112.007 9.49923 113.168 8.90887 114.416 8.5988C116.684 7.93854 119.016 7.49816 121.323 6.97513C128.66 5.30244 135.998 3.62959 143.336 1.95648C148.98 0.661836 152.254 2.7629 152.601 8.52987C152.91 13.6774 152.671 18.864 152.531 24.0296C152.392 29.1952 152.115 34.3531 151.814 39.5103C151.666 40.8671 151.437 42.2139 151.13 43.5437C149.33 43.9405 148.626 43.0907 148.326 42.031C147.509 39.1368 146.789 36.2134 146.108 33.283C145.526 30.7863 145.057 28.2643 144.402 25.0963C143.062 26.4803 141.931 27.3865 141.122 28.5226C133.383 39.4047 125.721 50.3411 117.988 61.2278C114.371 66.3202 110.692 71.368 106.951 76.3705C105.575 78.2982 104.008 80.0816 102.273 81.6928C99.3875 84.2465 96.1334 84.3468 92.7603 82.1543C90.9622 80.9859 89.3503 79.5314 87.6505 78.2057C82.5666 74.2473 77.4096 70.399 71.4273 67.2116C70.3238 68.2169 69.276 69.2817 68.2896 70.4016C59.7451 81.217 51.2234 92.0506 42.7244 102.902C38.9949 107.641 35.299 112.409 31.4486 117.049C30.0752 118.697 28.4816 120.148 26.7126 121.36C24.5406 122.845 23.4424 122.326 20.9153 119.106C21.3507 117.985 21.8793 116.903 22.4954 115.869C35.4588 97.3431 48.4495 78.8355 61.4676 60.3469C66.9617 52.5616 69.9409 51.8023 78.1845 56.3925C83.0646 59.1112 87.6732 62.3154 92.391 65.3214C93.6458 66.1215 94.8527 66.996 96.3857 68.0447L138.702 12.2457Z"
-											fill="#8D92FA" />
-										<path
-											d="M144.14 142.413C144.066 142.143 144.02 141.866 143.977 141.61C143.862 140.939 143.754 140.306 143.22 140.047C141.836 139.388 140.393 138.862 138.909 138.476C129.118 135.849 118.923 135.273 109.317 134.908C107.402 134.835 105.488 134.761 103.574 134.685C86.5995 134.017 69.0464 133.326 51.7466 134.4C41.624 135.027 31.3236 135.557 21.3627 136.069C18.5879 136.212 15.8133 136.356 13.039 136.499C12.3738 136.517 11.7083 136.482 11.0487 136.395L10.528 136.343C10.4828 136.175 10.4368 136.017 10.3935 135.868C10.2698 135.532 10.2006 135.178 10.1885 134.82C10.5365 130.283 10.8967 125.746 11.2693 121.21C11.8301 114.268 12.4103 107.089 12.9109 100.022C14.7142 74.5715 14.8732 52.1354 13.3979 31.4315C12.6935 22.1438 11.0782 12.9479 8.57533 3.97664C8.30413 3.14344 7.91184 2.3546 7.41101 1.63579C7.22087 1.33284 7.03335 1.03404 6.86971 0.734974L6.60513 0.248535L6.08449 0.435019C3.54318 1.3445 3.55287 3.24527 3.56192 4.63312V4.93656C3.5257 15.286 3.49983 25.6346 3.48431 35.9827C3.47978 38.4775 3.49271 40.9723 3.50499 43.467C3.53022 48.4313 3.55611 53.5654 3.44033 58.6061C3.10334 73.5073 2.66028 87.8934 2.11632 105.148C1.86212 113.204 1.52901 121.461 1.12605 129.688C0.959171 133.097 0.979175 137.592 2.63048 142.132L2.69515 142.307L2.84263 142.421C5.98289 144.865 9.15811 144.875 11.7111 144.862C15.0051 144.862 18.2995 144.854 21.5943 144.839C25.4105 144.828 29.2266 144.819 33.0428 144.816C57.4637 144.821 81.8842 144.834 106.305 144.853H110.614C112.605 144.853 114.597 144.862 116.591 144.879C118.66 144.891 120.766 144.904 122.881 144.904C125.043 144.904 127.215 144.891 129.37 144.85C134.166 144.72 138.941 144.173 143.642 143.213L144.325 143.084L144.14 142.413Z"
-											fill="#4950F6" />
-										</g>
-										<defs>
-											<clipPath id="clip0">
-												<rect fill="white" height="48" transform="translate(0.777344)"
-													width="48" />
-											</clipPath>
-										</defs>
-									</svg>
-
-								</div>
-								<h4 class="feature-title h3-mobile mb-8">Geplante Rolloutprojekte</h4>
-								<p class="text-sm">Forecast der geplanten Rolloutprojekte</p>
-								<button class="go-to-button"
-									style="margin-left: -50px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#4950F6"
-									onclick="location.href='rolloutmonitor/forecast.html';">Forecast</button>
 							</div>
 						</div>
-					</div>
-					<!--<div class="grid-item">
+						<!--<div class="grid-item">
 						<div class="feature text-center is-revealing">
 							<div class="feature-inner">
 								<div class="feature-icon" style="background:#4daa567c;">
@@ -219,71 +304,98 @@
 							</div>
 						</div>
 					</div> -->
+					</div>
+				</section>
+			</main>
 
-
+			<div
+				style="background-color: var(--main-medium); text-align: right"
+			>
+				<div style="padding: 20px; float: center; text-align: center">
+					<p
+						style="
+							color: white;
+							margin: 0px;
+							font-size: 15px;
+							font-weight: bold;
+						"
+					>
+						Fragen oder Probleme mit dem Rollout Monitor?
+					</p>
+					<button
+						class="contact-button"
+						onclick="location.href='mailto:torsten.mitte.extern@de.mcd.com?cc=almista01@gmail.com&subject=Frage bezüglich Rollout Monitor';"
+					>
+						Schreiben Sie uns
+					</button>
+					<p
+						style="
+							color: white;
+							margin: 0px;
+							margin-top: 10px;
+							font-size: 15px;
+							font-weight: bold;
+						"
+					>
+						oder per Telefon: 0172/3841911 (Ansprechpartner: Torsten
+						Mitte)
+					</p>
+					<div>
+						<button
+							class="game-button"
+							id="button"
+							onclick="location.href='minigame.html'"
+							style="
+								margin-right: 20px;
+								margin-bottom: 20px;
+								margin-top: 0px;
+							"
+						>
+							Dont Press
+						</button>
+					</div>
+					<hr />
 				</div>
-
-			</section>
-
-		</main>
-
-		<div style="background-color: var(--main-medium);  text-align:right">
-
-			<div style="padding:20px; float:center; text-align: center;">
-
-				<p style="color:white; margin:0px; font-size: 15px; font-weight: bold;">Fragen oder Probleme mit
-					dem
-					Rollout Monitor?</p>
-				<button class="contact-button"
-					onclick="location.href='mailto:torsten.mitte.extern@de.mcd.com?cc=almista01@gmail.com&subject=Frage bezüglich Rollout Monitor';">Schreiben
-					Sie uns</button>
-				<p style="color:white; margin:0px; margin-top:10px; font-size: 15px; font-weight: bold;">oder per
-					Telefon: 0172/3841911
-					(Ansprechpartner: Torsten Mitte)
-				</p>
-				<div><button class="game-button" id=button onclick="location.href='minigame.html'"
-						style="margin-right: 20px; margin-bottom: 20px; margin-top: 0px;">Dont Press</button></div>
-				<hr>
-
 			</div>
-
 		</div>
-	</div>
 
-	<script src="dist/js/main.min.js"></script>
-	<script>
-		function showGame() {
-			if (checkPassword()) {
-				document.getElementById("button").style.display = "inline-block";
-			} else {
-				document.getElementById("button").style.display = "none";
+		<script src="dist/js/main.min.js"></script>
+		<script>
+			function showGame() {
+				if (checkPassword()) {
+					document.getElementById("button").style.display =
+						"inline-block";
+				} else {
+					document.getElementById("button").style.display = "none";
+				}
 			}
-		}
-	</script>
-	<script>
-		function checkPassword() {
-			var passwordIsCorrect = getCookie("passwordIsCorrect");
-			if (passwordIsCorrect === "true") {
-				return true;
-			} else {
-				return false;
+		</script>
+		<script>
+			function checkPassword() {
+				var passwordIsCorrect = getCookie("passwordIsCorrect");
+				if (passwordIsCorrect === "true") {
+					return true;
+				} else {
+					return false;
+				}
 			}
-		}
+		</script>
+		<script>
+			function setCookie(cname, cvalue, exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+				var expires = "expires=" + d.toUTCString();
+				document.cookie =
+					cname + "=" + cvalue + ";" + expires + ";path=/";
+			}
 
-	</script>
-	<script>
-		function setCookie(cname, cvalue, exdays) {
-			var d = new Date();
-			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-			var expires = "expires=" + d.toUTCString();
-			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-		}
-
-		function getCookie(cname) {
-			var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-			return cookieValue
-		}
-	</script>
-</body>
-
+			function getCookie(cname) {
+				var cookieValue = document.cookie.replace(
+					/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/,
+					"$1"
+				);
+				return cookieValue;
+			}
+		</script>
+	</body>
 </html>

@@ -1,755 +1,882 @@
 <!DOCTYPE html>
 <html lang="de">
-
-<head>
-    <title>Rollout Monitor</title>
-    <style>
-        :root {
-            --font-big-size: 2rem;
-            --font-medium-size: 1.5rem;
-            --font-small-size: 1rem;
-            --main-dark: #009879;
-            --main-medium: #006a60;
-            --main-light: #40b3a2;
-            --accent-bright: #ffc10b;
-            --accent-medium: #ffd23f;
-            --accent-light: #ffe57a;
-            --margin-big: 2rem;
-            --margin-medium: 1rem;
-            --magin-small: 0.5rem;
-        }
-
-        @font-face {
-            font-family: "dashboardfont";
-            src: url("fonts/Roboto-Regular.ttf");
-        }
-
-        * {
-            font-family: "dashboardfont", sans-serif;
-            animation: fadein 0.1s;
-        }
-
-
-        body {
-            background-color: #f7f7f7;
-        }
-
-        /* Add the fade-in animation */
-        @keyframes fadein {
-            from {
-                opacity: 0;
-            }
-
-            to {
-                opacity: 1;
-            }
-        }
-
-        .KPI-grid {
-            grid-gap: 1rem;
-            margin-right: 2rem;
-            margin-left: 2rem;
-        }
-
-        .single {
-            grid-gap: 1rem;
-            margin-right: 2rem;
-            margin-left: 2rem;
-        }
-
-        div>div {
-            margin: 0;
-            padding: 0;
-        }
-
-        .KPI-box {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-            margin: 1rem;
-            border-radius: 0.5rem;
-            overflow-wrap: break-word;
-            background-clip: border-box;
-            border-width: 0px;
-            border-style: solid;
-            border-color: rgb(217, 222, 227);
-            transition: all 0.3s ease 0s;
-        }
-
-        .KPI-box:hover {
-            box-shadow: none;
-        }
-
-        .KPI-box h1 {
-            color: var(--main-medium);
-            font-size: 3rem;
-            font-weight: 600;
-            margin: 0;
-            margin-top: 1.5rem;
-            animation: fadein 1s;
-        }
-
-        .KPI-box h2 {
-            color: #566a7f;
-            font-size: 1.2rem;
-            font-weight: 400;
-            margin: 0;
-            padding-bottom: 1rem;
-        }
-
-        .KPI-box h3 {
-            color: #566a7f;
-            font-size: 1.2rem;
-            font-weight: 500;
-            margin: 0;
-            margin-top: 1rem;
-        }
-
-        .Combine {
-            grid-gap: 1rem;
-            display: flex;
-            margin-left: 2.5rem;
-            margin-right: 2.5rem;
-            margin-top: 1rem;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        #combine-2 {
-            display: block;
-        }
-
-        .red {
-            color: #fc5130 !important;
-        }
-
-        .chart {
-            flex-basis: 33%;
-            margin-bottom: 2rem;
-            overflow: hidden;
-            margin: 0;
-        }
-
-        .chart canvas {
-            max-width: 380px !important;
-            min-height: 390px !important;
-            margin: 0 auto;
-            padding-top: 1rem;
-        }
-
-        .Total {
-            flex-basis: 66%;
-        }
-
-        @media (max-width: 1200px) {
-            .Combine {
-                flex-wrap: wrap;
-            }
-        }
-
-
-
-        #KPIs {
-            display: flex;
-            gap: 5vw;
-            margin-bottom: 1rem;
-        }
-
-    	.lineChart {
-            margin-left: 4rem;
-            margin-right: 4rem;
-            margin-bottom: 2rem;
-        }
-
-        .header {
-            display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: center !important;
-            margin-top: var(--magin-small) !important;
-        }
-
-        .header h1 {
-            margin: 0 !important;
-        }
-
-    </style>
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta charset="utf-8" />
-    <title>Rollout Monitor</title>
-    <link rel="icon" href="../images/Logo SOS IS GmbH Neu shadow_tif.webp">
-    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script
-        src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js"></script>
-    <link rel="stylesheet" href="../styling/table.css">
-    <link rel="stylesheet" href="../styling/nav.css">
-    <link rel="stylesheet" href="../styling/search_and_refresh.css">
-    <link rel="stylesheet" href="../styling/header.css">
-    <link rel="stylesheet" href="../styling/info_box.css">
-    <link rel="stylesheet" href="../styling/background.css">
-    <link rel="stylesheet" href="../styling/div.css">
-    <link rel="stylesheet" href="../styling/popup.css">
-    <link rel="stylesheet" href="statustable.css">
-    <script src="../githubFileUpdater.js"></script>
-</head>
-
-<nav>
-    <div class="left"><a class="logo" href="../index.html">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
-                alt="McDonald's logo"></a>
-        <h2 id="text-long">McDonald's Rollout Monitor</h2>
-        <h2 id="text-short">McD Rollout Monitor</h2>
-    </div>
-    <div class="right">
-        <div class="dropdown" id="combined-dropdown">
-            <button class="dropbtn"><i class="fa fa-bars"></i>
-            </button>
-            <div class="dropdown-content">
-                <h3>NSO/IRLX</h3>
-                <a href="../rolloutmonitor.html">Home</a>
-                <a href="../rolloutmonitor/forecast.html">Forecast</a>
-                <a href="../rolloutmonitor/detail.html">Detailplanung</a>
-                <a href="../rolloutmonitor/installation.html">Rollout Status</a>
-                <a href="../rolloutmonitor/archiv.html">Archiv</a>
-                <hr>
-                <a href="../dashboards/projektstatus_server_rollout.html">Server Rollout</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">NSO/IRLX
-                <i class="fa fa-caret-down"></i>
-            </button>
-            <div class="dropdown-content">
-                <a href="../rolloutmonitor.html">Home</a>
-                <a href="../rolloutmonitor/forecast.html">Forecast</a>
-                <a href="../rolloutmonitor/detail.html">Detailplanung</a>
-                <!--<a href="../rolloutmonitor/installation.html">Rollout Status</a>-->
-                <a href="../rolloutmonitor/archiv.html">Archiv</a>
-            </div>
-        </div>
-        <div class="dropdown">
-            <button class="dropbtn">
-                <a href="../dashboards/projektstatus_server_rollout.html">Projektstatus Server Rollout</a>
-            </button>
-        </div>
-    </div>
-</nav>
-<body onload="openForm()">
-    <div class="form-popup" id="myForm">
-        <form class="form-container">
-            <h1>Login</h1>
-
-            <label class="error-mark" for="psw" style="display:none; color: red; font-size: 15px;"><b>Ungültiges
-                    Passwort</b></label>
-            <input type="password" placeholder="Enter Password" name="psw" required>
-            <button type="submit" class="btn">Login</button>
-        </form>
-    </div>
-    <section id="home">
-        <div class="header">
-            <h1>
-                Projektstatus Server Rollout
-            </h1>
-            <div class="refresh-search-container">
-                <!-- Refresh button -->
-                <button class="refresh-button" onclick="openForm();"><i class="fa fa-refresh"
-                        style="margin-right: 10px;"></i>Aktualisieren</button>
-                <!-- Search box container -->
-            </div>
-        </div>
-    </section id="home">
-    <section>
-        <div class="KPI-grid">
-            <div class="KPI-box">
-                <div class="Combine">
-                    <div class="Total">
-                        <h3>Status Server Rollout</h3>
-                        <div id="KPIs">
-                            <div id = "KPI">
-                                <h1 id="total_restaurants" style="color: #566a7f">&nbsp;</h1>
-                                <h2>Gesamtzahl Restaurants</h2>
-                            </div>
-                            <div id = "KPI">
-                                <h1 id="offen_restaurants" class="red">&nbsp;</h1>
-                                <h2>Offene Restaurants</h2>
-                            </div>
-                            <div id = "KPI">
-                                <h1 id="abgeschlossen_restaurants" style="color: var(--main-dark)">&nbsp;
-                                </h1>
-                                <h2>Abgeschlossene Restaurants</h2>
-                            </div>
-                        </div>
-                        <div class="status-table">
-                            <table id="status-table" class="sortable">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>RHS01</th>
-                                        <th>RHS02</th>
-                                        <th>Gesamt</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div class="chart">
-                        <div class="dropdown" id="dropdown-selector">
-                            <button class="dropbtn" id="selector" style="color:black; margin:0 auto;">Gesamt
-                                <i class="fa fa-caret-down"></i>
-                            </button>
-                            <div class="dropdown-content">
-                                <div class="dropdown-element">
-                                    <span>Gesamt</span>
-                                </div>
-                                <div class="dropdown-element">
-                                    <span>RHS01</span>
-                                </div>
-                                <div class="dropdown-element">
-                                    <span>RHS02</span>
-                                </div>
-                            </div>
-                        </div>
-                        <canvas id="myPieChart" width="350" height="350"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="single">
-            <div class="KPI-box" id="KPI-smaller">
-                <div class="Combine" id="combine-2">
-                    <h3>Anzahl getauschter Server</h3>
-                </div>
-                <div class="lineChart">
-                    <canvas id="lineChart" width="1400" height="330"></canvas>
-                </div>
-            </div>
-        </div>
-    </section>
-    <script>
-        const dropdownBtn = document.getElementById("selector");
-        const dropdownContents = document.querySelectorAll(".dropdown-content div span");
-
-        dropdownBtn.classList.add("dropdown-btn");
-
-        dropdownContents.forEach(content => {
-            content.addEventListener("click", function () {
-                dropdownBtn.innerHTML = this.innerHTML + ' <i class="fa fa-caret-down"></i>';
-                dropdownBtn.classList.add("active");
-                loadPieChart(this.innerHTML);
-            });
-        });
-
-    </script>
-    <script>
-        function loadKPIs() {
-            if (checkPassword()) {// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-                const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
-                // Replace YOUR_API_KEY with your Google API key
-                const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-                // Make a GET request to the Google Sheets API to retrieve the data for the table
-                $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D11:D13?key=${API_KEY}`,
-                    type: 'GET',
-                    success: function (response) {
-                        // The response from the API includes the data for the table in the "values" property
-                        const data = response.values;
-                        var values = [];
-
-                        data.forEach(function (item) {
-                            values.push(item[0]);
-                        });
-
-                        // Set the inner text of the html h1 element with id "total" to values[0]
-                        document.getElementById('total_restaurants').innerText = values[0];
-                        document.getElementById('offen_restaurants').innerText = values[1];
-                        document.getElementById('abgeschlossen_restaurants').innerText = values[2];
-                    }
-                });
-            }
-        }
-    </script>
-
-    <script>
-        function loadPieChart(type) {
-            if (checkPassword()) {
-                // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-                const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
-                // Replace YOUR_API_KEY with your Google API key
-                const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-                if (type == "RHS01") {
-                    url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!B3:B9?key=${API_KEY}`
-                } else if (type == "RHS02") {
-                    url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!C3:C9?key=${API_KEY}`
-                } else {
-                    url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D3:D9?key=${API_KEY}`
-                }
-
-                // Make a GET request to the Google Sheets API to retrieve the data for the table
-                $.ajax({
-                    url: url,
-                    type: 'GET',
-                    success: function (response) {
-                        // The response from the API includes the data for the table in the "values" property
-                        const data = response.values;
-
-                        var values = [];
-
-                        data.forEach(function (item) {
-                            values.push(item[0]);
-                        });
-                        
-                        var percent_done_r330 = Math.round(((values[0]-values[1]) / values[0]) * 100);
-                        var percent_open_r330 = Math.round(((values[1]) / values[0]) * 100);
-                        
-                        var percent_done_r340 = Math.round(((values[2]-values[3]) / values[2]) * 100);
-                        var percent_open_r340 = Math.round(((values[3]) / values[2]) * 100);
-
-                        const config = {
-                            type: "bar",
-                            data: {
-                                labels: ["R330", "R340"],
-                                datasets: [
-                                    {
-                                        label: "offen",
-                                        data: [percent_open_r330, percent_open_r340],
-                                        borderWidth: 1,
-                                        backgroundColor: "rgba(206, 89, 89, 0.2)",
-                                        borderColor: "rgba(206, 89, 89, 1)",
-
-                                    },
-                                    {
-                                        label: "done",
-                                        data: [percent_done_r330, percent_done_r340],
-                                        borderWidth: 1,
-                                        backgroundColor: "rgba(21, 152, 149, 0.2)",
-                                        borderColor: "rgba(21, 152, 149, 1)",
-                                    },
-                                ],
-                            },
-                            options: {
-                                animation: {
-                                    delay: 5000,
-                                },
-                                responsive: false,
-                                legend: {
-                                    display: false
-                                },
-                                plugins: {
-                                    datalabels: {
-                                        display: true,
-                                        align: 'center',
-                                        anchor: 'center',
-                                                                                font: {
-                                            size: 14,
-                                        },
-                                        formatter: function(value, context) {
-                                            return value +  ' %';
-                                    }                                                                                                                   
-                                },},                           
-                                tooltips: {
-                                    enabled: true,
-                                    mode: 'index',
-                                    intersect: false,
-                                    callbacks: {
-                                    label: function(tooltipItem, data) {
-                                        var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                                        var label = data.datasets[tooltipItem.datasetIndex].label || '';
-                                        return label + ": " + value + '%';
-                                    }
-                                }
-                                },
-                                scales: {
-                                    xAxes: [{
-                                        stacked: true,
-                                        ticks: {
-                                            display: true // show tick marks
-                                        },
-                                        gridLines: {
-                                            display: false // hide vertical grid lines
-                                        }
-                                    }],
-                                    yAxes: [{
-                                        stacked: true,
-                                        display: true,
-                                        ticks: {
-                                            display: false, // hide y-axis tick marks and labels
-                                            },
-                                        gridLines: {
-                                            display: true, // show the first grid line
-                                            color: 'rgba(0, 0, 0, 0)', // set the color of the grid lines
-                                            zeroLineColor: 'rgba(0, 0, 0, 1)', // set the color of the first grid line
-                                            drawBorder: false, // hide the y-axis border
-                                            drawTicks: false // hide the y-axis tick marks
-                                        }
-                                    }]}
-                            },
-
-                        };
-
-                        var ctx = document.getElementById("myPieChart").getContext("2d");
-
-                        var myDoughnutChart = new Chart(ctx, config);
-
-                        ctx.canvas.onmousemove = function (e) {
-                            var activePoint = myDoughnutChart.getElementAtEvent(e);
-                            if (activePoint[0]) {
-                                var index = activePoint[0]._index;
-                                var value = config.data.datasets[0].data[index];
-                                var label = config.data.labels[index];
-                                var color = activePoint[0]._model.borderColor;
-
-                                var percent = (activePoint[0]._model.endAngle - activePoint[0]._model.startAngle) / (2 * Math.PI) * 100;
-                                document.getElementById('center-text-h5').innerHTML = Math.round(percent.toFixed(2)) + '%';
-
-
-                                //document.getElementById('center-text-h5').innerHTML = value;
-                                document.getElementById('center-text-h5').style.color = color;
-                                document.getElementById('center-text-span').innerHTML = label;
-                            }
-                        };
-
-
-
-                    }
-                })
-            }
-        }
-    </script>
-
-    <script>
-        function loadLineChart() {
-            if (checkPassword()) {
-                // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-                const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
-                // Replace YOUR_API_KEY with your Google API key
-                const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-                var kw = [];
-                var rhs01 = [];
-                var rhs02 = [];
-                var gesamt = [];
-
-                // Make a GET request to the Google Sheets API to retrieve the data for the table
-                $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!F3:I27?key=${API_KEY}`,
-                    type: 'GET',
-                    success: function (response) {
-                        // The response from the API includes the data for the table in the "values" property
-                        const data = response.values;
-
-                        data.forEach(function (item) {
-                            kw.push(item[0]);
-                            rhs01.push(+item[1]);
-                            rhs02.push(+item[2]);
-                            gesamt.push(+item[3]);
-
-                        });
-
-
-                        var ctx = document.getElementById("lineChart").getContext("2d");
-                        var datashart = {
-                            labels: kw, // calendar weeks
-                            datasets: [
-                                {
-                                    label: "RHS01",
-                                    data: rhs01,
-                                    backgroundColor: "rgba(95,221,157, 0.5)",
-                                    borderColor: "rgba(95,221,157, 1)",
-                                    borderWidth: 1,
-                                    datalabels: {
-                                        align: 'end',
-                                        anchor: 'start'
-                                    }
-                                },
-                                {
-                                    label: "RHS02",
-                                    data: rhs02,
-                                    backgroundColor: "rgba(54, 162, 235, 0.5)",
-                                    borderColor: "rgba(54, 162, 235, 1)",
-                                    borderWidth: 1,
-                                    datalabels: {
-                                        align: 'end',
-                                        anchor: 'start'
-                                    }
-                                },
-                                {
-                                    label: "Total",
-                                    data: gesamt,
-                                    backgroundColor: "rgba(255, 206, 86, 0.5)",
-                                    borderColor: "rgba(255, 206, 86, 1)",
-                                    borderWidth: 1,
-
-                                    datalabels: {
-                                        align: 'end',
-                                        anchor: 'start'
-                                    }
-                                }
-                            ]
-                        };
-
-                        function delay(time) {
-                            return new Promise(resolve => setTimeout(resolve, time));
-                        }
-                        function createChart() {
-                            var myChart = new Chart(ctx, {
-                                type: "bar",
-                                data: datashart,
-                                options: {
-                                    plugins: {
-                                        datalabels: {
-                                            display: true,
-                                            align: 'center',
-                                            anchor: 'center',
-                                            color: 'black',
-                                        }
-                                    },
-                                    layout: {
-                                        padding: {
-                                            top: 20
-                                        }
-                                    },
-
-                                    //hide the x axis lines
-                                    scales: {
-                                        xAxes: [{
-                                            gridLines: {
-                                                display: false
-                                            }
-                                        }],
-                                        yAxes: [{
-                                            display: false,
-                                            ticks: {
-                                                beginAtZero: true,
-                                                callback: function (value) { if (value % 1 === 0) { return value; } }
-                                            },
-                                            gridLines: {
-                                                display: true
-                                            }
-                                        }]
-                                    },
-
-                                    legend: {
-                                        display: true,
-                                        position: "right",
-                                        labels: {
-                                            padding: 50,
-                                        }
-                                    },
-
-                                    responsive: true,
-                                    maintainAspectRatio: false,
-
-                                    tooltips: {
-                                        mode: 'index',
-                                        intersect: false
-                                    },
-                                    hover: {
-                                        mode: 'index',
-                                        intersect: false
-                                    }
-                                }
-                            });
-                        }
-
-                        delay(0).then(() => createChart());
-
-                    }
-                });
-            }
-        }
-    </script>
-
-    <script>
-        $(function () {
-            $('.scroll-page').on('click', function () {
-                var offset = 60; // Set the offset to 50px
-                var speed = 800;
-                var target = $(this.hash);
-
-                $('nav a').each(function () {
-                    $(this).removeClass('active');
-                });
-
-                $(this).addClass('active');
-
-                $('html, body').animate({
-                    scrollTop: target.offset().top - offset // Subtract the offset from the scrollTop position
-                }, speed, 'swing');
-            });
-        });
-    </script>
-    <script>
-        function openForm() {
-            const form = document.querySelector(".form-container");
-            if (checkPassword()) {
-                passwordIsCorrect = true;
-                loadStatusTable();
-                loadLineChart();
-                loadPieChart();
-                loadKPIs();
-                form.remove();
-            } else {
-                document.getElementById("myForm").style.display = "block";
-                const passwordInput = document.querySelector("input[name='psw']");
-                const errorMark = document.querySelector(".error-mark");
-                const submitButton = document.querySelector("button[type='submit']");
-
-                submitButton.addEventListener("click", (event) => {
-                    event.preventDefault();
-
-                    if (passwordInput.value === "mcdonalds") {
-                        setCookie("passwordIsCorrect", "true", 30);
-                        form.remove();
-                        loadStatusTable();
-                        loadLineChart();
-                        loadPieChart();
-                        loadKPIs();
-                    } else {
-                        errorMark.style.display = "inline";
-                    }
-                });
-            }
-        }
-    </script>
-
-<script>
-    countUp();
-</script>
-
-
-    <script>
-        function loadStatusTable() {
-            if (checkPassword()) {
-
-                // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-                const SHEET_ID = '1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g';
-                // Replace YOUR_API_KEY with your Google API key
-                const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-                // Make a GET request to the Google Sheets API to retrieve the data for the table
-                $.ajax({
-                    url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!A2:D7?key=${API_KEY}`,
-                    type: 'GET',
-                    success: function (response) {
-                        // The response from the API includes the data for the table in the "values" property
-                        const data = response.values;
-
-                        data.shift();
-
-                        // Iterate through the data and add a row to the table for each item
-                        $('#status-table tbody').empty();
-                        data.forEach(function (item) {
-
-                            $('#status-table tbody').append(`
+	<head>
+		<title>Rollout Monitor</title>
+		<style>
+			:root {
+				--font-big-size: 2rem;
+				--font-medium-size: 1.5rem;
+				--font-small-size: 1rem;
+				--main-dark: #009879;
+				--main-medium: #006a60;
+				--main-light: #40b3a2;
+				--accent-bright: #ffc10b;
+				--accent-medium: #ffd23f;
+				--accent-light: #ffe57a;
+				--margin-big: 2rem;
+				--margin-medium: 1rem;
+				--magin-small: 0.5rem;
+			}
+
+			@font-face {
+				font-family: "dashboardfont";
+				src: url("fonts/Roboto-Regular.ttf");
+			}
+
+			* {
+				font-family: "dashboardfont", sans-serif;
+				animation: fadein 0.1s;
+			}
+
+			body {
+				background-color: #f7f7f7;
+			}
+
+			/* Add the fade-in animation */
+			@keyframes fadein {
+				from {
+					opacity: 0;
+				}
+
+				to {
+					opacity: 1;
+				}
+			}
+
+			.KPI-grid {
+				grid-gap: 1rem;
+				margin-right: 2rem;
+				margin-left: 2rem;
+			}
+
+			.single {
+				grid-gap: 1rem;
+				margin-right: 2rem;
+				margin-left: 2rem;
+			}
+
+			div > div {
+				margin: 0;
+				padding: 0;
+			}
+
+			.KPI-box {
+				background-color: white;
+				border-radius: 10px;
+				box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+				margin: 1rem;
+				border-radius: 0.5rem;
+				overflow-wrap: break-word;
+				background-clip: border-box;
+				border-width: 0px;
+				border-style: solid;
+				border-color: rgb(217, 222, 227);
+				transition: all 0.3s ease 0s;
+			}
+
+			.KPI-box:hover {
+				box-shadow: none;
+			}
+
+			.KPI-box h1 {
+				color: var(--main-medium);
+				font-size: 3rem;
+				font-weight: 600;
+				margin: 0;
+				margin-top: 1.5rem;
+				animation: fadein 1s;
+			}
+
+			.KPI-box h2 {
+				color: #566a7f;
+				font-size: 1.2rem;
+				font-weight: 400;
+				margin: 0;
+				padding-bottom: 1rem;
+			}
+
+			.KPI-box h3 {
+				color: #566a7f;
+				font-size: 1.2rem;
+				font-weight: 500;
+				margin: 0;
+				margin-top: 1rem;
+			}
+
+			.Combine {
+				grid-gap: 1rem;
+				display: flex;
+				margin-left: 2.5rem;
+				margin-right: 2.5rem;
+				margin-top: 1rem;
+				justify-content: center;
+				margin-bottom: 1.5rem;
+			}
+
+			#combine-2 {
+				display: block;
+			}
+
+			.red {
+				color: #fc5130 !important;
+			}
+
+			.chart {
+				flex-basis: 33%;
+				margin-bottom: 2rem;
+				overflow: hidden;
+				margin: 0;
+			}
+
+			.chart canvas {
+				max-width: 380px !important;
+				min-height: 390px !important;
+				margin: 0 auto;
+				padding-top: 1rem;
+			}
+
+			.Total {
+				flex-basis: 66%;
+			}
+
+			@media (max-width: 1200px) {
+				.Combine {
+					flex-wrap: wrap;
+				}
+			}
+
+			#KPIs {
+				display: flex;
+				gap: 5vw;
+				margin-bottom: 1rem;
+			}
+
+			.lineChart {
+				margin-left: 4rem;
+				margin-right: 4rem;
+				margin-bottom: 2rem;
+			}
+
+			.header {
+				display: flex;
+				flex-direction: row;
+				justify-content: space-between;
+				align-items: center !important;
+				margin-top: var(--magin-small) !important;
+			}
+
+			.header h1 {
+				margin: 0 !important;
+			}
+		</style>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta charset="utf-8" />
+		<title>Rollout Monitor</title>
+		<link
+			rel="icon"
+			href="../images/Logo SOS IS GmbH Neu shadow_tif.webp"
+		/>
+		<script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@0.7.0/dist/chartjs-plugin-datalabels.min.js"></script>
+		<link rel="stylesheet" href="../styling/table.css" />
+		<link rel="stylesheet" href="../styling/nav.css" />
+		<link rel="stylesheet" href="../styling/search_and_refresh.css" />
+		<link rel="stylesheet" href="../styling/header.css" />
+		<link rel="stylesheet" href="../styling/info_box.css" />
+		<link rel="stylesheet" href="../styling/background.css" />
+		<link rel="stylesheet" href="../styling/div.css" />
+		<link rel="stylesheet" href="../styling/popup.css" />
+		<link rel="stylesheet" href="statustable.css" />
+		<script src="../githubFileUpdater.js"></script>
+	</head>
+
+	<nav>
+		<div class="left">
+			<a class="logo" href="../index.html">
+				<img
+					src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
+					alt="McDonald's logo"
+			/></a>
+			<h2 id="text-long">McDonald's Rollout Monitor</h2>
+			<h2 id="text-short">McD Rollout Monitor</h2>
+		</div>
+		<div class="right">
+			<div class="dropdown" id="combined-dropdown">
+				<button class="dropbtn"><i class="fa fa-bars"></i></button>
+				<div class="dropdown-content">
+					<h3>NSO/IRLX</h3>
+					<a href="../rolloutmonitor.html">Home</a>
+					<a href="../rolloutmonitor/forecast.html">Forecast</a>
+					<a href="../rolloutmonitor/detail.html">Detailplanung</a>
+					<a href="../rolloutmonitor/installation.html"
+						>Rollout Status</a
+					>
+					<a href="../rolloutmonitor/archiv.html">Archiv</a>
+					<hr />
+					<a href="../dashboards/projektstatus_server_rollout.html"
+						>Server Rollout</a
+					>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="dropbtn">
+					NSO/IRLX
+					<i class="fa fa-caret-down"></i>
+				</button>
+				<div class="dropdown-content">
+					<a href="../rolloutmonitor.html">Home</a>
+					<a href="../rolloutmonitor/forecast.html">Forecast</a>
+					<a href="../rolloutmonitor/detail.html">Detailplanung</a>
+					<!--<a href="../rolloutmonitor/installation.html">Rollout Status</a>-->
+					<a href="../rolloutmonitor/archiv.html">Archiv</a>
+				</div>
+			</div>
+			<div class="dropdown">
+				<button class="dropbtn">
+					<a href="../dashboards/projektstatus_server_rollout.html"
+						>Projektstatus Server Rollout</a
+					>
+				</button>
+			</div>
+		</div>
+	</nav>
+	<body onload="openForm()">
+		<div class="form-popup" id="myForm">
+			<form class="form-container">
+				<h1>Login</h1>
+
+				<label
+					class="error-mark"
+					for="psw"
+					style="display: none; color: red; font-size: 15px"
+					><b>Ungültiges Passwort</b></label
+				>
+				<input
+					type="password"
+					placeholder="Enter Password"
+					name="psw"
+					required
+				/>
+				<button type="submit" class="btn">Login</button>
+			</form>
+		</div>
+		<section id="home">
+			<div class="header">
+				<h1>Projektstatus Server Rollout</h1>
+				<div class="refresh-search-container">
+					<!-- Refresh button -->
+					<button class="refresh-button" onclick="openForm();">
+						<i class="fa fa-refresh" style="margin-right: 10px"></i
+						>Aktualisieren
+					</button>
+					<!-- Search box container -->
+				</div>
+			</div>
+		</section>
+		<section>
+			<div class="KPI-grid">
+				<div class="KPI-box">
+					<div class="Combine">
+						<div class="Total">
+							<h3>Status Server Rollout</h3>
+							<div id="KPIs">
+								<div id="KPI">
+									<h1
+										id="total_restaurants"
+										style="color: #566a7f"
+									>
+										&nbsp;
+									</h1>
+									<h2>Gesamtzahl Restaurants</h2>
+								</div>
+								<div id="KPI">
+									<h1 id="offen_restaurants" class="red">
+										&nbsp;
+									</h1>
+									<h2>Offene Restaurants</h2>
+								</div>
+								<div id="KPI">
+									<h1
+										id="abgeschlossen_restaurants"
+										style="color: var(--main-dark)"
+									>
+										&nbsp;
+									</h1>
+									<h2>Abgeschlossene Restaurants</h2>
+								</div>
+							</div>
+							<div class="status-table">
+								<table id="status-table" class="sortable">
+									<thead>
+										<tr>
+											<th></th>
+											<th>RHS01</th>
+											<th>RHS02</th>
+											<th>Gesamt</th>
+										</tr>
+									</thead>
+									<tbody></tbody>
+								</table>
+							</div>
+						</div>
+						<div class="chart">
+							<div class="dropdown" id="dropdown-selector">
+								<button
+									class="dropbtn"
+									id="selector"
+									style="color: black; margin: 0 auto"
+								>
+									Gesamt
+									<i class="fa fa-caret-down"></i>
+								</button>
+								<div class="dropdown-content">
+									<div class="dropdown-element">
+										<span>Gesamt</span>
+									</div>
+									<div class="dropdown-element">
+										<span>RHS01</span>
+									</div>
+									<div class="dropdown-element">
+										<span>RHS02</span>
+									</div>
+								</div>
+							</div>
+							<canvas
+								id="myPieChart"
+								width="350"
+								height="350"
+							></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="single">
+				<div class="KPI-box" id="KPI-smaller">
+					<div class="Combine" id="combine-2">
+						<h3>Anzahl getauschter Server</h3>
+					</div>
+					<div class="lineChart">
+						<canvas
+							id="lineChart"
+							width="1400"
+							height="330"
+						></canvas>
+					</div>
+				</div>
+			</div>
+		</section>
+		<script>
+			const dropdownBtn = document.getElementById("selector");
+			const dropdownContents = document.querySelectorAll(
+				".dropdown-content div span"
+			);
+
+			dropdownBtn.classList.add("dropdown-btn");
+
+			dropdownContents.forEach((content) => {
+				content.addEventListener("click", function () {
+					dropdownBtn.innerHTML =
+						this.innerHTML + ' <i class="fa fa-caret-down"></i>';
+					dropdownBtn.classList.add("active");
+					loadPieChart(this.innerHTML);
+				});
+			});
+		</script>
+		<script>
+			function loadKPIs() {
+				if (checkPassword()) {
+					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+					const SHEET_ID =
+						"1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g";
+					// Replace YOUR_API_KEY with your Google API key
+					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+
+					// Make a GET request to the Google Sheets API to retrieve the data for the table
+					$.ajax({
+						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D11:D13?key=${API_KEY}`,
+						type: "GET",
+						success: function (response) {
+							// The response from the API includes the data for the table in the "values" property
+							const data = response.values;
+							var values = [];
+
+							data.forEach(function (item) {
+								values.push(item[0]);
+							});
+
+							// Set the inner text of the html h1 element with id "total" to values[0]
+							document.getElementById(
+								"total_restaurants"
+							).innerText = values[0];
+							document.getElementById(
+								"offen_restaurants"
+							).innerText = values[1];
+							document.getElementById(
+								"abgeschlossen_restaurants"
+							).innerText = values[2];
+						},
+					});
+				}
+			}
+		</script>
+
+		<script>
+			function loadPieChart(type) {
+				if (checkPassword()) {
+					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+					const SHEET_ID =
+						"1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g";
+					// Replace YOUR_API_KEY with your Google API key
+					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+
+					if (type == "RHS01") {
+						url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!B3:B9?key=${API_KEY}`;
+					} else if (type == "RHS02") {
+						url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!C3:C9?key=${API_KEY}`;
+					} else {
+						url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!D3:D9?key=${API_KEY}`;
+					}
+
+					// Make a GET request to the Google Sheets API to retrieve the data for the table
+					$.ajax({
+						url: url,
+						type: "GET",
+						success: function (response) {
+							// The response from the API includes the data for the table in the "values" property
+							const data = response.values;
+
+							var values = [];
+
+							data.forEach(function (item) {
+								values.push(item[0]);
+							});
+
+							var percent_done_r330 = Math.round(
+								((values[0] - values[1]) / values[0]) * 100
+							);
+							var percent_open_r330 = Math.round(
+								(values[1] / values[0]) * 100
+							);
+
+							var percent_done_r340 = Math.round(
+								((values[2] - values[3]) / values[2]) * 100
+							);
+							var percent_open_r340 = Math.round(
+								(values[3] / values[2]) * 100
+							);
+
+							const config = {
+								type: "bar",
+								data: {
+									labels: ["R330", "R340"],
+									datasets: [
+										{
+											label: "offen",
+											data: [
+												percent_open_r330,
+												percent_open_r340,
+											],
+											borderWidth: 1,
+											backgroundColor:
+												"rgba(206, 89, 89, 0.2)",
+											borderColor: "rgba(206, 89, 89, 1)",
+										},
+										{
+											label: "done",
+											data: [
+												percent_done_r330,
+												percent_done_r340,
+											],
+											borderWidth: 1,
+											backgroundColor:
+												"rgba(21, 152, 149, 0.2)",
+											borderColor:
+												"rgba(21, 152, 149, 1)",
+										},
+									],
+								},
+								options: {
+									animation: {
+										delay: 5000,
+									},
+									responsive: false,
+									legend: {
+										display: false,
+									},
+									plugins: {
+										datalabels: {
+											display: true,
+											align: "center",
+											anchor: "center",
+											font: {
+												size: 14,
+											},
+											formatter: function (
+												value,
+												context
+											) {
+												return value + " %";
+											},
+										},
+									},
+									tooltips: {
+										enabled: true,
+										mode: "index",
+										intersect: false,
+										callbacks: {
+											label: function (
+												tooltipItem,
+												data
+											) {
+												var value =
+													data.datasets[
+														tooltipItem.datasetIndex
+													].data[tooltipItem.index];
+												var label =
+													data.datasets[
+														tooltipItem.datasetIndex
+													].label || "";
+												return (
+													label + ": " + value + "%"
+												);
+											},
+										},
+									},
+									scales: {
+										xAxes: [
+											{
+												stacked: true,
+												ticks: {
+													display: true, // show tick marks
+												},
+												gridLines: {
+													display: false, // hide vertical grid lines
+												},
+											},
+										],
+										yAxes: [
+											{
+												stacked: true,
+												display: true,
+												ticks: {
+													display: false, // hide y-axis tick marks and labels
+												},
+												gridLines: {
+													display: true, // show the first grid line
+													color: "rgba(0, 0, 0, 0)", // set the color of the grid lines
+													zeroLineColor:
+														"rgba(0, 0, 0, 1)", // set the color of the first grid line
+													drawBorder: false, // hide the y-axis border
+													drawTicks: false, // hide the y-axis tick marks
+												},
+											},
+										],
+									},
+								},
+							};
+
+							var ctx = document
+								.getElementById("myPieChart")
+								.getContext("2d");
+
+							var myDoughnutChart = new Chart(ctx, config);
+
+							ctx.canvas.onmousemove = function (e) {
+								var activePoint =
+									myDoughnutChart.getElementAtEvent(e);
+								if (activePoint[0]) {
+									var index = activePoint[0]._index;
+									var value =
+										config.data.datasets[0].data[index];
+									var label = config.data.labels[index];
+									var color =
+										activePoint[0]._model.borderColor;
+
+									var percent =
+										((activePoint[0]._model.endAngle -
+											activePoint[0]._model.startAngle) /
+											(2 * Math.PI)) *
+										100;
+									document.getElementById(
+										"center-text-h5"
+									).innerHTML =
+										Math.round(percent.toFixed(2)) + "%";
+
+									//document.getElementById('center-text-h5').innerHTML = value;
+									document.getElementById(
+										"center-text-h5"
+									).style.color = color;
+									document.getElementById(
+										"center-text-span"
+									).innerHTML = label;
+								}
+							};
+						},
+					});
+				}
+			}
+		</script>
+
+		<script>
+			function loadLineChart() {
+				if (checkPassword()) {
+					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+					const SHEET_ID =
+						"1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g";
+					// Replace YOUR_API_KEY with your Google API key
+					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+					var kw = [];
+					var rhs01 = [];
+					var rhs02 = [];
+					var gesamt = [];
+
+					// Make a GET request to the Google Sheets API to retrieve the data for the table
+					$.ajax({
+						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!F3:I27?key=${API_KEY}`,
+						type: "GET",
+						success: function (response) {
+							// The response from the API includes the data for the table in the "values" property
+							const data = response.values;
+
+							data.forEach(function (item) {
+								kw.push(item[0]);
+								rhs01.push(+item[1]);
+								rhs02.push(+item[2]);
+								gesamt.push(+item[3]);
+							});
+
+							var ctx = document
+								.getElementById("lineChart")
+								.getContext("2d");
+							var datashart = {
+								labels: kw, // calendar weeks
+								datasets: [
+									{
+										label: "RHS01",
+										data: rhs01,
+										backgroundColor:
+											"rgba(95,221,157, 0.5)",
+										borderColor: "rgba(95,221,157, 1)",
+										borderWidth: 1,
+										datalabels: {
+											align: "end",
+											anchor: "start",
+										},
+									},
+									{
+										label: "RHS02",
+										data: rhs02,
+										backgroundColor:
+											"rgba(54, 162, 235, 0.5)",
+										borderColor: "rgba(54, 162, 235, 1)",
+										borderWidth: 1,
+										datalabels: {
+											align: "end",
+											anchor: "start",
+										},
+									},
+									{
+										label: "Total",
+										data: gesamt,
+										backgroundColor:
+											"rgba(255, 206, 86, 0.5)",
+										borderColor: "rgba(255, 206, 86, 1)",
+										borderWidth: 1,
+
+										datalabels: {
+											align: "end",
+											anchor: "start",
+										},
+									},
+								],
+							};
+
+							function delay(time) {
+								return new Promise((resolve) =>
+									setTimeout(resolve, time)
+								);
+							}
+							function createChart() {
+								var myChart = new Chart(ctx, {
+									type: "bar",
+									data: datashart,
+									options: {
+										plugins: {
+											datalabels: {
+												display: true,
+												align: "center",
+												anchor: "center",
+												color: "black",
+											},
+										},
+										layout: {
+											padding: {
+												top: 20,
+											},
+										},
+
+										//hide the x axis lines
+										scales: {
+											xAxes: [
+												{
+													gridLines: {
+														display: false,
+													},
+												},
+											],
+											yAxes: [
+												{
+													display: false,
+													ticks: {
+														beginAtZero: true,
+														callback: function (
+															value
+														) {
+															if (
+																value % 1 ===
+																0
+															) {
+																return value;
+															}
+														},
+													},
+													gridLines: {
+														display: true,
+													},
+												},
+											],
+										},
+
+										legend: {
+											display: true,
+											position: "right",
+											labels: {
+												padding: 50,
+											},
+										},
+
+										responsive: true,
+										maintainAspectRatio: false,
+
+										tooltips: {
+											mode: "index",
+											intersect: false,
+										},
+										hover: {
+											mode: "index",
+											intersect: false,
+										},
+									},
+								});
+							}
+
+							delay(0).then(() => createChart());
+						},
+					});
+				}
+			}
+		</script>
+
+		<script>
+			$(function () {
+				$(".scroll-page").on("click", function () {
+					var offset = 60; // Set the offset to 50px
+					var speed = 800;
+					var target = $(this.hash);
+
+					$("nav a").each(function () {
+						$(this).removeClass("active");
+					});
+
+					$(this).addClass("active");
+
+					$("html, body").animate(
+						{
+							scrollTop: target.offset().top - offset, // Subtract the offset from the scrollTop position
+						},
+						speed,
+						"swing"
+					);
+				});
+			});
+		</script>
+
+		<script>
+			function openForm() {
+				const form = document.querySelector(".form-container");
+				if (checkPassword()) {
+					passwordIsCorrect = true;
+					loadStatusTable();
+					loadLineChart();
+					loadPieChart();
+					loadKPIs();
+					form.remove();
+				} else {
+					document.getElementById("myForm").style.display = "block";
+					const passwordInput =
+						document.querySelector("input[name='psw']");
+					const errorMark = document.querySelector(".error-mark");
+					const submitButton = document.querySelector(
+						"button[type='submit']"
+					);
+
+					submitButton.addEventListener("click", (event) => {
+						event.preventDefault();
+
+						if (passwordInput.value === "mcdonalds") {
+							setCookie("passwordIsCorrect", "true", 30);
+							form.remove();
+							loadStatusTable();
+							loadLineChart();
+							loadPieChart();
+							loadKPIs();
+						} else {
+							errorMark.style.display = "inline";
+						}
+					});
+				}
+			}
+		</script>
+
+		<script>
+			countUp();
+		</script>
+
+		<script>
+			function loadStatusTable() {
+				if (checkPassword()) {
+					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+					const SHEET_ID =
+						"1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g";
+					// Replace YOUR_API_KEY with your Google API key
+					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+
+					// Make a GET request to the Google Sheets API to retrieve the data for the table
+					$.ajax({
+						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_Server_Rollout!A2:D7?key=${API_KEY}`,
+						type: "GET",
+						success: function (response) {
+							// The response from the API includes the data for the table in the "values" property
+							const data = response.values;
+
+							data.shift();
+
+							// Iterate through the data and add a row to the table for each item
+							$("#status-table tbody").empty();
+							data.forEach(function (item) {
+								$("#status-table tbody").append(`
                                 <tr class="row">
                                 <td>${item[0]}</td>
                                 <td>${item[1]}</td>
@@ -757,39 +884,40 @@
                                 <td>${item[3]}</td>
                                 </tr>
                             `);
-                        });
-                    }
-                });
+							});
+						},
+					});
+				}
+			}
+		</script>
 
-            }
-        }
-    </script>
+		<script>
+			function checkPassword() {
+				var passwordIsCorrect = getCookie("passwordIsCorrect");
+				if (passwordIsCorrect === "true") {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		</script>
 
-    <script>
-        function checkPassword() {
-            var passwordIsCorrect = getCookie("passwordIsCorrect");
-            if (passwordIsCorrect === "true") {
-                return true;
-            } else {
-                return false;
-            }
-        }
+		<script>
+			function setCookie(cname, cvalue, exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+				var expires = "expires=" + d.toUTCString();
+				document.cookie =
+					cname + "=" + cvalue + ";" + expires + ";path=/";
+			}
 
-    </script>
-    <script>
-        function setCookie(cname, cvalue, exdays) {
-            var d = new Date();
-            d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
-
-        function getCookie(cname) {
-            var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-            return cookieValue
-        }
-    </script>
-
-</body>
-
+			function getCookie(cname) {
+				var cookieValue = document.cookie.replace(
+					/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/,
+					"$1"
+				);
+				return cookieValue;
+			}
+		</script>
+	</body>
 </html>

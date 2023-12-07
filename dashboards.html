@@ -1,213 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-	@font-face {
-		font-family: "dashboardfont";
-		src: url("fonts/Roboto-Regular.ttf");
-	}
+	<style>
+		@font-face {
+			font-family: "dashboardfont";
+			src: url("fonts/Roboto-Regular.ttf");
+		}
 
-	* {
-		font-family: "dashboardfont", sans-serif !important;
-	}
+		* {
+			font-family: "dashboardfont", sans-serif !important;
+		}
 
-	:root {
-		--font-big-size: 2rem;
-		--font-medium-size: 1.5rem;
-		--font-small-size: 1rem;
-		--main-dark: #009879;
-		--main-medium: #006a60;
-		--main-light: #40b3a2;
-		--accent-bright: #ffc10b;
-		--accent-medium: #ffd23f;
-		--accent-light: #ffe57a;
-		--margin-big: 2rem;
-		--margin-medium: 1rem;
-		--magin-small: 0.5rem;
-	}
+		:root {
+			--font-big-size: 2rem;
+			--font-medium-size: 1.5rem;
+			--font-small-size: 1rem;
+			--main-dark: #009879;
+			--main-medium: #006a60;
+			--main-light: #40b3a2;
+			--accent-bright: #ffc10b;
+			--accent-medium: #ffd23f;
+			--accent-light: #ffe57a;
+			--margin-big: 2rem;
+			--margin-medium: 1rem;
+			--magin-small: 0.5rem;
+		}
 
-	.grid-container {
-		display: flex;
-		column-gap: 30px;
-		align-items: center;
-		text-align: center;
-		justify-content: center;
-		flex-wrap: wrap;
+		.grid-container {
+			display: flex;
+			column-gap: 30px;
+			align-items: center;
+			text-align: center;
+			justify-content: center;
+			flex-wrap: wrap;
+		}
 
-	}
+		.grid-item {
+			display: inline-grid;
+		}
 
-	.grid-item {
-		display: inline-grid;
-	}
+		.section-paragraph {
+			margin-bottom: 4rem !important;
+		}
 
-	.section-paragraph {
-		margin-bottom: 4rem !important;
-	}
+		.contact-button {
+			border-radius: 26px;
+			background-color: #7371fc;
+			border: none;
+			margin-left: 5px;
+			font-size: 15px;
+			padding: 8px 16px;
+			color: white;
+		}
 
-	.contact-button {
-		border-radius: 26px;
-		background-color: #7371FC;
-		border: none;
-		margin-left: 5px;
-		font-size: 15px;
-		padding: 8px 16px;
-		color: white;
-	}
+		.game-button {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			border-radius: 26px;
+			background-color: rgb(192, 192, 192);
+			border: none;
+			margin-left: 5px;
+			font-size: 15px;
+			padding: 8px 16px;
+			color: #fc5130;
+			display: none;
+		}
 
-	.game-button {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		border-radius: 26px;
-		background-color: rgb(192, 192, 192);
-		border: none;
-		margin-left: 5px;
-		font-size: 15px;
-		padding: 8px 16px;
-		color: #fc5130;
-		display: none;
-	}
+		.game-button:hover {
+			font-weight: bold;
+		}
 
-	.game-button:hover {
-		font-weight: bold;
+		.contact-button:hover {
+			font-weight: bold;
+		}
 
-	}
+		#login-popup {
+			display: none;
+			/* hidden by default */
+			position: fixed;
+			/* stay in place */
+			z-index: 1;
+			/* sit on top */
+			left: 0;
+			top: 0;
+			width: 100%;
+			/* full width */
+			height: 100%;
+			/* full height */
+			overflow: auto;
+			/* enable scroll if needed */
+			background-color: rgb(0, 0, 0);
+			/* fallback color */
+			background-color: rgba(0, 0, 0, 0.4);
+			/* black w/ opacity */
+		}
 
-	.contact-button:hover {
-		font-weight: bold;
-	}
+		form {
+			background-color: #fefefe;
+			margin: 15% auto;
+			/* 15% from the top and centered */
+			padding: 20px;
+			border: 1px solid #888;
+			width: 80%;
+			/* Could be more or less, depending on screen size */
+		}
 
-	#login-popup {
-		display: none;
-		/* hidden by default */
-		position: fixed;
-		/* stay in place */
-		z-index: 1;
-		/* sit on top */
-		left: 0;
-		top: 0;
-		width: 100%;
-		/* full width */
-		height: 100%;
-		/* full height */
-		overflow: auto;
-		/* enable scroll if needed */
-		background-color: rgb(0, 0, 0);
-		/* fallback color */
-		background-color: rgba(0, 0, 0, 0.4);
-		/* black w/ opacity */
-	}
+		/* Media Query that  */
+	</style>
 
-	form {
-		background-color: #fefefe;
-		margin: 15% auto;
-		/* 15% from the top and centered */
-		padding: 20px;
-		border: 1px solid #888;
-		width: 80%;
-		/* Could be more or less, depending on screen size */
-	}
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Rollout Monitor</title>
+		<link rel="icon" href="images/Logo SOS IS GmbH Neu shadow_tif.webp" />
+		<link rel="stylesheet" href="dist/css/style.css" />
+		<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
+		<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+	</head>
 
-	/* Media Query that  */
-
-
-</style>
-
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Rollout Monitor</title>
-	<link rel="icon" href="images/Logo SOS IS GmbH Neu shadow_tif.webp">
-	<link rel="stylesheet" href="dist/css/style.css">
-	<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
-	<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
-</head>
-
-<body onload="showGame()" class="is-boxed has-animations">
-	<div class="body-wrap boxed-container">
-		<main>
-			<section class="features section">
-				<div class="features-header text-center">
-					<div class="header"
-						style="background-color: var(--main-dark); margin-top: 20px; margin-left:70px; margin-right: 70px;margin-bottom: 20px; padding-top:20px; padding-bottom: 10px;border-radius: 42px;">
-						<a href="index.html"><img
-								src=" https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
-								alt="McDonald's logo"
-								style="display: block; margin: auto auto; width:100px; text-align: center;"></a>
-						<h2 style="margin:0px; color:white">McDonald's
-							Rollout Monitor</h2>
-					</div>
-					<p class=" section-paragraph">Dieses Dashboard soll Ihnen einen schnellen Überblick
-						über
-						alle aktuellen und geplanten Rolloutprojekte geben. <br>Auf dieser Seite finden sie alle
-						hinterlegten Dashboards.<br> Bei Fragen, Problemen oder Anregungen nutzen Sie bitte eine der
-						untenstehenden Kontaktmöglichkeiten.</p>
-				</div>
-				<div class="grid-container">
-					<div class="grid-item">
-						<div class="feature text-center is-revealing" style="text-align:center;">
-							<div class="feature-inner">
-								<div class="feature-icon" style="background:#fbd68d; pointer-events: auto;">
-									<svg width="88" height="88" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-										style="padding:17px;">
-										<g fill="none" fill-rule="nonzero">
-											<path
-												d="M32.49 15.51c-2.35-2.34-5.42-3.51-8.49-3.51v12l-8.49 8.49c4.69 4.69 12.28 4.69 16.97 0 4.69-4.69 4.69-12.29.01-16.98zm-8.49-11.51c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.96 20-20c0-11.05-8.95-20-20-20zm0 36c-8.84 0-16-7.16-16-16s7.16-16 16-16 16 7.16 16 16-7.16 16-16 16z"
-												fill="#f7b32b" />
-										</g>
-									</svg>
-								</div>
-								<h4 class="feature-title h3-mobile mb-8">Rollout Planung<br>2023</h4>
-								<button class="go-to-button"
-									style="margin-left: -38px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#f7b32b"
-									onclick="location.href='dashboards/rollout_planung_2023.html';">2023</button>
-							</div>
+	<body onload="showGame()" class="is-boxed has-animations">
+		<div class="body-wrap boxed-container">
+			<main>
+				<section class="features section">
+					<div class="features-header text-center">
+						<div
+							class="header"
+							style="
+								background-color: var(--main-dark);
+								margin-top: 20px;
+								margin-left: 70px;
+								margin-right: 70px;
+								margin-bottom: 20px;
+								padding-top: 20px;
+								padding-bottom: 10px;
+								border-radius: 42px;
+							"
+						>
+							<a href="index.html"
+								><img
+									src=" https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
+									alt="McDonald's logo"
+									style="
+										display: block;
+										margin: auto auto;
+										width: 100px;
+										text-align: center;
+									"
+							/></a>
+							<h2 style="margin: 0px; color: white">
+								McDonald's Rollout Monitor
+							</h2>
 						</div>
+						<p class="section-paragraph">
+							Dieses Dashboard soll Ihnen einen schnellen
+							Überblick über alle aktuellen und geplanten
+							Rolloutprojekte geben. <br />Auf dieser Seite finden
+							sie alle hinterlegten Dashboards.<br />
+							Bei Fragen, Problemen oder Anregungen nutzen Sie
+							bitte eine der untenstehenden Kontaktmöglichkeiten.
+						</p>
 					</div>
-
-					<div class="grid-item">
-						<div class="feature text-center is-revealing" style="text-align:center;">
-							<div class="feature-inner">
-								<div class="feature-icon" style="background:#e65557; pointer-events: auto;">
-									<svg width="88" height="88" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-										style="padding:17px;">
-										<g fill="none" fill-rule="nonzero">
-											<path
-												d="M32.49 15.51c-2.35-2.34-5.42-3.51-8.49-3.51v12l-8.49 8.49c4.69 4.69 12.28 4.69 16.97 0 4.69-4.69 4.69-12.29.01-16.98zm-8.49-11.51c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.96 20-20c0-11.05-8.95-20-20-20zm0 36c-8.84 0-16-7.16-16-16s7.16-16 16-16 16 7.16 16 16-7.16 16-16 16z"
-												fill="#ba1b1d" />
-										</g>
-									</svg>
-								</div>
-								<h4 class="feature-title h3-mobile mb-8">Rollout Planung<br>2024</h4>
-								<button class="go-to-button"
-									style="margin-left: -38px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#ba1b1d"
-									onclick="location.href='dashboards/rollout_planung_2024.html';">2024</button>
-							</div>
-						</div>
-					</div>
-					<div class="grid-item">
-						<div class="feature text-center is-revealing" style="text-align:center;">
-							<div class="feature-inner">
-								<div class="feature-icon" style="background:#fbd68d; pointer-events: auto;">
-									<svg width="88" height="88" viewBox="0 0 24 24" style="padding:20px;" fill="none" xmlns="http://www.w3.org/2000/svg">
-										<path d="M10 3.75C10.4142 3.75 10.75 3.41421 10.75 3C10.75 2.58579 10.4142 2.25 10 2.25V3.75ZM14 2.25C13.5858 2.25 13.25 2.58579 13.25 3C13.25 3.41421 13.5858 3.75 14 3.75V2.25ZM13 21.75C13.4142 21.75 13.75 21.4142 13.75 21C13.75 20.5858 13.4142 20.25 13 20.25V21.75ZM3.17157 19.8284L3.7019 19.2981H3.7019L3.17157 19.8284ZM20.8284 4.17157L20.2981 4.7019V4.7019L20.8284 4.17157ZM21.25 13C21.25 13.4142 21.5858 13.75 22 13.75C22.4142 13.75 22.75 13.4142 22.75 13H21.25ZM14 12.75C14.4142 12.75 14.75 12.4142 14.75 12C14.75 11.5858 14.4142 11.25 14 11.25V12.75ZM18 11.25C17.5858 11.25 17.25 11.5858 17.25 12C17.25 12.4142 17.5858 12.75 18 12.75V11.25ZM2.75 13V12H1.25V13H2.75ZM2.75 12V11H1.25V12H2.75ZM13 20.25H10V21.75H13V20.25ZM21.25 11V12H22.75V11H21.25ZM1.25 13C1.25 14.8644 1.24841 16.3382 1.40313 17.489C1.56076 18.6614 1.89288 19.6104 2.64124 20.3588L3.7019 19.2981C3.27869 18.8749 3.02502 18.2952 2.88976 17.2892C2.75159 16.2615 2.75 14.9068 2.75 13H1.25ZM10 20.25C8.09318 20.25 6.73851 20.2484 5.71085 20.1102C4.70476 19.975 4.12511 19.7213 3.7019 19.2981L2.64124 20.3588C3.38961 21.1071 4.33855 21.4392 5.51098 21.5969C6.66182 21.7516 8.13558 21.75 10 21.75V20.25ZM14 3.75C15.9068 3.75 17.2615 3.75159 18.2892 3.88976C19.2952 4.02502 19.8749 4.27869 20.2981 4.7019L21.3588 3.64124C20.6104 2.89288 19.6614 2.56076 18.489 2.40313C17.3382 2.24841 15.8644 2.25 14 2.25V3.75ZM22.75 11C22.75 9.13558 22.7516 7.66182 22.5969 6.51098C22.4392 5.33855 22.1071 4.38961 21.3588 3.64124L20.2981 4.7019C20.7213 5.12511 20.975 5.70476 21.1102 6.71085C21.2484 7.73851 21.25 9.09318 21.25 11H22.75ZM10 2.25C8.13558 2.25 6.66182 2.24841 5.51098 2.40313C4.33856 2.56076 3.38961 2.89288 2.64124 3.64124L3.7019 4.7019C4.12511 4.27869 4.70476 4.02502 5.71085 3.88976C6.73851 3.75159 8.09318 3.75 10 3.75V2.25ZM2.75 11C2.75 9.09318 2.75159 7.73851 2.88976 6.71085C3.02502 5.70476 3.27869 5.12511 3.7019 4.7019L2.64124 3.64124C1.89288 4.38961 1.56076 5.33855 1.40313 6.51098C1.24841 7.66182 1.25 9.13558 1.25 11H2.75ZM21.25 12V13H22.75V12H21.25ZM2 12.75H14V11.25H2V12.75ZM18 12.75H22V11.25H18V12.75Z" fill="#f7b32b"/>
-										<path d="M13.5 7.5L18 7.5" stroke="#f7b32b" stroke-width="2" stroke-linecap="round"/>
-										<path d="M6 17.5L6 15.5" stroke="#f7b32b" stroke-width="2" stroke-linecap="round"/>
-										<path d="M6 8.5L6 6.5" stroke="#f7b32b" stroke-width="2" stroke-linecap="round"/>
-										<path d="M9 17.5L9 15.5" stroke="#f7b32b" stroke-width="2" stroke-linecap="round"/>
-										<path d="M9 8.5L9 6.5" stroke="#f7b32b" stroke-width="2" stroke-linecap="round"/>
-										<path d="M15.5841 17.5H14.8341V17.5L15.5841 17.5ZM15.5841 18L15.0964 18.5698C15.3772 18.8101 15.7911 18.8101 16.0718 18.5698L15.5841 18ZM16.656 18.0698C16.9706 17.8004 17.0074 17.327 16.738 17.0123C16.4687 16.6976 15.9952 16.6609 15.6806 16.9302L16.656 18.0698ZM15.4877 16.9302C15.173 16.6609 14.6996 16.6976 14.4302 17.0123C14.1609 17.327 14.1976 17.8004 14.5123 18.0698L15.4877 16.9302ZM20.3892 16.6352C20.6296 16.9726 21.0979 17.0512 21.4352 16.8108C21.7726 16.5704 21.8512 16.1021 21.6108 15.7648L20.3892 16.6352ZM18.5048 14.25C16.5912 14.25 14.8341 15.5999 14.8341 17.5H16.3341C16.3341 16.6387 17.1923 15.75 18.5048 15.75V14.25ZM14.8341 17.5L14.8341 18L16.3341 18L16.3341 17.5L14.8341 17.5ZM16.0718 18.5698L16.656 18.0698L15.6806 16.9302L15.0964 17.4302L16.0718 18.5698ZM16.0718 17.4302L15.4877 16.9302L14.5123 18.0698L15.0964 18.5698L16.0718 17.4302ZM21.6108 15.7648C20.945 14.8304 19.782 14.25 18.5048 14.25V15.75C19.3411 15.75 20.0295 16.1304 20.3892 16.6352L21.6108 15.7648Z" fill="#f7b32b"/>
-										<path d="M18.4952 21V21.75V21ZM21.4159 18.5H22.1659H21.4159ZM21.4159 18L21.9036 17.4302C21.6228 17.1899 21.2089 17.1899 20.9282 17.4302L21.4159 18ZM20.344 17.9302C20.0294 18.1996 19.9926 18.673 20.262 18.9877C20.5313 19.3024 21.0048 19.3391 21.3194 19.0698L20.344 17.9302ZM21.5123 19.0698C21.827 19.3391 22.3004 19.3024 22.5698 18.9877C22.8391 18.673 22.8024 18.1996 22.4877 17.9302L21.5123 19.0698ZM16.6108 19.3648C16.3704 19.0274 15.9021 18.9488 15.5648 19.1892C15.2274 19.4296 15.1488 19.8979 15.3892 20.2352L16.6108 19.3648ZM18.4952 21.75C20.4088 21.75 22.1659 20.4001 22.1659 18.5H20.6659C20.6659 19.3613 19.8077 20.25 18.4952 20.25V21.75ZM22.1659 18.5V18H20.6659V18.5H22.1659ZM20.9282 17.4302L20.344 17.9302L21.3194 19.0698L21.9036 18.5698L20.9282 17.4302ZM20.9282 18.5698L21.5123 19.0698L22.4877 17.9302L21.9036 17.4302L20.9282 18.5698ZM15.3892 20.2352C16.055 21.1696 17.218 21.75 18.4952 21.75V20.25C17.6589 20.25 16.9705 19.8696 16.6108 19.3648L15.3892 20.2352Z" fill="#f7b32b"/>
+					<div class="grid-container">
+						<div class="grid-item">
+							<div
+								class="feature text-center is-revealing"
+								style="text-align: center"
+							>
+								<div class="feature-inner">
+									<div
+										class="feature-icon"
+										style="
+											background: #fbd68d;
+											pointer-events: auto;
+										"
+									>
+										<svg
+											width="88"
+											height="88"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 48 48"
+											style="padding: 17px"
+										>
+											<g fill="none" fill-rule="nonzero">
+												<path
+													d="M32.49 15.51c-2.35-2.34-5.42-3.51-8.49-3.51v12l-8.49 8.49c4.69 4.69 12.28 4.69 16.97 0 4.69-4.69 4.69-12.29.01-16.98zm-8.49-11.51c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.96 20-20c0-11.05-8.95-20-20-20zm0 36c-8.84 0-16-7.16-16-16s7.16-16 16-16 16 7.16 16 16-7.16 16-16 16z"
+													fill="#f7b32b"
+												/>
+											</g>
 										</svg>
+									</div>
+									<h4 class="feature-title h3-mobile mb-8">
+										Rollout Planung<br />2023
+									</h4>
+									<button
+										class="go-to-button"
+										style="
+											margin-left: -38px;
+											position: absolute;
+											border: none;
+											color: white;
+											padding: 5px 20px;
+											text-align: center;
+											text-decoration: none;
+											font-size: 16px;
+											cursor: pointer;
+											border-radius: 25px;
+											font-weight: bold;
+											background-color: #f7b32b;
+										"
+										onclick="location.href='dashboards/rollout_planung_2023.html';"
+									>
+										2023
+									</button>
 								</div>
-								<h4 class="feature-title h3-mobile mb-8">Servermigration<br>R340-SSD/R350</h4>
-								<button class="go-to-button"
-									style="margin-left: -75px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#f7b32b"
-									onclick="location.href='dashboards/servermigration_2023_r350.html';">Servermigration</button>
 							</div>
 						</div>
-					</div>
-					<!-- <div class="grid-item">
+
+						<div class="grid-item">
+							<div
+								class="feature text-center is-revealing"
+								style="text-align: center"
+							>
+								<div class="feature-inner">
+									<div
+										class="feature-icon"
+										style="
+											background: #e65557;
+											pointer-events: auto;
+										"
+									>
+										<svg
+											width="88"
+											height="88"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 48 48"
+											style="padding: 17px"
+										>
+											<g fill="none" fill-rule="nonzero">
+												<path
+													d="M32.49 15.51c-2.35-2.34-5.42-3.51-8.49-3.51v12l-8.49 8.49c4.69 4.69 12.28 4.69 16.97 0 4.69-4.69 4.69-12.29.01-16.98zm-8.49-11.51c-11.05 0-20 8.95-20 20s8.95 20 20 20 20-8.96 20-20c0-11.05-8.95-20-20-20zm0 36c-8.84 0-16-7.16-16-16s7.16-16 16-16 16 7.16 16 16-7.16 16-16 16z"
+													fill="#ba1b1d"
+												/>
+											</g>
+										</svg>
+									</div>
+									<h4 class="feature-title h3-mobile mb-8">
+										Rollout Planung<br />2024
+									</h4>
+									<button
+										class="go-to-button"
+										style="
+											margin-left: -38px;
+											position: absolute;
+											border: none;
+											color: white;
+											padding: 5px 20px;
+											text-align: center;
+											text-decoration: none;
+											font-size: 16px;
+											cursor: pointer;
+											border-radius: 25px;
+											font-weight: bold;
+											background-color: #ba1b1d;
+										"
+										onclick="location.href='dashboards/rollout_planung_2024.html';"
+									>
+										2024
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="grid-item">
+							<div
+								class="feature text-center is-revealing"
+								style="text-align: center"
+							>
+								<div class="feature-inner">
+									<div
+										class="feature-icon"
+										style="
+											background: #fbd68d;
+											pointer-events: auto;
+										"
+									>
+										<svg
+											width="88"
+											height="88"
+											viewBox="0 0 24 24"
+											style="padding: 20px"
+											fill="none"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M10 3.75C10.4142 3.75 10.75 3.41421 10.75 3C10.75 2.58579 10.4142 2.25 10 2.25V3.75ZM14 2.25C13.5858 2.25 13.25 2.58579 13.25 3C13.25 3.41421 13.5858 3.75 14 3.75V2.25ZM13 21.75C13.4142 21.75 13.75 21.4142 13.75 21C13.75 20.5858 13.4142 20.25 13 20.25V21.75ZM3.17157 19.8284L3.7019 19.2981H3.7019L3.17157 19.8284ZM20.8284 4.17157L20.2981 4.7019V4.7019L20.8284 4.17157ZM21.25 13C21.25 13.4142 21.5858 13.75 22 13.75C22.4142 13.75 22.75 13.4142 22.75 13H21.25ZM14 12.75C14.4142 12.75 14.75 12.4142 14.75 12C14.75 11.5858 14.4142 11.25 14 11.25V12.75ZM18 11.25C17.5858 11.25 17.25 11.5858 17.25 12C17.25 12.4142 17.5858 12.75 18 12.75V11.25ZM2.75 13V12H1.25V13H2.75ZM2.75 12V11H1.25V12H2.75ZM13 20.25H10V21.75H13V20.25ZM21.25 11V12H22.75V11H21.25ZM1.25 13C1.25 14.8644 1.24841 16.3382 1.40313 17.489C1.56076 18.6614 1.89288 19.6104 2.64124 20.3588L3.7019 19.2981C3.27869 18.8749 3.02502 18.2952 2.88976 17.2892C2.75159 16.2615 2.75 14.9068 2.75 13H1.25ZM10 20.25C8.09318 20.25 6.73851 20.2484 5.71085 20.1102C4.70476 19.975 4.12511 19.7213 3.7019 19.2981L2.64124 20.3588C3.38961 21.1071 4.33855 21.4392 5.51098 21.5969C6.66182 21.7516 8.13558 21.75 10 21.75V20.25ZM14 3.75C15.9068 3.75 17.2615 3.75159 18.2892 3.88976C19.2952 4.02502 19.8749 4.27869 20.2981 4.7019L21.3588 3.64124C20.6104 2.89288 19.6614 2.56076 18.489 2.40313C17.3382 2.24841 15.8644 2.25 14 2.25V3.75ZM22.75 11C22.75 9.13558 22.7516 7.66182 22.5969 6.51098C22.4392 5.33855 22.1071 4.38961 21.3588 3.64124L20.2981 4.7019C20.7213 5.12511 20.975 5.70476 21.1102 6.71085C21.2484 7.73851 21.25 9.09318 21.25 11H22.75ZM10 2.25C8.13558 2.25 6.66182 2.24841 5.51098 2.40313C4.33856 2.56076 3.38961 2.89288 2.64124 3.64124L3.7019 4.7019C4.12511 4.27869 4.70476 4.02502 5.71085 3.88976C6.73851 3.75159 8.09318 3.75 10 3.75V2.25ZM2.75 11C2.75 9.09318 2.75159 7.73851 2.88976 6.71085C3.02502 5.70476 3.27869 5.12511 3.7019 4.7019L2.64124 3.64124C1.89288 4.38961 1.56076 5.33855 1.40313 6.51098C1.24841 7.66182 1.25 9.13558 1.25 11H2.75ZM21.25 12V13H22.75V12H21.25ZM2 12.75H14V11.25H2V12.75ZM18 12.75H22V11.25H18V12.75Z"
+												fill="#f7b32b"
+											/>
+											<path
+												d="M13.5 7.5L18 7.5"
+												stroke="#f7b32b"
+												stroke-width="2"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M6 17.5L6 15.5"
+												stroke="#f7b32b"
+												stroke-width="2"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M6 8.5L6 6.5"
+												stroke="#f7b32b"
+												stroke-width="2"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M9 17.5L9 15.5"
+												stroke="#f7b32b"
+												stroke-width="2"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M9 8.5L9 6.5"
+												stroke="#f7b32b"
+												stroke-width="2"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M15.5841 17.5H14.8341V17.5L15.5841 17.5ZM15.5841 18L15.0964 18.5698C15.3772 18.8101 15.7911 18.8101 16.0718 18.5698L15.5841 18ZM16.656 18.0698C16.9706 17.8004 17.0074 17.327 16.738 17.0123C16.4687 16.6976 15.9952 16.6609 15.6806 16.9302L16.656 18.0698ZM15.4877 16.9302C15.173 16.6609 14.6996 16.6976 14.4302 17.0123C14.1609 17.327 14.1976 17.8004 14.5123 18.0698L15.4877 16.9302ZM20.3892 16.6352C20.6296 16.9726 21.0979 17.0512 21.4352 16.8108C21.7726 16.5704 21.8512 16.1021 21.6108 15.7648L20.3892 16.6352ZM18.5048 14.25C16.5912 14.25 14.8341 15.5999 14.8341 17.5H16.3341C16.3341 16.6387 17.1923 15.75 18.5048 15.75V14.25ZM14.8341 17.5L14.8341 18L16.3341 18L16.3341 17.5L14.8341 17.5ZM16.0718 18.5698L16.656 18.0698L15.6806 16.9302L15.0964 17.4302L16.0718 18.5698ZM16.0718 17.4302L15.4877 16.9302L14.5123 18.0698L15.0964 18.5698L16.0718 17.4302ZM21.6108 15.7648C20.945 14.8304 19.782 14.25 18.5048 14.25V15.75C19.3411 15.75 20.0295 16.1304 20.3892 16.6352L21.6108 15.7648Z"
+												fill="#f7b32b"
+											/>
+											<path
+												d="M18.4952 21V21.75V21ZM21.4159 18.5H22.1659H21.4159ZM21.4159 18L21.9036 17.4302C21.6228 17.1899 21.2089 17.1899 20.9282 17.4302L21.4159 18ZM20.344 17.9302C20.0294 18.1996 19.9926 18.673 20.262 18.9877C20.5313 19.3024 21.0048 19.3391 21.3194 19.0698L20.344 17.9302ZM21.5123 19.0698C21.827 19.3391 22.3004 19.3024 22.5698 18.9877C22.8391 18.673 22.8024 18.1996 22.4877 17.9302L21.5123 19.0698ZM16.6108 19.3648C16.3704 19.0274 15.9021 18.9488 15.5648 19.1892C15.2274 19.4296 15.1488 19.8979 15.3892 20.2352L16.6108 19.3648ZM18.4952 21.75C20.4088 21.75 22.1659 20.4001 22.1659 18.5H20.6659C20.6659 19.3613 19.8077 20.25 18.4952 20.25V21.75ZM22.1659 18.5V18H20.6659V18.5H22.1659ZM20.9282 17.4302L20.344 17.9302L21.3194 19.0698L21.9036 18.5698L20.9282 17.4302ZM20.9282 18.5698L21.5123 19.0698L22.4877 17.9302L21.9036 17.4302L20.9282 18.5698ZM15.3892 20.2352C16.055 21.1696 17.218 21.75 18.4952 21.75V20.25C17.6589 20.25 16.9705 19.8696 16.6108 19.3648L15.3892 20.2352Z"
+												fill="#f7b32b"
+											/>
+										</svg>
+									</div>
+									<h4 class="feature-title h3-mobile mb-8">
+										Servermigration<br />R340-SSD/R350
+									</h4>
+									<button
+										class="go-to-button"
+										style="
+											margin-left: -75px;
+											position: absolute;
+											border: none;
+											color: white;
+											padding: 5px 20px;
+											text-align: center;
+											text-decoration: none;
+											font-size: 16px;
+											cursor: pointer;
+											border-radius: 25px;
+											font-weight: bold;
+											background-color: #f7b32b;
+										"
+										onclick="location.href='dashboards/servermigration_2023_r350.html';"
+									>
+										Servermigration
+									</button>
+								</div>
+							</div>
+						</div>
+						<!-- <div class="grid-item">
 						<div class="feature text-center is-revealing" style="text-align:center;">
 							<div class="feature-inner">
 								<div class="feature-icon" style="background:#e65557; pointer-events: auto;">
@@ -229,26 +384,85 @@
 							</div>
 						</div>
 					</div> -->
-					<div class="grid-item">
-						<div class="feature text-center is-revealing" style="text-align:center;">
-							<div class="feature-inner">
-								<div class="feature-icon" style="background:#fbd68d; pointer-events: auto;">
-									<svg width="88" height="88" viewBox="0 0 24 24" fill="none" style = "padding:20px;" xmlns="http://www.w3.org/2000/svg">
-										<path d="M18.18 8.03933L18.6435 7.57589C19.4113 6.80804 20.6563 6.80804 21.4241 7.57589C22.192 8.34374 22.192 9.58868 21.4241 10.3565L20.9607 10.82M18.18 8.03933C18.18 8.03933 18.238 9.02414 19.1069 9.89309C19.9759 10.762 20.9607 10.82 20.9607 10.82M18.18 8.03933L13.9194 12.2999C13.6308 12.5885 13.4865 12.7328 13.3624 12.8919C13.2161 13.0796 13.0906 13.2827 12.9882 13.4975C12.9014 13.6797 12.8368 13.8732 12.7078 14.2604L12.2946 15.5L12.1609 15.901M20.9607 10.82L16.7001 15.0806C16.4115 15.3692 16.2672 15.5135 16.1081 15.6376C15.9204 15.7839 15.7173 15.9094 15.5025 16.0118C15.3203 16.0986 15.1268 16.1632 14.7396 16.2922L13.5 16.7054L13.099 16.8391M13.099 16.8391L12.6979 16.9728C12.5074 17.0363 12.2973 16.9867 12.1553 16.8447C12.0133 16.7027 11.9637 16.4926 12.0272 16.3021L12.1609 15.901M13.099 16.8391L12.1609 15.901" stroke="#f7b32b" stroke-width="1.5"/>
-										<path d="M8 13H10.5" stroke="#f7b32b" stroke-width="1.5" stroke-linecap="round"/>
-										<path d="M8 9H14.5" stroke="#f7b32b" stroke-width="1.5" stroke-linecap="round"/>
-										<path d="M8 17H9.5" stroke="#f7b32b" stroke-width="1.5" stroke-linecap="round"/>
-										<path d="M3 14V10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157M21 14C21 17.7712 21 19.6569 19.8284 20.8284M4.17157 20.8284C5.34315 22 7.22876 22 11 22H13C16.7712 22 18.6569 22 19.8284 20.8284M19.8284 20.8284C20.7715 19.8853 20.9554 18.4796 20.9913 16" stroke="#f7b32b" stroke-width="1.5" stroke-linecap="round"/>
+						<div class="grid-item">
+							<div
+								class="feature text-center is-revealing"
+								style="text-align: center"
+							>
+								<div class="feature-inner">
+									<div
+										class="feature-icon"
+										style="
+											background: #fbd68d;
+											pointer-events: auto;
+										"
+									>
+										<svg
+											width="88"
+											height="88"
+											viewBox="0 0 24 24"
+											fill="none"
+											style="padding: 20px"
+											xmlns="http://www.w3.org/2000/svg"
+										>
+											<path
+												d="M18.18 8.03933L18.6435 7.57589C19.4113 6.80804 20.6563 6.80804 21.4241 7.57589C22.192 8.34374 22.192 9.58868 21.4241 10.3565L20.9607 10.82M18.18 8.03933C18.18 8.03933 18.238 9.02414 19.1069 9.89309C19.9759 10.762 20.9607 10.82 20.9607 10.82M18.18 8.03933L13.9194 12.2999C13.6308 12.5885 13.4865 12.7328 13.3624 12.8919C13.2161 13.0796 13.0906 13.2827 12.9882 13.4975C12.9014 13.6797 12.8368 13.8732 12.7078 14.2604L12.2946 15.5L12.1609 15.901M20.9607 10.82L16.7001 15.0806C16.4115 15.3692 16.2672 15.5135 16.1081 15.6376C15.9204 15.7839 15.7173 15.9094 15.5025 16.0118C15.3203 16.0986 15.1268 16.1632 14.7396 16.2922L13.5 16.7054L13.099 16.8391M13.099 16.8391L12.6979 16.9728C12.5074 17.0363 12.2973 16.9867 12.1553 16.8447C12.0133 16.7027 11.9637 16.4926 12.0272 16.3021L12.1609 15.901M13.099 16.8391L12.1609 15.901"
+												stroke="#f7b32b"
+												stroke-width="1.5"
+											/>
+											<path
+												d="M8 13H10.5"
+												stroke="#f7b32b"
+												stroke-width="1.5"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M8 9H14.5"
+												stroke="#f7b32b"
+												stroke-width="1.5"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M8 17H9.5"
+												stroke="#f7b32b"
+												stroke-width="1.5"
+												stroke-linecap="round"
+											/>
+											<path
+												d="M3 14V10C3 6.22876 3 4.34315 4.17157 3.17157C5.34315 2 7.22876 2 11 2H13C16.7712 2 18.6569 2 19.8284 3.17157M21 14C21 17.7712 21 19.6569 19.8284 20.8284M4.17157 20.8284C5.34315 22 7.22876 22 11 22H13C16.7712 22 18.6569 22 19.8284 20.8284M19.8284 20.8284C20.7715 19.8853 20.9554 18.4796 20.9913 16"
+												stroke="#f7b32b"
+												stroke-width="1.5"
+												stroke-linecap="round"
+											/>
 										</svg>
+									</div>
+									<h4 class="feature-title h3-mobile mb-8">
+										Gesamtplanung<br />2024
+									</h4>
+									<button
+										class="go-to-button"
+										style="
+											margin-left: -38px;
+											position: absolute;
+											border: none;
+											color: white;
+											padding: 5px 20px;
+											text-align: center;
+											text-decoration: none;
+											font-size: 16px;
+											cursor: pointer;
+											border-radius: 25px;
+											font-weight: bold;
+											background-color: #f7b32b;
+										"
+										onclick="location.href='dashboards/gesamtplanung_2024.html';"
+									>
+										2024
+									</button>
 								</div>
-								<h4 class="feature-title h3-mobile mb-8">Gesamtplanung<br>2024</h4>
-								<button class="go-to-button"
-									style="margin-left: -38px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#f7b32b"
-									onclick="location.href='dashboards/gesamtplanung_2024.html';">2024</button>
 							</div>
 						</div>
-					</div>
-					<!--<div class="grid-item">
+						<!--<div class="grid-item">
 						<div class="feature text-center is-revealing">
 							<div class="feature-inner">
 								<div class="feature-icon" style="background:#E0E1FE;">
@@ -340,60 +554,96 @@
 							</div>
 						</div>
 					</div> -->
+					</div>
+				</section>
+			</main>
+			<div
+				style="background-color: var(--main-medium); text-align: right"
+			>
+				<div style="padding: 20px; float: center; text-align: center">
+					<p
+						style="
+							color: white;
+							margin: 0px;
+							font-size: 15px;
+							font-weight: bold;
+						"
+					>
+						Fragen oder Probleme mit dem Rollout Monitor?
+					</p>
+					<button
+						class="contact-button"
+						onclick="location.href='mailto:torsten.mitte.extern@de.mcd.com?cc=almista01@gmail.com&subject=Frage bezüglich Rollout Monitor';"
+					>
+						Schreiben Sie uns
+					</button>
+					<p
+						style="
+							color: white;
+							margin: 0px;
+							margin-top: 10px;
+							font-size: 15px;
+							font-weight: bold;
+						"
+					>
+						oder per Telefon: 0172/3841911 (Ansprechpartner: Torsten
+						Mitte)
+					</p>
+					<div>
+						<button
+							class="game-button"
+							id="button"
+							onclick="location.href='minigame.html'"
+							style="
+								margin-right: 20px;
+								margin-bottom: 20px;
+								margin-top: 0px;
+							"
+						>
+							Dont Press
+						</button>
+					</div>
+					<hr />
 				</div>
-			</section>
-		</main>
-		<div style="background-color: var(--main-medium);  text-align:right">
-			<div style="padding:20px; float:center; text-align: center;">
-				<p style="color:white; margin:0px; font-size: 15px; font-weight: bold;">Fragen oder Probleme mit
-					dem
-					Rollout Monitor?</p>
-				<button class="contact-button"
-					onclick="location.href='mailto:torsten.mitte.extern@de.mcd.com?cc=almista01@gmail.com&subject=Frage bezüglich Rollout Monitor';">Schreiben
-					Sie uns</button>
-				<p style="color:white; margin:0px; margin-top:10px; font-size: 15px; font-weight: bold;">oder per
-					Telefon: 0172/3841911
-					(Ansprechpartner: Torsten Mitte)
-				</p>
-				<div><button class="game-button" id=button onclick="location.href='minigame.html'"
-						style="margin-right: 20px; margin-bottom: 20px; margin-top: 0px;">Dont Press</button></div>
-				<hr>
 			</div>
 		</div>
-	</div>
-	<script src="dist/js/main.min.js"></script>
-	<script>
-		function showGame() {
-			if (checkPassword()) {
-				document.getElementById("button").style.display = "inline-block";
-			} else {
-				document.getElementById("button").style.display = "none";
+		<script src="dist/js/main.min.js"></script>
+		<script>
+			function showGame() {
+				if (checkPassword()) {
+					document.getElementById("button").style.display =
+						"inline-block";
+				} else {
+					document.getElementById("button").style.display = "none";
+				}
 			}
-		}
-	</script>
-	<script>
-		function checkPassword() {
-			var passwordIsCorrect = getCookie("passwordIsCorrect");
-			if (passwordIsCorrect === "true") {
-				return true;
-			} else {
-				return false;
+		</script>
+		<script>
+			function checkPassword() {
+				var passwordIsCorrect = getCookie("passwordIsCorrect");
+				if (passwordIsCorrect === "true") {
+					return true;
+				} else {
+					return false;
+				}
 			}
-		}
-	</script>
-	<script>
-		function setCookie(cname, cvalue, exdays) {
-			var d = new Date();
-			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-			var expires = "expires=" + d.toUTCString();
-			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-		}
+		</script>
+		<script>
+			function setCookie(cname, cvalue, exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+				var expires = "expires=" + d.toUTCString();
+				document.cookie =
+					cname + "=" + cvalue + ";" + expires + ";path=/";
+			}
 
-		function getCookie(cname) {
-			var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-			return cookieValue
-		}
-	</script>
-</body>
-
+			function getCookie(cname) {
+				var cookieValue = document.cookie.replace(
+					/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/,
+					"$1"
+				);
+				return cookieValue;
+			}
+		</script>
+	</body>
 </html>

@@ -1,163 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
-<style>
-	@font-face {
-		font-family: "dashboardfont";
-		src: url("fonts/Roboto-Regular.ttf");
-	}
+	<style>
+		@font-face {
+			font-family: "dashboardfont";
+			src: url("fonts/Roboto-Regular.ttf");
+		}
 
-	* {
-		font-family: "dashboardfont", sans-serif !important;
-	}
+		* {
+			font-family: "dashboardfont", sans-serif !important;
+		}
 
-	:root {
-		--font-big-size: 2rem;
-		--font-medium-size: 1.5rem;
-		--font-small-size: 1rem;
-		--main-dark: #009879;
-		--main-medium: #006a60;
-		--main-light: #40b3a2;
-		--accent-bright: #ffc10b;
-		--accent-medium: #ffd23f;
-		--accent-light: #ffe57a;
-		--margin-big: 2rem;
-		--margin-medium: 1rem;
-		--magin-small: 0.5rem;
-	}
+		:root {
+			--font-big-size: 2rem;
+			--font-medium-size: 1.5rem;
+			--font-small-size: 1rem;
+			--main-dark: #009879;
+			--main-medium: #006a60;
+			--main-light: #40b3a2;
+			--accent-bright: #ffc10b;
+			--accent-medium: #ffd23f;
+			--accent-light: #ffe57a;
+			--margin-big: 2rem;
+			--margin-medium: 1rem;
+			--magin-small: 0.5rem;
+		}
 
-	.section-paragraph {
-		margin-bottom: 4rem !important;
-	}
+		.section-paragraph {
+			margin-bottom: 4rem !important;
+		}
 
-	.grid-container {
-		display: flex;
-		column-gap: 30px;
-		grid-template-columns: 1fr 1fr 1fr;
-		flex-wrap: wrap;
-		justify-content: center;
-	}
+		.grid-container {
+			display: flex;
+			column-gap: 30px;
+			grid-template-columns: 1fr 1fr 1fr;
+			flex-wrap: wrap;
+			justify-content: center;
+		}
 
-	.grid-item {
-		display: inline-grid;
-	}
+		.grid-item {
+			display: inline-grid;
+		}
 
-	.contact-button {
-		border-radius: 26px;
-		background-color: #7371FC;
-		border: none;
-		margin-left: 5px;
-		font-size: 15px;
-		padding: 8px 16px;
-		color: white;
-	}
+		.contact-button {
+			border-radius: 26px;
+			background-color: #7371fc;
+			border: none;
+			margin-left: 5px;
+			font-size: 15px;
+			padding: 8px 16px;
+			color: white;
+		}
 
-	.game-button {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		border-radius: 26px;
-		background-color: rgb(192, 192, 192);
-		border: none;
-		margin-left: 5px;
-		font-size: 15px;
-		padding: 8px 16px;
-		color: #fc5130;
-		display: none;
-	}
+		.game-button {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			border-radius: 26px;
+			background-color: rgb(192, 192, 192);
+			border: none;
+			margin-left: 5px;
+			font-size: 15px;
+			padding: 8px 16px;
+			color: #fc5130;
+			display: none;
+		}
 
-	.game-button:hover {
-		font-weight: bold;
+		.game-button:hover {
+			font-weight: bold;
+		}
 
-	}
+		.contact-button:hover {
+			font-weight: bold;
+		}
+	</style>
 
-	.contact-button:hover {
-		font-weight: bold;
-	}
-</style>
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Rollout Monitor</title>
+		<link rel="icon" href="images/Logo SOS IS GmbH Neu shadow_tif.webp" />
+		<link rel="stylesheet" href="dist/css/style.css" />
+		<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
+		<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+		<link rel="stylesheet" href="styling/popup.css" />
+	</head>
 
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Rollout Monitor</title>
-	<link rel="icon" href="images/Logo SOS IS GmbH Neu shadow_tif.webp">
-	<link rel="stylesheet" href="dist/css/style.css">
-	<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
-	<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
-	<link rel="stylesheet" href="styling/popup.css">
-</head>
-
-<body onload="showGame()" class="is-boxed has-animations">
-	<div class="body-wrap boxed-container">
-		<main>
-			<section class="features section">
-				<div class="features-header text-center">
-					<div class="header"
-						style="background-color: var(--main-dark); margin-top: 20px; margin-left:70px; margin-right: 70px;margin-bottom: 20px; padding-top:20px; padding-bottom: 10px;border-radius: 42px;">
-						<img src=" https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
-							alt="McDonald's logo"
-							style="display: block; margin: auto auto; width:100px; text-align: center;">
-						<h2 style="margin:0px; color:white">McDonald's
-							Rollout Monitor</h2>
-					</div>
-					<p class="section-paragraph">Dieses Dashboard soll Ihnen einen schnellen Überblick
-						über
-						alle aktuellen und geplanten Rolloutprojekte geben. <br> Über die Kacheln erreichen Sie die
-						dedizierten Rolloutbereiche. <br>Bei Fragen, Problemen oder Anregungen nutzen Sie bitte eine
-						der
-						untenstehenden Kontaktmöglichkeiten.</p>
-				</div>
-				<div class="grid-container">
-					<div class="grid-item">
-						<div class="feature text-center is-revealing" style="text-align:center;">
-							<div class="feature-inner">
-								<div class="feature-icon" style="background:#FFD2DA; pointer-events: auto;">
-									<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
-										style="padding:17px; padding-top: 25px; padding-left:24px; ">
-										<g>
-											<g>
-												<path
-													d="m391.1,373.9h-57.1v-39.9l16.2,16.1c11.2,11.2 24.9,3.9 28.9-0.1 7.9-8 7.9-20.9-0.1-28.9l-51-50.6c-8-7.9-20.8-7.9-28.8,0l-51,50.6c-8,7.9-8.1,20.9-0.1,28.9 7.9,8 20.9,8.1 28.9,0.1l16.2-16.1v39.8h-170.3c-38.6,0-70.1-31.4-70.1-70 0-38.6 31.4-70.1 70.1-70.1h268.2c38.6,0 70,31.4 70,70.1 0.1,38.6-31.4,70.1-70,70.1zm-338.3-251c-1.42109e-14-38.6 31.4-70 70.1-70h268.2c38.6,0 70,31.4 70,70 0,38.6-31.4,70.1-70,70.1h-268.2c-38.6-0.1-70.1-31.5-70.1-70.1zm402.4,90.4c28.3-20.1 46.8-53.2 46.8-90.5 0-61.1-49.7-110.8-110.9-110.8h-268.2c-61.2,0-110.9,49.7-110.9,110.9 0,37.3 18.5,70.4 46.8,90.5-28.3,20.1-46.8,53.1-46.8,90.4 0,61.1 49.7,110.9 110.9,110.9h170.3v66.9c0,11.3 9.1,20.4 20.4,20.4 11.3,0 20.4-9.1 20.4-20.4v-66.9h57.1c61.1,0 110.9-49.7 110.9-110.9 0-37.3-18.5-70.3-46.8-90.5z"
-													fill=#FCB5C2 />
-												<path
-													d="m113.3,143.3h8.9c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-8.9c-11.3,0-20.4,9.1-20.4,20.4-0.1,11.3 9.1,20.4 20.4,20.4z"
-													fill=#FF6381 />
-												<path
-													d="m189.8,143.3h8.9c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-8.9c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4z"
-													fill=#FF6381 />
-												<path
-													d="m126.7,283.4h-8.9c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h8.9c11.3,0 20.4-9.1 20.4-20.4-2.84217e-14-11.3-9.2-20.4-20.4-20.4z"
-													fill=#FF6381 />
-												<path
-													d="m203.2,283.4h-8.9c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h8.9c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4z"
-													fill=#FF6381 />
-											</g>
-										</g>
-									</svg>
-								</div>
-								<h4 class="feature-title h3-mobile mb-8">Rollout Monitor <br> NSO/IRLX</h4>
-								<p class="text-sm"></p>
-								<button class="go-to-button"
-									style="margin-left: -57px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#FF6381"
-									onclick="location.href='rolloutmonitor.html';">NSO/IRLX</button>
-							</div>
+	<body onload="showGame()" class="is-boxed has-animations">
+		<div class="body-wrap boxed-container">
+			<main>
+				<section class="features section">
+					<div class="features-header text-center">
+						<div
+							class="header"
+							style="
+								background-color: var(--main-dark);
+								margin-top: 20px;
+								margin-left: 70px;
+								margin-right: 70px;
+								margin-bottom: 20px;
+								padding-top: 20px;
+								padding-bottom: 10px;
+								border-radius: 42px;
+							"
+						>
+							<img
+								src=" https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
+								alt="McDonald's logo"
+								style="
+									display: block;
+									margin: auto auto;
+									width: 100px;
+									text-align: center;
+								"
+							/>
+							<h2 style="margin: 0px; color: white">
+								McDonald's Rollout Monitor
+							</h2>
 						</div>
+						<p class="section-paragraph">
+							Dieses Dashboard soll Ihnen einen schnellen
+							Überblick über alle aktuellen und geplanten
+							Rolloutprojekte geben. <br />
+							Über die Kacheln erreichen Sie die dedizierten
+							Rolloutbereiche. <br />Bei Fragen, Problemen oder
+							Anregungen nutzen Sie bitte eine der untenstehenden
+							Kontaktmöglichkeiten.
+						</p>
 					</div>
-					<div class="grid-item">
-						<div class="feature text-center is-revealing">
-							<div class="feature-inner">
-								<div class="feature-icon" style="background:#E0E1FE">
-									<svg width="85" height="85" xmlns="http://www.w3.org/2000/svg"
-										viewBox="0 0 512.009 512.009"
-										style="padding:17px; padding-left:20px; padding-bottom: 20px;">
-										<g>
+					<div class="grid-container">
+						<div class="grid-item">
+							<div
+								class="feature text-center is-revealing"
+								style="text-align: center"
+							>
+								<div class="feature-inner">
+									<div
+										class="feature-icon"
+										style="
+											background: #ffd2da;
+											pointer-events: auto;
+										"
+									>
+										<svg
+											width="80"
+											height="80"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 512 512"
+											style="
+												padding: 17px;
+												padding-top: 25px;
+												padding-left: 24px;
+											"
+										>
 											<g>
 												<g>
-													<path d="M170.667,341.338c-11.776,0-21.333,9.557-21.333,21.333s9.557,21.333,21.333,21.333S192,374.447,192,362.671
-														S182.443,341.338,170.667,341.338z" fill="#4950F6" />
-													<path d="M341.333,341.338c-11.776,0-21.333,9.557-21.333,21.333s9.557,21.333,21.333,21.333c11.776,0,21.333-9.557,21.333-21.333
-														S353.109,341.338,341.333,341.338z" fill="#4950F6" />
-													<path d="M256.009,42.671c-0.002,0-0.005,0-0.007,0c-0.001,0-0.001,0-0.002,0c-0.001,0-0.002,0-0.003,0
+													<path
+														d="m391.1,373.9h-57.1v-39.9l16.2,16.1c11.2,11.2 24.9,3.9 28.9-0.1 7.9-8 7.9-20.9-0.1-28.9l-51-50.6c-8-7.9-20.8-7.9-28.8,0l-51,50.6c-8,7.9-8.1,20.9-0.1,28.9 7.9,8 20.9,8.1 28.9,0.1l16.2-16.1v39.8h-170.3c-38.6,0-70.1-31.4-70.1-70 0-38.6 31.4-70.1 70.1-70.1h268.2c38.6,0 70,31.4 70,70.1 0.1,38.6-31.4,70.1-70,70.1zm-338.3-251c-1.42109e-14-38.6 31.4-70 70.1-70h268.2c38.6,0 70,31.4 70,70 0,38.6-31.4,70.1-70,70.1h-268.2c-38.6-0.1-70.1-31.5-70.1-70.1zm402.4,90.4c28.3-20.1 46.8-53.2 46.8-90.5 0-61.1-49.7-110.8-110.9-110.8h-268.2c-61.2,0-110.9,49.7-110.9,110.9 0,37.3 18.5,70.4 46.8,90.5-28.3,20.1-46.8,53.1-46.8,90.4 0,61.1 49.7,110.9 110.9,110.9h170.3v66.9c0,11.3 9.1,20.4 20.4,20.4 11.3,0 20.4-9.1 20.4-20.4v-66.9h57.1c61.1,0 110.9-49.7 110.9-110.9 0-37.3-18.5-70.3-46.8-90.5z"
+														fill="#FCB5C2"
+													/>
+													<path
+														d="m113.3,143.3h8.9c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-8.9c-11.3,0-20.4,9.1-20.4,20.4-0.1,11.3 9.1,20.4 20.4,20.4z"
+														fill="#FF6381"
+													/>
+													<path
+														d="m189.8,143.3h8.9c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4h-8.9c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4z"
+														fill="#FF6381"
+													/>
+													<path
+														d="m126.7,283.4h-8.9c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h8.9c11.3,0 20.4-9.1 20.4-20.4-2.84217e-14-11.3-9.2-20.4-20.4-20.4z"
+														fill="#FF6381"
+													/>
+													<path
+														d="m203.2,283.4h-8.9c-11.3,0-20.4,9.1-20.4,20.4 0,11.3 9.1,20.4 20.4,20.4h8.9c11.3,0 20.4-9.1 20.4-20.4 0-11.3-9.1-20.4-20.4-20.4z"
+														fill="#FF6381"
+													/>
+												</g>
+											</g>
+										</svg>
+									</div>
+									<h4 class="feature-title h3-mobile mb-8">
+										Rollout Monitor <br />
+										NSO/IRLX
+									</h4>
+									<p class="text-sm"></p>
+									<button
+										class="go-to-button"
+										style="
+											margin-left: -57px;
+											position: absolute;
+											border: none;
+											color: white;
+											padding: 5px 20px;
+											text-align: center;
+											text-decoration: none;
+											font-size: 16px;
+											cursor: pointer;
+											border-radius: 25px;
+											font-weight: bold;
+											background-color: #ff6381;
+										"
+										onclick="location.href='rolloutmonitor.html';"
+									>
+										NSO/IRLX
+									</button>
+								</div>
+							</div>
+						</div>
+						<div class="grid-item">
+							<div class="feature text-center is-revealing">
+								<div class="feature-inner">
+									<div
+										class="feature-icon"
+										style="background: #e0e1fe"
+									>
+										<svg
+											width="85"
+											height="85"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 512.009 512.009"
+											style="
+												padding: 17px;
+												padding-left: 20px;
+												padding-bottom: 20px;
+											"
+										>
+											<g>
+												<g>
+													<g>
+														<path
+															d="M170.667,341.338c-11.776,0-21.333,9.557-21.333,21.333s9.557,21.333,21.333,21.333S192,374.447,192,362.671
+														S182.443,341.338,170.667,341.338z"
+															fill="#4950F6"
+														/>
+														<path
+															d="M341.333,341.338c-11.776,0-21.333,9.557-21.333,21.333s9.557,21.333,21.333,21.333c11.776,0,21.333-9.557,21.333-21.333
+														S353.109,341.338,341.333,341.338z"
+															fill="#4950F6"
+														/>
+														<path
+															d="M256.009,42.671c-0.002,0-0.005,0-0.007,0c-0.001,0-0.001,0-0.002,0c-0.001,0-0.002,0-0.003,0
 														c-70.671,0.003-134.648,28.637-180.967,74.935c-0.016,0.016-0.034,0.029-0.05,0.045c-0.017,0.017-0.03,0.035-0.047,0.052
 														C28.688,163.976,0.072,227.867,0.011,298.445C0.011,298.521,0,298.595,0,298.671c0,0.073,0.01,0.143,0.011,0.215
 														c0.05,60.201,20.962,117.239,58.515,162.704c4.053,4.907,10.084,7.748,16.448,7.748h362.048c6.364,0,12.395-2.841,16.448-7.748
@@ -168,141 +250,229 @@
 														c0,11.782,9.551,21.333,21.333,21.333c11.782,0,21.333-9.551,21.333-21.333V86.396c42.906,4.259,82.068,21.232,113.676,47.096
 														l-14.325,14.325c-8.331,8.331-8.331,21.839,0,30.17c8.331,8.331,21.839,8.331,30.17,0l14.326-14.326
 														c25.867,31.607,42.842,70.771,47.103,113.677h-62.95c-11.782,0-21.333,9.551-21.333,21.333c0,11.782,9.551,21.333,21.333,21.333
-														h62.95C464.409,359.001,449.97,395.686,426.68,426.671z" fill="#4950F6" />
-													<polygon points="259.661,341.338 319.991,220.655 199.33,281.007 "
-														fill="#4950F6" />
+														h62.95C464.409,359.001,449.97,395.686,426.68,426.671z"
+															fill="#4950F6"
+														/>
+														<polygon
+															points="259.661,341.338 319.991,220.655 199.33,281.007 "
+															fill="#4950F6"
+														/>
+													</g>
 												</g>
 											</g>
-										</g>
-									</svg>
+										</svg>
+									</div>
+									<h4 class="feature-title h3-mobile mb-8">
+										Dashboard <br />
+										Rollout Planung
+									</h4>
+									<p class="text-sm"></p>
+									<button
+										class="go-to-button"
+										style="
+											margin-left: -77px;
+											position: absolute;
+											border: none;
+											color: white;
+											padding: 5px 20px;
+											text-align: center;
+											text-decoration: none;
+											font-size: 16px;
+											cursor: pointer;
+											border-radius: 25px;
+											font-weight: bold;
+											background-color: #4950f6;
+										"
+										onclick="location.href='dashboards.html';"
+									>
+										Rollout Planung
+									</button>
 								</div>
-								<h4 class="feature-title h3-mobile mb-8">Dashboard <br> Rollout Planung
-								</h4>
-								<p class="text-sm"></p>
-								<button class="go-to-button"
-									style="margin-left: -77px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#4950F6"
-									onclick="location.href='dashboards.html';">Rollout Planung</button>
+							</div>
+						</div>
+						<div class="grid-item">
+							<div class="feature text-center is-revealing">
+								<div class="feature-inner">
+									<div
+										class="feature-icon"
+										style="background: #ffd8cd"
+									>
+										<svg
+											width="88"
+											height="88"
+											xmlns="http://www.w3.org/2000/svg"
+											viewBox="0 0 48 48"
+											style="padding: 17px"
+										>
+											<g fill="none" fill-rule="nonzero">
+												<path
+													d="M41.09 10.45l-2.77-3.36c-.56-.66-1.39-1.09-2.32-1.09h-24c-.93 0-1.76.43-2.31 1.09l-2.77 3.36c-.58.7-.92 1.58-.92 2.55v25c0 2.21 1.79 4 4 4h28c2.21 0 4-1.79 4-4v-25c0-.97-.34-1.85-.91-2.55zm-17.09 24.55l-11-11h7v-4h8v4h7l-11 11zm-13.75-25l1.63-2h24l1.87 2h-27.5z"
+													fill="#ff997d"
+												/>
+												<path
+													d="M0 0h48v48h-48z"
+													fill="none"
+												/>
+											</g>
+										</svg>
+									</div>
+									<h4 class="feature-title h3-mobile mb-8">
+										Rollout Monitor <br />
+										Archiv
+									</h4>
+									<p class="text-sm"></p>
+									<div style="float: center">
+										<button
+											class="go-to-button"
+											style="
+												margin-left: -39px;
+												position: absolute;
+												border: none;
+												color: white;
+												padding: 5px 20px;
+												text-align: center;
+												text-decoration: none;
+												font-size: 16px;
+												cursor: pointer;
+												border-radius: 25px;
+												font-weight: bold;
+												background-color: #ff997d;
+											"
+											onclick="location.href='archiv.html';"
+										>
+											Archiv
+										</button>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>
-					<div class="grid-item">
-						<div class="feature text-center is-revealing">
-							<div class="feature-inner">
-								<div class="feature-icon" style="background:#FFD8CD;">
-									<svg width="88" height="88" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"
-										style="padding:17px;">
-										<g fill="none" fill-rule="nonzero">
-											<path
-												d="M41.09 10.45l-2.77-3.36c-.56-.66-1.39-1.09-2.32-1.09h-24c-.93 0-1.76.43-2.31 1.09l-2.77 3.36c-.58.7-.92 1.58-.92 2.55v25c0 2.21 1.79 4 4 4h28c2.21 0 4-1.79 4-4v-25c0-.97-.34-1.85-.91-2.55zm-17.09 24.55l-11-11h7v-4h8v4h7l-11 11zm-13.75-25l1.63-2h24l1.87 2h-27.5z"
-												fill="#ff997d" />
-											<path d="M0 0h48v48h-48z" fill="none" />
-										</g>
-									</svg>
-								</div>
-								<h4 class="feature-title h3-mobile mb-8">Rollout Monitor <br> Archiv</h4>
-								<p class="text-sm"></p>								
-								<div style="float: center;"><button class="go-to-button"
-										style="margin-left: -39px; position:absolute; border: none; color: white; padding: 5px 20px; text-align: center; text-decoration: none; font-size: 16px; cursor: pointer; border-radius: 25px; font-weight: bold; background-color:#ff997d"
-										onclick="location.href='archiv.html';">Archiv</button></div>
-							</div>
-						</div>
+				</section>
+			</main>
+
+			<div
+				style="background-color: var(--main-medium); text-align: right"
+			>
+				<div style="padding: 20px; float: center; text-align: center">
+					<p
+						style="
+							color: white;
+							margin: 0px;
+							font-size: 15px;
+							font-weight: bold;
+						"
+					>
+						Fragen oder Probleme mit dem Rollout Monitor?
+					</p>
+					<button
+						class="contact-button"
+						onclick="location.href='mailto:torsten.mitte.extern@de.mcd.com?cc=almista01@gmail.com&subject=Frage bezüglich Rollout Monitor';"
+					>
+						Schreiben Sie uns
+					</button>
+					<p
+						style="
+							color: white;
+							margin: 0px;
+							margin-top: 10px;
+							font-size: 15px;
+							font-weight: bold;
+						"
+					>
+						oder per Telefon: 0172/3841911 (Ansprechpartner: Torsten
+						Mitte)
+					</p>
+					<div>
+						<button
+							class="game-button"
+							id="button"
+							onclick="location.href='minigame.html'"
+							style="
+								margin-right: 20px;
+								margin-bottom: 20px;
+								margin-top: 0px;
+							"
+						>
+							Dont Press
+						</button>
 					</div>
+					<hr />
 				</div>
-
-			</section>
-
-		</main>
-
-		<div style="background-color: var(--main-medium);  text-align:right">
-
-			<div style="padding:20px; float:center; text-align: center;">
-
-				<p style="color:white; margin:0px; font-size: 15px; font-weight: bold;">Fragen oder Probleme mit
-					dem
-					Rollout Monitor?</p>
-				<button class="contact-button"
-					onclick="location.href='mailto:torsten.mitte.extern@de.mcd.com?cc=almista01@gmail.com&subject=Frage bezüglich Rollout Monitor';">Schreiben
-					Sie uns</button>
-				<p style="color:white; margin:0px; margin-top:10px; font-size: 15px; font-weight: bold;">oder per
-					Telefon: 0172/3841911
-					(Ansprechpartner: Torsten Mitte)
-				</p>
-				<div><button class="game-button" id=button onclick="location.href='minigame.html'"
-						style="margin-right: 20px; margin-bottom: 20px; margin-top: 0px;">Dont Press</button></div>
-				<hr>
-
 			</div>
-
 		</div>
-	</div>
 
-	<script src="dist/js/main.min.js"></script>
-	<script>
-		function showGame() {
-			if (checkPassword()) {
-				document.getElementById("button").style.display = "inline-block";
-			} else {
-				document.getElementById("button").style.display = "none";
+		<script src="dist/js/main.min.js"></script>
+		<script>
+			function showGame() {
+				if (checkPassword()) {
+					document.getElementById("button").style.display =
+						"inline-block";
+				} else {
+					document.getElementById("button").style.display = "none";
+				}
 			}
-		}
-	</script>
-	<script>
-		const form = document.querySelector(".form-container");
-		function openForm() {
-			if (checkPassword()) {
-				showGame();
-				form.remove();
-			} else {
-				document.getElementById("myForm").style.display = "block";
-				const passwordInput = document.querySelector("input[name='psw']");
-				const errorMark = document.querySelector(".error-mark");
-				const submitButton = document.querySelector("button[type='submit']");
+		</script>
+		<script>
+			const form = document.querySelector(".form-container");
+			function openForm() {
+				if (checkPassword()) {
+					showGame();
+					form.remove();
+				} else {
+					document.getElementById("myForm").style.display = "block";
+					const passwordInput =
+						document.querySelector("input[name='psw']");
+					const errorMark = document.querySelector(".error-mark");
+					const submitButton = document.querySelector(
+						"button[type='submit']"
+					);
 
-				submitButton.addEventListener("click", (event) => {
-					event.preventDefault();
+					submitButton.addEventListener("click", (event) => {
+						event.preventDefault();
 
-					if (passwordInput.value === "mcdonalds") {
-						setCookie("passwordIsCorrect", "true", 30);
-						form.remove();
-						load2022();
-						showGame();
-					} else {
-						errorMark.style.display = "inline";
-					}
-				});
+						if (passwordInput.value === "mcdonalds") {
+							setCookie("passwordIsCorrect", "true", 30);
+							form.remove();
+							load2022();
+							showGame();
+						} else {
+							errorMark.style.display = "inline";
+						}
+					});
+				}
 			}
-		}
-
-
-	</script>
-	<script>
-		function checkPassword() {
-			var passwordIsCorrect = getCookie("passwordIsCorrect");
-			if (passwordIsCorrect === "true") {
-				return true;
-			} else {
-				return false;
+		</script>
+		<script>
+			function checkPassword() {
+				var passwordIsCorrect = getCookie("passwordIsCorrect");
+				if (passwordIsCorrect === "true") {
+					return true;
+				} else {
+					return false;
+				}
 			}
-		}
+		</script>
+		<script>
+			function setCookie(cname, cvalue, exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+				var expires = "expires=" + d.toUTCString();
+				document.cookie =
+					cname + "=" + cvalue + ";" + expires + ";path=/";
+			}
 
-	</script>
-	<script>
-		function setCookie(cname, cvalue, exdays) {
-			var d = new Date();
-			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-			var expires = "expires=" + d.toUTCString();
-			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-		}
+			function getCookie(cname) {
+				var cookieValue = document.cookie.replace(
+					/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/,
+					"$1"
+				);
+				return cookieValue;
+			}
 
-		function getCookie(cname) {
-			var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-			return cookieValue
-		}
-
-		function delCookie() {
-			document.cookie = "passwordIsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-		}
-	</script>
-</body>
-
+			function delCookie() {
+				document.cookie =
+					"passwordIsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+			}
+		</script>
+	</body>
 </html>

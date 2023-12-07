@@ -1,251 +1,270 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<title>Rollout Monitor</title>
+		<style>
+			:root {
+				--font-big-size: 2rem;
+				--font-medium-size: 1.5rem;
+				--font-small-size: 1rem;
+				--main-dark: #009879;
+				--main-medium: #006a60;
+				--main-light: #40b3a2;
+				--accent-bright: #ffc10b;
+				--accent-medium: #ffd23f;
+				--accent-light: #ffe57a;
+				--margin-big: 2rem;
+				--margin-medium: 1rem;
+				--magin-small: 0.5rem;
+			}
 
-<head>
-  <title>Rollout Monitor</title>
-  <style>
-    :root {
-      --font-big-size: 2rem;
-      --font-medium-size: 1.5rem;
-      --font-small-size: 1rem;
-      --main-dark: #009879;
-      --main-medium: #006a60;
-      --main-light: #40b3a2;
-      --accent-bright: #ffc10b;
-      --accent-medium: #ffd23f;
-      --accent-light: #ffe57a;
-      --margin-big: 2rem;
-      --margin-medium: 1rem;
-      --magin-small: 0.5rem;
-    }
+			@font-face {
+				font-family: "dashboardfont";
+				src: url("fonts/Roboto-Regular.ttf");
+			}
 
-    @font-face {
-      font-family: "dashboardfont";
-      src: url("fonts/Roboto-Regular.ttf");
-    }
+			* {
+				font-family: "dashboardfont", sans-serif;
+				animation: fadein 0.5s;
+			}
 
-    * {
-      font-family: "dashboardfont", sans-serif;
-      animation: fadein .5s;
-    }
+			/* Add the fade-in animation */
+			@keyframes fadein {
+				from {
+					opacity: 0;
+				}
 
+				to {
+					opacity: 1;
+				}
+			}
 
-    /* Add the fade-in animation */
-    @keyframes fadein {
-      from {
-        opacity: 0;
-      }
+			@media only screen and (max-width: 1400px) {
+				.dropdown {
+					display: none;
+				}
 
-      to {
-        opacity: 1;
-      }
-    }
+				#combined-dropdown {
+					display: block !important;
+				}
 
-    @media only screen and (max-width: 1400px) {
-      .dropdown {
-        display: none;
-      }
+				#dropdown-selector {
+					display: block !important;
+				}
 
-      #combined-dropdown {
-        display: block !important;
-      }
+				nav .right {
+					justify-content: right;
+					margin-right: 10vw !important;
+				}
 
-      #dropdown-selector {
-        display: block !important;
-      }
+				.dropdown-content {
+					margin: 0;
+				}
+			}
+		</style>
 
-      nav .right {
-        justify-content: right;
-        margin-right: 10vw !important;
-      }
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="icon"
+			href="../images/Logo SOS IS GmbH Neu shadow_tif.webp"
+		/>
+		<script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<link rel="stylesheet" href="../styling/table.css" />
+		<link rel="stylesheet" href="../styling/nav.css" />
+		<link rel="stylesheet" href="../styling/search_and_refresh.css" />
+		<link rel="stylesheet" href="../styling/header.css" />
+		<link rel="stylesheet" href="../styling/info_box.css" />
+		<link rel="stylesheet" href="../styling/background.css" />
+		<link rel="stylesheet" href="../styling/div.css" />
+		<link rel="stylesheet" href="../styling/popup.css" />
+		<script src="../js-components/navbar.js"></script>
+		<script src="../githubFileUpdater.js"></script>
+	</head>
 
-      .dropdown-content {
-        margin: 0;
-      }
-    }
-  </style>
+	<app-nav> </app-nav>
 
+	<body onload="openForm();">
+		<div class="form-popup" id="myForm">
+			<form class="form-container">
+				<h1>Login</h1>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="../images/Logo SOS IS GmbH Neu shadow_tif.webp">
-  <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="../styling/table.css">
-  <link rel="stylesheet" href="../styling/nav.css">
-  <link rel="stylesheet" href="../styling/search_and_refresh.css">
-  <link rel="stylesheet" href="../styling/header.css">
-  <link rel="stylesheet" href="../styling/info_box.css">
-  <link rel="stylesheet" href="../styling/background.css">
-  <link rel="stylesheet" href="../styling/div.css">
-  <link rel="stylesheet" href="../styling/popup.css">
-  <script src = "../js-components/navbar.js"></script>
-  <script src="../githubFileUpdater.js"></script>
-</head>
+				<label
+					class="error-mark"
+					for="psw"
+					style="display: none; color: red; font-size: 15px"
+					><b>Ungültiges Passwort</b></label
+				>
+				<input
+					type="password"
+					placeholder="Enter Password"
+					name="psw"
+					required
+				/>
+				<button type="submit" class="btn">Login</button>
+			</form>
+		</div>
 
-<app-nav>
-</app-nav>
+		<section id="home">
+			<div>
+				<h1>Detailplanung für alle laufenden Rolloutprojekte</h1>
+			</div>
+			<div class="info-box">
+				<div class="info-box__icon">i</div>
+				<div class="info-box__text">
+					Diese Seite bietet Ihnen einen detaillierten Überblick über
+					alle laufenden Rolloutprojekte. <br />
+					Nach dem Drücken des Buttons "Aktualisieren" wird die
+					Übersicht aus dem Masterdokument neu geladen.
+				</div>
+			</div>
+		</section>
+		<section id="detail1">
+			<!-- Refresh and search container -->
+			<div class="refresh-search-container">
+				<!-- Refresh button -->
+				<button class="refresh-button" onclick="loadDetail1();">
+					<i class="fa fa-refresh" style="margin-right: 10px"></i
+					>Aktualisieren
+				</button>
+			</div>
+			<div class="bigtable">
+				<div class="table-wrapper">
+					<table id="detail1-table" class="sortable">
+						<thead>
+							<tr>
+								<th class="long"></th>
+								<th>#01</th>
+								<th>#02</th>
+								<th>#03</th>
+								<th>#04</th>
+								<th>#05</th>
+								<th>#06</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</section>
+		<section id="detail2">
+			<!-- Refresh and search container -->
+			<div class="refresh-search-container" style="margin-top: 30px">
+				<!-- Refresh button -->
+				<button class="refresh-button" onclick="loadDetail2();">
+					<i class="fa fa-refresh" style="margin-right: 10px"></i
+					>Aktualisieren
+				</button>
+				<!-- Search box container -->
+			</div>
+			<div class="bigtable">
+				<div class="table-wrapper">
+					<table id="detail2-table" class="sortable">
+						<thead>
+							<tr>
+								<th class="long"></th>
+								<th>#07</th>
+								<th>#08</th>
+								<th>#09</th>
+								<th>#10</th>
+								<th>#11</th>
+								<th>#12</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
+		</section>
 
-<body onload="openForm();">
-  <div class="form-popup" id="myForm">
-    <form class="form-container">
-      <h1>Login</h1>
+		<script>
+			function loadDetail2() {
+				if (checkPassword()) {
+					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+					const SHEET_ID =
+						"1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
+					// Replace YOUR_API_KEY with your Google API key
+					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
 
-      <label class="error-mark" for="psw" style="display:none; color: red; font-size: 15px;"><b>Ungültiges
-          Passwort</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-      <button type="submit" class="btn">Login</button>
-    </form>
-  </div>
-
-  <section id="home">
-
-    <div>
-      <h1>
-        Detailplanung für alle laufenden Rolloutprojekte
-      </h1>
-    </div>
-    <div class="info-box">
-      <div class="info-box__icon">i</div>
-      <div class="info-box__text">
-        Diese Seite bietet Ihnen einen detaillierten Überblick über alle laufenden Rolloutprojekte. <br>
-        Nach dem Drücken des Buttons "Aktualisieren" wird die Übersicht aus dem Masterdokument neu geladen.
-      </div>
-    </div>
-  </section id="home">
-  <section id="detail1">
-
-    <!-- Refresh and search container -->
-    <div class="refresh-search-container">
-      <!-- Refresh button -->
-      <button class="refresh-button" onclick="loadDetail1();"><i class="fa fa-refresh"
-          style="margin-right: 10px;"></i>Aktualisieren</button>
-
-    </div>
-    <div class="bigtable">
-      <div class="table-wrapper">
-        <table id="detail1-table" class="sortable">
-          <thead>
-            <tr>
-              <th class="long"></th>
-              <th>#01</th>
-              <th>#02</th>
-              <th>#03</th>
-              <th>#04</th>
-              <th>#05</th>
-              <th>#06</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-
-      </div>
-    </div>
-  </section id="detail1">
-  <section id="detail2">
-
-    <!-- Refresh and search container -->
-    <div class="refresh-search-container" style="margin-top:30px">
-      <!-- Refresh button -->
-      <button class="refresh-button" onclick="loadDetail2();"><i class="fa fa-refresh"
-          style="margin-right: 10px;"></i>Aktualisieren</button>
-      <!-- Search box container -->
-
-    </div>
-    <div class="bigtable">
-      <div class="table-wrapper">
-        <table id="detail2-table" class="sortable">
-          <thead>
-            <tr>
-              <th class="long"></th>
-              <th>#07</th>
-              <th>#08</th>
-              <th>#09</th>
-              <th>#10</th>
-              <th>#11</th>
-              <th>#12</th>
-            </tr>
-          </thead>
-          <tbody>
-          </tbody>
-        </table>
-
-      </div>
-    </div>
-  </section id="detail2">
-
-  <script>
-    function loadDetail2() {
-      if (checkPassword()) {
-
-        // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-        const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-        // Replace YOUR_API_KEY with your Google API key
-        const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-        // Make a GET request to the Google Sheets API to retrieve the data for the table
-        $.ajax({
-          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?ranges=Detailplanung!A1:A37&ranges=Detailplanung!H1:K37&key=${API_KEY}`,
-          type: 'GET',
-          success: function (response) {
-            $('#detail2-table tbody').empty();
-            const data1 = response.valueRanges[0].values;
-            const data2 = response.valueRanges[1].values;
-            for (let i = 1; i < data1.length; i++) {
-              let hasValue = false;
-              if (data2[i]) {
-                for (let j = 0; j < data2[i].length; j++) {
-                  if (data2[i][j]) {
-                    hasValue = true;
-                    break;
-                  }
-                }
-              }
-              for (let j = 0; j < data1[i].length; j++) {
-                $('#detail2-table tbody').append(`
+					// Make a GET request to the Google Sheets API to retrieve the data for the table
+					$.ajax({
+						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?ranges=Detailplanung!A1:A37&ranges=Detailplanung!H1:K37&key=${API_KEY}`,
+						type: "GET",
+						success: function (response) {
+							$("#detail2-table tbody").empty();
+							const data1 = response.valueRanges[0].values;
+							const data2 = response.valueRanges[1].values;
+							for (let i = 1; i < data1.length; i++) {
+								let hasValue = false;
+								if (data2[i]) {
+									for (let j = 0; j < data2[i].length; j++) {
+										if (data2[i][j]) {
+											hasValue = true;
+											break;
+										}
+									}
+								}
+								for (let j = 0; j < data1[i].length; j++) {
+									$("#detail2-table tbody").append(`
         <tr>
           <td class ="first-column">${data1[i][j]}</td>
-          <td>${hasValue && data2[i] && data2[i][j] ? data2[i][j] : ''}</td>
-          <td>${hasValue && data2[i] && data2[i][j + 1] ? data2[i][j + 1] : ''}</td>
-          <td>${hasValue && data2[i] && data2[i][j + 2] ? data2[i][j + 2] : ''}</td>
-          <td>${hasValue && data2[i] && data2[i][j + 3] ? data2[i][j + 3] : ''}</td>
-          <td>${hasValue && data2[i] && data2[i][j + 4] ? data2[i][j + 4] : ''}</td>
-          <td>${hasValue && data2[i] && data2[i][j + 5] ? data2[i][j + 5] : ''}</td>
+          <td>${hasValue && data2[i] && data2[i][j] ? data2[i][j] : ""}</td>
+          <td>${
+				hasValue && data2[i] && data2[i][j + 1] ? data2[i][j + 1] : ""
+			}</td>
+          <td>${
+				hasValue && data2[i] && data2[i][j + 2] ? data2[i][j + 2] : ""
+			}</td>
+          <td>${
+				hasValue && data2[i] && data2[i][j + 3] ? data2[i][j + 3] : ""
+			}</td>
+          <td>${
+				hasValue && data2[i] && data2[i][j + 4] ? data2[i][j + 4] : ""
+			}</td>
+          <td>${
+				hasValue && data2[i] && data2[i][j + 5] ? data2[i][j + 5] : ""
+			}</td>
         </tr>
     `);
-              }
-            }
-          }
-        });
-      }
-    }
-  </script>
-  <script>
-    function loadDetail1() {
-      if (checkPassword()) {
-        // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-        const SHEET_ID_2 = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-        // Replace YOUR_API_KEY with your Google API key
-        const API_KEY_2 = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-        // Make a GET request to the Google Sheets API to retrieve the data for the table
-        $.ajax({
-          url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID_2}/values/Detailplanung!A1:G37?key=${API_KEY_2}`,
-          type: 'GET',
-          success: function (response) {
-            $('#detail1-table tbody').empty();
-            // The response from the API includes the data for the table in the "values" propertys
-            const data = response.values;
-            data.shift();
-            // Iterate through the data and add a row to the table for each item
-            data.forEach(function (item) {
-
-              $('#detail1-table tbody').append(`
+								}
+							}
+						},
+					});
+				}
+			}
+		</script>
+		<script>
+			function loadDetail1() {
+				if (checkPassword()) {
+					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+					const SHEET_ID_2 =
+						"1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
+					// Replace YOUR_API_KEY with your Google API key
+					const API_KEY_2 = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+					// Make a GET request to the Google Sheets API to retrieve the data for the table
+					$.ajax({
+						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID_2}/values/Detailplanung!A1:G37?key=${API_KEY_2}`,
+						type: "GET",
+						success: function (response) {
+							$("#detail1-table tbody").empty();
+							// The response from the API includes the data for the table in the "values" propertys
+							const data = response.values;
+							data.shift();
+							// Iterate through the data and add a row to the table for each item
+							data.forEach(function (item) {
+								$("#detail1-table tbody").append(`
               <tr>
                 <td class ="first-column">${item[0] || "\u200B"}</td>
                 <td>${item[1] || "\u200B"}</td>
@@ -256,133 +275,137 @@
                 <td>${item[6] || "\u200B"}</td>
               </tr>
             `);
-            });
-          }
-        });
-      }
-    }
-  </script>
+							});
+						},
+					});
+				}
+			}
+		</script>
 
-<script>
-  countUp();
-</script>
+		<script>
+			countUp();
+		</script>
 
+		<script>
+			// Get the search box and data table elements
+			var searchBox = document.querySelector(".search-box");
+			var dataTable = document.querySelector("#detail1-table");
 
-  <script>
-    // Get the search box and data table elements
-    var searchBox = document.querySelector('.search-box');
-    var dataTable = document.querySelector('#detail1-table');
+			// Add an event listener to the search box that listens for input events
+			searchBox.addEventListener("input", function () {
+				// Get the search query from the search box
+				var query = this.value.toLowerCase();
 
-    // Add an event listener to the search box that listens for input events
-    searchBox.addEventListener('input', function () {
-      // Get the search query from the search box
-      var query = this.value.toLowerCase();
+				// Loop through all the rows in the data table
+				for (var i = 1; i < dataTable.rows.length; i++) {
+					// Get the current row
+					var row = dataTable.rows[i];
 
-      // Loop through all the rows in the data table
-      for (var i = 1; i < dataTable.rows.length; i++) {
-        // Get the current row
-        var row = dataTable.rows[i];
+					// Set the row's display style to none by default
+					row.style.display = "none";
 
-        // Set the row's display style to none by default
-        row.style.display = 'none';
+					// Loop through all the cells in the row
+					for (var j = 0; j < row.cells.length; j++) {
+						// Get the current cell
+						var cell = row.cells[j];
 
-        // Loop through all the cells in the row
-        for (var j = 0; j < row.cells.length; j++) {
-          // Get the current cell
-          var cell = row.cells[j];
+						// If the cell's text content contains the search query, set the row's display style to '' (empty string) to show the row
+						if (
+							cell.textContent.toLowerCase().indexOf(query) > -1
+						) {
+							row.style.display = "";
+							break;
+						}
+					}
+				}
+			});
+		</script>
+		<script>
+			$(function () {
+				$(".scroll-page").on("click", function () {
+					var offset = 60; // Set the offset to 50px
+					var speed = 800;
+					var target = $(this.hash);
 
-          // If the cell's text content contains the search query, set the row's display style to '' (empty string) to show the row
-          if (cell.textContent.toLowerCase().indexOf(query) > -1) {
-            row.style.display = '';
-            break;
-          }
-        }
-      }
-    });
+					$("nav a").each(function () {
+						$(this).removeClass("active");
+					});
 
-  </script>
-  <script>
-    $(function () {
-      $('.scroll-page').on('click', function () {
-        var offset = 60; // Set the offset to 50px
-        var speed = 800;
-        var target = $(this.hash);
+					$(this).addClass("active");
 
-        $('nav a').each(function () {
-          $(this).removeClass('active');
-        });
+					$("html, body").animate(
+						{
+							scrollTop: target.offset().top - offset, // Subtract the offset from the scrollTop position
+						},
+						speed,
+						"swing"
+					);
+				});
+			});
+		</script>
+		<script>
+			const form = document.querySelector(".form-container");
+			function openForm() {
+				if (checkPassword()) {
+					loadDetail1();
+					loadDetail2();
+					form.remove();
+				} else {
+					document.getElementById("myForm").style.display = "block";
+					const passwordInput =
+						document.querySelector("input[name='psw']");
+					const errorMark = document.querySelector(".error-mark");
+					const submitButton = document.querySelector(
+						"button[type='submit']"
+					);
 
-        $(this).addClass('active');
+					submitButton.addEventListener("click", (event) => {
+						event.preventDefault();
 
-        $('html, body').animate({
-          scrollTop: target.offset().top - offset // Subtract the offset from the scrollTop position
-        }, speed, 'swing');
-      });
-    });
-  </script>
-  <script>
-    const form = document.querySelector(".form-container");
-    function openForm() {
-      if (checkPassword()) {
-        loadDetail1();
-        loadDetail2();
-        form.remove();
-      } else {
-        document.getElementById("myForm").style.display = "block";
-        const passwordInput = document.querySelector("input[name='psw']");
-        const errorMark = document.querySelector(".error-mark");
-        const submitButton = document.querySelector("button[type='submit']");
+						if (passwordInput.value === "mcdonalds") {
+							setCookie("passwordIsCorrect", "true", 30);
+							form.remove();
+							loadDetail1();
+							loadDetail2();
+						} else {
+							errorMark.style.display = "inline";
+						}
+					});
+				}
+			}
+		</script>
 
-        submitButton.addEventListener("click", (event) => {
-          event.preventDefault();
+		<script>
+			function checkPassword() {
+				var passwordIsCorrect = getCookie("passwordIsCorrect");
+				if (passwordIsCorrect === "true") {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		</script>
+		<script>
+			function setCookie(cname, cvalue, exdays) {
+				var d = new Date();
+				d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+				var expires = "expires=" + d.toUTCString();
+				document.cookie =
+					cname + "=" + cvalue + ";" + expires + ";path=/";
+			}
 
-          if (passwordInput.value === "mcdonalds") {
-            setCookie("passwordIsCorrect", "true", 30);
-            form.remove();
-            loadDetail1();
-            loadDetail2();
-          } else {
-            errorMark.style.display = "inline";
-          }
-        });
-      }
-    }
+			function getCookie(cname) {
+				var cookieValue = document.cookie.replace(
+					/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/,
+					"$1"
+				);
+				return cookieValue;
+			}
 
-
-  </script>
-
-  <script>
-    function checkPassword() {
-      var passwordIsCorrect = getCookie("passwordIsCorrect");
-      if (passwordIsCorrect === "true") {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-  </script>
-  <script>
-    function setCookie(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-      var expires = "expires=" + d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function getCookie(cname) {
-      var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-      return cookieValue
-    }
-
-    function deleteCookie(cname) {
-      document.cookie = cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    }
-
-
-  </script>
-
-
-</body>
-
+			function deleteCookie(cname) {
+				document.cookie =
+					cname + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+			}
+		</script>
+	</body>
 </html>
