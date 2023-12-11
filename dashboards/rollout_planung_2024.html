@@ -186,6 +186,25 @@
 				margin: 0 !important;
 			}
 
+			.kpis .kpi-sub-value {
+				font-size: 3rem;
+				font-weight: 600;
+				animation: fadein 1s;
+				margin: 0 !important;
+			}
+
+			.kpis-irlx {
+				display: grid !important;
+				grid-template-columns: 1fr 2fr;
+				margin-left: 9rem !important;
+				margin-right: 9rem !important;
+			}
+
+			.forecast-values {
+				display: grid;
+				grid-template-columns: 1fr 1fr 1fr 1fr;
+			}
+
 			.kpis #total-nso {
 				color: #6b9ac4;
 				font-size: 4.5rem;
@@ -368,11 +387,42 @@
 						<b>I</b>n<b>R</b>eal<b>L</b>ifeE<b>X</b>perience
 					</div>
 				</div>
-				<div class="kpis" id="top">
+				<div class="kpis kpis-irlx">
 					<div class="kpi-box">
 						<div class="kpi-value" id="total-irlx">10</div>
 
 						<div class="kpi-title">Target</div>
+					</div>
+					<div class="forecast">
+						<div class="kpi-title" style="font-weight: 600">
+							Forecast
+						</div>
+						<div class="forecast-values">
+							<div class="kpi-box">
+								<div class="kpi-sub-value" id="forecast-Q1">
+									10
+								</div>
+								<div class="kpi-title">Q1</div>
+							</div>
+							<div class="kpi-box">
+								<div class="kpi-sub-value" id="forecast-Q2">
+									10
+								</div>
+								<div class="kpi-title">Q2</div>
+							</div>
+							<div class="kpi-box">
+								<div class="kpi-sub-value" id="forecast-Q3">
+									10
+								</div>
+								<div class="kpi-title">Q3</div>
+							</div>
+							<div class="kpi-box">
+								<div class="kpi-sub-value" id="forecast-Q4">
+									10
+								</div>
+								<div class="kpi-title">Q4</div>
+							</div>
+						</div>
 					</div>
 				</div>
 
@@ -448,7 +498,7 @@
 				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
 
 				$.ajax({
-					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B22:M22?key=${API_KEY}`,
+					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B22:U22?key=${API_KEY}`,
 					type: "GET",
 					success: function (response) {
 						// The response from the API includes the data for the table in the "values" property
@@ -457,6 +507,10 @@
 						const completed_value = data[0][5];
 						const planned_value = data[0][8];
 						const unplanned_value = data[0][11];
+						const forecast_q1 = data[0][13];
+						const forecast_q2 = data[0][15];
+						const forecast_q3 = data[0][17];
+						const forecast_q4 = data[0][19];
 
 						// get the element with class ="kpi-value" and id = "planned"
 						const planned = document.querySelector(
@@ -478,6 +532,22 @@
 						);
 						// set the innerHTML of the element to the value of the target_value variable
 						total.innerHTML = target_value;
+
+						const f_q1 = document.querySelector("#forecast-Q1");
+						// set the innerHTML of the element to the value of the target_value variable
+						f_q1.innerHTML = forecast_q1;
+
+						const f_q2 = document.querySelector("#forecast-Q2");
+						// set the innerHTML of the element to the value of the target_value variable
+						f_q2.innerHTML = forecast_q2;
+
+						const f_q3 = document.querySelector("#forecast-Q3");
+						// set the innerHTML of the element to the value of the target_value variable
+						f_q3.innerHTML = forecast_q3;
+
+						const f_q4 = document.querySelector("#forecast-Q4");
+						// set the innerHTML of the element to the value of the target_value variable
+						f_q4.innerHTML = forecast_q4;
 					},
 				});
 			}
