@@ -596,9 +596,14 @@
 						type: "GET",
 						success: function (response) {
 							const data = response.values;
-							const completedData = data[0];
-							const plannedData = data[1];
-							const unplannedData = data[2];
+							// Check for data[2] and assign to completedData
+							var completedData = data[0] ? data[0] : [];
+
+							// Check for data[3] and assign to plannedData
+							var plannedData = data[1] ? data[1] : [];
+
+							// Check for data[4] and assign to unplannedData
+							var unplannedData = data[2] ? data[2] : [];
 
 							const ctx = document
 								.getElementById("NSO-chart")
@@ -756,9 +761,14 @@
 						type: "GET",
 						success: function (response) {
 							const data = response.values;
-							const completedData = data[0];
-							const plannedData = data[1];
-							const unplannedData = data[2];
+							// Check for data[2] and assign to completedData
+							var completedData = data[0] ? data[0] : [];
+
+							// Check for data[3] and assign to plannedData
+							var plannedData = data[1] ? data[1] : [];
+
+							// Check for data[4] and assign to unplannedData
+							var unplannedData = data[2] ? data[2] : [];
 
 							const ctx = document
 								.getElementById("IRLX-chart")
@@ -907,26 +917,6 @@
 					type: "GET",
 					success: function (response) {
 						// The response from the API includes the data for the table in the "values" property
-						const data = response.values;
-						const completedData = data[0];
-						const plannedData = data[1];
-						const unplannedData = data[2];
-						const today = new Date();
-						const currentMonth = today.getMonth() + 1;
-
-						var completed_month = 0;
-
-						var completed_month =
-							completedData.length < 2 ? 2 : completedData.length;
-						var planned_month =
-							plannedData.length - 1 < 2
-								? 2
-								: plannedData.length - completed_month - 1;
-						var unplanned_month =
-							13 - plannedData.length < 2
-								? 2
-								: 13 - plannedData.length;
-
 						const chartDiv = document.getElementById("chart-nso");
 						chartDiv.style.gridTemplateColumns = `1fr 1fr`;
 
@@ -945,24 +935,6 @@
 					success: function (response) {
 						// The response from the API includes the data for the table in the "values" property
 						const data = response.values;
-
-						const completedData = data[0];
-						const plannedData = data[1];
-						const unplannedData = data[2];
-
-						var completed_month = 0;
-
-						var completed_month =
-							completedData.length < 2 ? 2 : completedData.length;
-						var planned_month =
-							plannedData.length - 1 < 2
-								? 2
-								: plannedData.length - completed_month - 1;
-						var unplanned_month =
-							13 - plannedData.length < 2
-								? 2
-								: 13 - plannedData.length;
-
 						const chartDiv = document.getElementById("chart-irlx");
 						chartDiv.style.gridTemplateColumns = `1fr 1fr`;
 

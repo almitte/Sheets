@@ -1,6 +1,6 @@
-class Navbar extends HTMLElement{
-    connectedCallback(){
-        this.innerHTML = `<nav>
+class Navbar extends HTMLElement {
+  connectedCallback() {
+    this.innerHTML = `<nav>
         <div class="left"><a class="logo" href="../index.html">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/McDonald%27s_Golden_Arches.svg/1200px-McDonald%27s_Golden_Arches.svg.png"
                     alt="McDonald's logo"></a>
@@ -46,7 +46,6 @@ class Navbar extends HTMLElement{
                     <a href="../dashboards.html">Home</a>
                     <a href="../dashboards/gesamtplanung_2024.html">Gesamtplanung 2024</a>
                     <hr>
-                    <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                     <hr>
                     <a href="../dashboards/servermigration_2023_r350.html">Servermigration (R340-SSD/R350)</a>
@@ -63,11 +62,12 @@ class Navbar extends HTMLElement{
                   <a href="../archiv/archiv_2024.html">Archiv 2024</a>
                   <hr>
                   <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
+                  <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
               </div>
             </div>
         </div>
-    </nav>`
-    }
+    </nav>`;
+  }
 }
 
-customElements.define('app-nav', Navbar);
+customElements.define("app-nav", Navbar);
