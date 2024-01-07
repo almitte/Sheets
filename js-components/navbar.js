@@ -16,7 +16,7 @@ class Navbar extends HTMLElement {
                     <a href="../rolloutmonitor.html">Home</a>
                     <a href="../rolloutmonitor/forecast.html">Forecast</a>
                     <a href="../rolloutmonitor/detail.html">Detailplanung</a>
-                    <a href="../rolloutmonitor/installation.html">Rollout Status</a>
+                    <a href="../rolloutmonitor/statustable.html">Statustable</a>
                     <hr>
                     <a href="../archiv/archiv_2022.html">Archiv 2022</a>
                     <a href="../archiv/archiv_2023.html">Archiv 2023</a>
@@ -36,6 +36,7 @@ class Navbar extends HTMLElement {
                     <a href="../rolloutmonitor.html">Home</a>
                     <a href="../rolloutmonitor/forecast.html">Forecast</a>
                     <a href="../rolloutmonitor/detail.html">Detailplanung</a>
+                    <a href="../rolloutmonitor/statustable.html">Statustable</a>
                 </div>
             </div>
             <div class="dropdown">

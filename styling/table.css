@@ -340,25 +340,25 @@ th:first-child {
 }
 
 /* Style for the first column */
-.bigtable .sortable th:first-child,
-.bigtable .sortable td:first-child {
+#statustable .sortable th:first-child,
+#statustable .sortable td:first-child {
 	position: sticky;
 	left: 0;
 	z-index: 1;
 }
 
-.bigtable .sortable td:first-child {
+#statustable .sortable td:first-child {
 	background-color: white; /* or the color of your table background */
 }
 
-.bigtable .sortable th:first-child {
+#statustable .sortable th:first-child {
 	background-color: var(
 		--main-dark
 	); /* or the color of your table background */
 }
 
 /* Ensure the table wrapper allows for horizontal scrolling */
-.bigtable .table-scroll {
+#statustable .table-scroll {
 	overflow-x: auto;
 }
 
