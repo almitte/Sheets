@@ -121,11 +121,16 @@
 
 		<section id="home">
 			<div>
-				<h1>Store Status</h1>
+				<h1>Statustable</h1>
 			</div>
 			<div class="info-box">
 				<div class="info-box__icon">i</div>
-				<div class="info-box__text">Hier noch Text einfügen...</div>
+				<div class="info-box__text">
+					Diese Seite bietet Ihnen einen detaillierten Überblick über
+					den aktuellen Status aller laufenden Rolloutprojekte <br />
+					Nach dem Drücken des Buttons "Aktualisieren" wird die
+					Übersicht aus dem Masterdokument neu geladen.
+				</div>
 			</div>
 		</section>
 		<section id="main">
@@ -156,25 +161,21 @@
 								<tr>
 									<th class="short">Store</th>
 									<th class="short">Art</th>
+									<th class="short">
+										Eröffnungs-<br />termin
+									</th>
 									<th class="short">RI-Freigabe</th>
-									<th class="short">Baugenehmigung</th>
-									<th class="short">Eröffnung</th>
-									<th class="short">
-										RI-Freigabeplan vorhanden
-									</th>
-									<th class="short">A&V erstellt</th>
-									<th class="short">Hardware bestellt</th>
-									<th class="short">
-										IT-Installation geplant
-									</th>
-									<th class="short">
-										IT-Installation abgeschlossen
-									</th>
+									<th class="short">Bau-<br />genehmigung</th>
+									<th class="short">Freigabeplan</th>
+									<th class="short">A&V</th>
+									<th class="short">Hardware Bestellung</th>
+									<th class="short">IT-Termine</th>
+									<th class="short">Bulksheet</th>
+									<th class="short">RFM-Paket</th>
+									<th class="short">IT-Installation</th>
 									<th class="short">Restaurant eröffnet</th>
-									<th class="short">VIP-Support beendet</th>
-									<th class="short">
-										An Regelsupport übergeben
-									</th>
+									<th class="short">VIP-Support</th>
+									<th class="short">Regel-Support</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -195,7 +196,7 @@
 
 					// Make a GET request to the Google Sheets API to retrieve the data for the table
 					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/StoreStatus!A1:M100?key=${API_KEY}`,
+						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Statustable!A1:O100?key=${API_KEY}`,
 						type: "GET",
 						success: function (response) {
 							// The response from the API includes the data for the table in the "values" property
@@ -209,9 +210,11 @@
 
 							data.forEach(function (item) {
 								try {
-									for (let i = 5; i <= 12; i++) {
-										if (item[i] == "JA") {
+									for (let i = 4; i <= 14; i++) {
+										if (item[i] == "DONE") {
 											statusClass.push("yes-selection");
+										} else if (item[i] == "ONGOING") {
+											statusClass.push("open-selection");
 										} else {
 											statusClass.push("no-selection");
 										}
@@ -241,33 +244,42 @@
 										<button>${item[1]}</button>
 									</td>
 									<td>${item[2]}</td>
-									<td>${item[3]}</td>
-									<td>${item[4]}</td>
 									<td class="${statusClass[0]}" disabled>
-										<button>${item[6]}</button>
+										<button>${item[3]}</button>
 									</td>
 									<td class="${statusClass[1]}" disabled>
-										<button>${item[6]}</button>
+										<button>${item[4]}</button>
 									</td>
 									<td class="${statusClass[2]}" disabled>
-										<button>${item[7]}</button>
+										<button>${item[5]}</button>
 									</td>
 									<td class="${statusClass[3]}" disabled>
-										<button>${item[8]}</button>
+										<button>${item[6]}</button>
 									</td>
 									<td class="${statusClass[4]}" disabled>
+										<button>${item[7]}</button>
+									</td>
+									<td class="${statusClass[5]}" disabled>
+										<button>${item[8]}</button>
+									</td>
+									<td class="${statusClass[6]}" disabled>
 										<button>${item[9]}</button>
 									</td>
 									<td class="${statusClass[5]}" disabled>
 										<button>${item[10]}</button>
 									</td>
-									<td class="${statusClass[6]}" disabled>
+									<td class="${statusClass[7]}" disabled>
 										<button>${item[11]}</button>
 									</td>
-									<td class="${statusClass[7]}" disabled>
-										<button>${item[9]}</button>
+									<td class="${statusClass[8]}" disabled>
+										<button>${item[12]}</button>
 									</td>
-									
+									<td class="${statusClass[9]}" disabled>
+										<button>${item[13]}</button>
+									</td>
+									<td class="${statusClass[10]}" disabled>
+										<button>${item[14]}</button>
+									</td>								
 									</tr>
 								`);
 							});

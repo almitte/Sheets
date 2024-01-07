@@ -4,7 +4,7 @@
 	font-size: 0.9rem;
 	min-width: 400px;
 	width: 100%;
-	table-layout: fixed;
+	table-layout: auto;
 	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 	margin: 0;
 }
@@ -120,11 +120,6 @@ th:first-child {
 
 .bigtable th.medium {
 	width: 4%;
-}
-
-/* Add a hover effect to the rows of the table */
-.bigtable table tbody tr:hover {
-	background-color: #00987a4b;
 }
 
 .bigtable .first-column {
@@ -253,6 +248,18 @@ th:first-child {
 	box-shadow: 0px 0px 14px -2px var(--main-dark);
 }
 
+.open-selection button {
+	background-color: #ffc20b;
+	border: none;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	padding: 8px 16px;
+	border-radius: 42px;
+	font-weight: bold;
+	box-shadow: 0px 0px 14px -2px #ffc20b;
+}
+
 .no-selection button {
 	background-color: #b83708;
 	border: none;
@@ -324,4 +331,38 @@ th:first-child {
 }
 
 #installation-table th {
+}
+
+/* Optional: Styles for the table to ensure it takes full width */
+.sortable {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+/* Style for the first column */
+.bigtable .sortable th:first-child,
+.bigtable .sortable td:first-child {
+	position: sticky;
+	left: 0;
+	z-index: 1;
+}
+
+.bigtable .sortable td:first-child {
+	background-color: white; /* or the color of your table background */
+}
+
+.bigtable .sortable th:first-child {
+	background-color: var(
+		--main-dark
+	); /* or the color of your table background */
+}
+
+/* Ensure the table wrapper allows for horizontal scrolling */
+.bigtable .table-scroll {
+	overflow-x: auto;
+}
+
+/* You can add more styling as per your design */
+.bigtable table tbody tr:hover {
+	background-color: #00987a4b !important;
 }
