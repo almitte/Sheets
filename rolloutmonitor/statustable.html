@@ -32,6 +32,11 @@
 				background-color: #f7f7f7;
 			}
 
+			.link-ablage {
+				font-size: 1.5rem;
+				color: var(--main-dark);
+			}
+
 			/* Add the fade-in animation */
 			@keyframes fadein {
 				from {
@@ -176,6 +181,7 @@
 									<th class="short">Restaurant eröffnet</th>
 									<th class="short">VIP-Support</th>
 									<th class="short">Regel-Support</th>
+									<th class="short">1</th>
 									<th class="short">Link Ablage</th>
 								</tr>
 							</thead>
@@ -197,61 +203,79 @@
 
 					// Make a GET request to the Google Sheets API to retrieve the data for the table
 					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Statustable!A1:P100?key=${API_KEY}`,
+						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Statustable!A1:Q100?key=${API_KEY}`,
 						type: "GET",
 						success: function (response) {
 							// The response from the API includes the data for the table in the "values" property
 							const data = response.values;
 
-							data.shift();
 							// Iterate through the data and add a row to the table for each item
 							$("#forecast-table tbody").empty();
 
+							var isHeader = true;
+
 							data.forEach(function (item) {
-								link = item[15];
+								if (isHeader) {
+									var headerRow = "<tr>";
+									item.forEach(function (headerTitle) {
+										headerRow += `<th>${headerTitle}</th>`;
+									});
+									headerRow += "</tr>";
+									$("#forecast-table thead")
+										.empty()
+										.append(headerRow); // Append header row to thead
+									isHeader = false; // Set to false after creating the header
+								} else {
+									link = item[16];
 
-								item[15] = item[0].split(" ")[0];
+									item[16] = item[0].split(" ")[0];
 
-								var statusClass = [];
-								try {
-									for (let i = 3; i <= 14; i++) {
-										if (item[i] == "DONE") {
-											statusClass.push("yes-selection");
-										} else if (item[i] == "ONGOING") {
-											statusClass.push("open-selection");
+									var statusClass = [];
+									try {
+										for (let i = 3; i <= 15; i++) {
+											if (item[i] == "DONE") {
+												statusClass.push(
+													"yes-selection"
+												);
+											} else if (item[i] == "ONGOING") {
+												statusClass.push(
+													"open-selection"
+												);
+											} else {
+												statusClass.push(
+													"no-selection"
+												);
+											}
+										}
+									} catch (e) {
+										console.log(e);
+									}
+
+									try {
+										for (let i = 0; i <= 14; i++) {
+											if (item[i] == undefined) {
+												item[i] = "";
+											}
+										}
+									} catch (e) {
+										console.log(e);
+									}
+
+									try {
+										// Determine the class name for the "status" cell based on its value
+										var varianteClass = "";
+										if (item[1] == "NSO") {
+											varianteClass = "nso";
+										} else if (item[1] == "IRLX") {
+											varianteClass = "irlx";
 										} else {
-											statusClass.push("no-selection");
+											varianteClass = "else";
 										}
+									} catch (e) {
+										console.log(e);
 									}
-								} catch (e) {
-									console.log(e);
-								}
 
-								try {
-									for (let i = 0; i <= 14; i++) {
-										if (item[i] == undefined) {
-											item[i] = "";
-										}
-									}
-								} catch (e) {
-									console.log(e);
-								}
-
-								try {
-									// Determine the class name for the "status" cell based on its value
-									var varianteClass = "";
-									if (item[1] == "NSO") {
-										varianteClass = "nso";
-									} else if (item[1] == "IRLX") {
-										varianteClass = "irlx";
-									} else {
-										varianteClass = "else";
-									}
-								} catch (e) {
-									console.log(e);
-								}
-
-								$("#forecast-table tbody").append(`
+									$("#forecast-table tbody").append(`
 									<tr>
 									<td>${item[0]}</td>
 									<td class="${varianteClass}" disabled>
@@ -294,9 +318,13 @@
 									<td class="${statusClass[11]}" disabled>
 										<button>${item[14]}</button>
 									</td>
-									<td><a href=${link}><b>${item[15]}</b></a></td>
+									<td class="${statusClass[12]}" disabled>
+										<button>${item[15]}</button>
+									</td>
+									<td><a class="link-ablage" href=${link}><b>${item[16]}</b></a></td>
 									</tr>
 								`);
+								}
 							});
 							const table =
 								document.getElementById("forecast-table");
