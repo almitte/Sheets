@@ -176,6 +176,7 @@
 									<th class="short">Restaurant eröffnet</th>
 									<th class="short">VIP-Support</th>
 									<th class="short">Regel-Support</th>
+									<th class="short">Extrat</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -196,7 +197,7 @@
 
 					// Make a GET request to the Google Sheets API to retrieve the data for the table
 					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Statustable!A1:O100?key=${API_KEY}`,
+						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Statustable!A1:P100?key=${API_KEY}`,
 						type: "GET",
 						success: function (response) {
 							// The response from the API includes the data for the table in the "values" property
@@ -206,17 +207,30 @@
 							// Iterate through the data and add a row to the table for each item
 							$("#forecast-table tbody").empty();
 
-							var statusClass = [];
-
 							data.forEach(function (item) {
+								link = item[15];
+
+								item[15] = "Dokumentenablage";
+
+								var statusClass = [];
 								try {
-									for (let i = 4; i <= 14; i++) {
+									for (let i = 3; i <= 14; i++) {
 										if (item[i] == "DONE") {
 											statusClass.push("yes-selection");
 										} else if (item[i] == "ONGOING") {
 											statusClass.push("open-selection");
 										} else {
 											statusClass.push("no-selection");
+										}
+									}
+								} catch (e) {
+									console.log(e);
+								}
+
+								try {
+									for (let i = 0; i <= 14; i++) {
+										if (item[i] == undefined) {
+											item[i] = "";
 										}
 									}
 								} catch (e) {
@@ -265,21 +279,22 @@
 									<td class="${statusClass[6]}" disabled>
 										<button>${item[9]}</button>
 									</td>
-									<td class="${statusClass[5]}" disabled>
+									<td class="${statusClass[7]}" disabled>
 										<button>${item[10]}</button>
 									</td>
-									<td class="${statusClass[7]}" disabled>
+									<td class="${statusClass[8]}" disabled>
 										<button>${item[11]}</button>
 									</td>
-									<td class="${statusClass[8]}" disabled>
+									<td class="${statusClass[9]}" disabled>
 										<button>${item[12]}</button>
 									</td>
-									<td class="${statusClass[9]}" disabled>
+									<td class="${statusClass[10]}" disabled>
 										<button>${item[13]}</button>
 									</td>
-									<td class="${statusClass[10]}" disabled>
+									<td class="${statusClass[11]}" disabled>
 										<button>${item[14]}</button>
-									</td>								
+									</td>
+									<td><a href=${link}>${item[15]}</a></td>
 									</tr>
 								`);
 							});
