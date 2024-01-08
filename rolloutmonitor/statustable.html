@@ -176,7 +176,7 @@
 									<th class="short">Restaurant eröffnet</th>
 									<th class="short">VIP-Support</th>
 									<th class="short">Regel-Support</th>
-									<th class="short">Extrat</th>
+									<th class="short">Link Ablage</th>
 								</tr>
 							</thead>
 							<tbody></tbody>
@@ -210,7 +210,7 @@
 							data.forEach(function (item) {
 								link = item[15];
 
-								item[15] = "Dokumentenablage";
+								item[15] = item[0].split(" ")[0];
 
 								var statusClass = [];
 								try {
@@ -294,7 +294,7 @@
 									<td class="${statusClass[11]}" disabled>
 										<button>${item[14]}</button>
 									</td>
-									<td><a href=${link}>${item[15]}</a></td>
+									<td><a href=${link}><b>${item[15]}</b></a></td>
 									</tr>
 								`);
 							});
