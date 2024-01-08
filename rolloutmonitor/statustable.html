@@ -218,6 +218,8 @@
 								if (isHeader) {
 									var headerRow = "<tr>";
 									item.forEach(function (headerTitle) {
+										console.log(headerTitle);
+
 										if (headerTitle.includes("-")) {
 											var beforeString =
 												headerTitle.split("-")[0];
