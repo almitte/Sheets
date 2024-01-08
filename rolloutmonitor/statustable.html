@@ -218,7 +218,23 @@
 								if (isHeader) {
 									var headerRow = "<tr>";
 									item.forEach(function (headerTitle) {
-										headerRow += `<th>${headerTitle}</th>`;
+										if (headerTitle.includes("-")) {
+											var beforeString =
+												headerTitle.split("-")[0];
+											var afterString =
+												headerTitle.split("-")[1];
+
+											headerRow += `<th>${beforeString}-<br/>${afterString}</th>`;
+										} else if (headerTitle.includes(" ")) {
+											var beforeString =
+												headerTitle.split(" ")[0];
+											var afterString =
+												headerTitle.split(" ")[1];
+
+											headerRow += `<th>${beforeString}<br/>${afterString}</th>`;
+										} else {
+											headerRow += `<th>${headerTitle}</th>`;
+										}
 									});
 									headerRow += "</tr>";
 									$("#forecast-table thead")
