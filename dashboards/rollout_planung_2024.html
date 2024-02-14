@@ -109,7 +109,7 @@
 
 			.kpis {
 				display: grid;
-				grid-template-columns: 1fr 1fr;
+				grid-template-columns: 1fr 1fr 1fr !important;
 				text-align: center;
 				margin: 0 !important;
 				margin-top: 1.5rem !important;
@@ -203,6 +203,8 @@
 				grid-template-columns: 1fr 1.5fr;
 				margin-left: 10rem !important;
 				margin-right: 1em !important;
+				text-align: center;
+				margin-top: 1.5rem !important;
 			}
 
 			.forecast-values {
@@ -238,6 +240,34 @@
 				font-weight: 500;
 				margin: 0 !important;
 				margin-top: 0.2rem;
+			}
+
+			.kpis-irlx #total-irlx {
+				color: #6b9ac4;
+				font-size: 4.5rem;
+			}
+
+			.kpis-irlx .kpi-title {
+				color: #566a7f;
+				font-size: 1.2rem;
+				font-weight: 500;
+				margin: 0 !important;
+				margin-top: 0.2rem;
+			}
+
+			.kpis-irlx .kpi-value {
+				font-size: 3.5rem;
+				font-weight: 600;
+				animation: fadein 1s;
+				margin: 0 !important;
+			}
+
+			.kpis-irlx .kpi-sub-value {
+				color: #3d5165;
+				font-size: 1.7rem;
+				font-weight: 600;
+				animation: fadein 1s;
+				margin: 0 !important;
 			}
 
 			hr {
@@ -361,6 +391,12 @@
 
 				<div class="completed-planned-box">
 					<div class="kpis" id="chart-nso">
+						<div class="kpi-box" id="completed">
+							<div class="kpi-value" id="completed-nso">10</div>
+
+							<hr class="completed-divider" />
+							<div class="kpi-title">Completed</div>
+						</div>
 						<div class="kpi-box" id="planned">
 							<div class="kpi-value" id="planned-nso">20</div>
 
@@ -392,7 +428,7 @@
 						<b>I</b>n<b>R</b>eal<b>L</b>ifeE<b>X</b>perience
 					</div>
 				</div>
-				<div class="kpis kpis-irlx">
+				<div class="kpis-irlx">
 					<div class="kpi-box">
 						<div class="kpi-value" id="total-irlx">10</div>
 
@@ -433,6 +469,12 @@
 
 				<div class="completed-planned-box">
 					<div class="kpis" id="chart-irlx">
+						<div class="kpi-box" id="completed">
+							<div class="kpi-value" id="completed-irlx">10</div>
+
+							<hr class="completed-divider" />
+							<div class="kpi-title">Completed</div>
+						</div>
 						<div class="kpi-box" id="planned">
 							<div class="kpi-value" id="planned-irlx">20</div>
 
@@ -482,6 +524,12 @@
 						planned.innerHTML = planned_value;
 
 						// get the element with class ="kpi-value" and id = "planned"
+						const completed = document.querySelector(
+							".kpi-value#completed-nso"
+						);
+						completed.innerHTML = completed_value;
+
+						// get the element with class ="kpi-value" and id = "planned"
 						const unplanned = document.querySelector(
 							".kpi-value#unplanned-nso"
 						);
@@ -516,6 +564,12 @@
 						const forecast_q2 = data[0][15];
 						const forecast_q3 = data[0][17];
 						const forecast_q4 = data[0][19];
+
+						// get the element with class ="kpi-value" and id = "planned"
+						const completed = document.querySelector(
+							".kpi-value#completed-irlx"
+						);
+						completed.innerHTML = completed_value;
 
 						// get the element with class ="kpi-value" and id = "planned"
 						const planned = document.querySelector(
