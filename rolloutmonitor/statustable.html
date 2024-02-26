@@ -251,7 +251,10 @@
 									var statusClass = [];
 									try {
 										for (let i = 3; i <= 15; i++) {
-											if (item[i] == "DONE") {
+											if (
+												(item[i] == "DONE") |
+												(item[i] == "N.A.")
+											) {
 												statusClass.push(
 													"yes-selection"
 												);
