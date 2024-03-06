@@ -70,7 +70,7 @@
 				display: grid;
 				justify-content: space-between;
 				align-items: center !important;
-				grid-template-columns: 2fr 0.05fr 1fr 1fr;
+				grid-template-columns: 2fr 1fr 1fr;
 			}
 
 			#completed-r340 {
@@ -120,7 +120,7 @@
 				font-weight: 500;
 				margin: 0;
 				margin-top: 1rem;
-				text-align: center;
+				text-align: center !important;
 			}
 
 			.kpis {
@@ -137,7 +137,12 @@
 				margin: 0 !important;
 			}
 
+			.kpi-box#outOfScope {
+				margin-right: 0.5rem !important;
+			}
+
 			.kpi-box#completed {
+				margin-left: 0.5rem !important;
 				margin-right: 0.5rem !important;
 			}
 
@@ -176,7 +181,7 @@
 			#chart-nso {
 				margin-left: 0 !important;
 				margin-right: 0 !important;
-				grid-template-columns: 2.5fr 1fr 1fr;
+				grid-template-columns: 1fr 3fr 1fr 1fr;
 			}
 
 			#chart-nso .kpi-value {
@@ -205,6 +210,10 @@
 			.kpis #total-nso {
 				color: #6b9ac4;
 				font-size: 4.5rem;
+			}
+
+			.kpis #outOfScope-value {
+				color: #363158ea;
 			}
 
 			.kpis #total-irlx {
@@ -246,6 +255,10 @@
 
 			.completed-divider {
 				background-color: #4fb477;
+			}
+
+			.outOfScope-divider {
+				background-color: #363158ea;
 			}
 
 			.planned-divider {
@@ -302,6 +315,7 @@
 		<link rel="stylesheet" href="statustable.css" />
 		<script src="../js-components/navbar.js"></script>
 		<script src="../githubFileUpdater.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 	</head>
 
 	<app-nav> </app-nav>
@@ -356,12 +370,21 @@
 
 				<div class="completed-planned-box">
 					<div class="kpis" id="chart-nso">
+						<div class="kpi-box" id="outOfScope">
+							<div class="kpi-value" id="outOfScope-value">
+								10
+							</div>
+
+							<hr class="outOfScope-divider" />
+
+							<div class="kpi-title">Out of Scope</div>
+						</div>
 						<div class="kpi-box" id="completed">
 							<div class="kpi-div">
 								<div class="kpi-value" id="completed-nso">
 									10
 								</div>
-								<div class="kpi-value"></div>
+
 								<div class="kpi-value" id="completed-r340">
 									10
 								</div>
@@ -373,7 +396,7 @@
 							<hr class="completed-divider" />
 							<div class="kpi-div">
 								<div class="kpi-title">Completed</div>
-								<div class="kpi-value"></div>
+
 								<div class="kpi-title">R340-SSD</div>
 								<div class="kpi-title">R350</div>
 							</div>
@@ -473,6 +496,28 @@
 						);
 						// set the innerHTML of the element to the value of the target_value variable
 						total.innerHTML = target;
+					},
+				});
+			}
+		</script>
+
+		<script>
+			function loadOutOfScope() {
+				const SHEET_ID = "1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g";
+				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+
+				$.ajax({
+					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B16:B16?key=${API_KEY}`,
+					type: "GET",
+					success: function (response) {
+						// The response from the API includes the data for the table in the "values" property
+						const data = response.values;
+						const outOfScope = data[0][0];
+
+						const outofscope = document.querySelector(
+							".kpi-value#outOfScope-value"
+						);
+						outofscope.innerHTML = outOfScope;
 					},
 				});
 			}
@@ -703,6 +748,7 @@
 					passwordIsCorrect = true;
 					loadNSOKPIValues();
 					loadNSOchart();
+					loadOutOfScope();
 					form.remove();
 				} else {
 					document.getElementById("myForm").style.display = "block";
@@ -731,6 +777,7 @@
 
 							loadNSOKPIValues();
 							loadNSOchart();
+							loadOutOfScope();
 						} else {
 							errorMark.style.display = "inline";
 						}
