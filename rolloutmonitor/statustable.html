@@ -441,9 +441,19 @@
 					submitButton.addEventListener("click", (event) => {
 						event.preventDefault();
 
-						if (passwordInput.value === "mcdonalds") {
+						// Hash the submitted password
+						const hashedPassword = CryptoJS.SHA256(
+							passwordInput.value
+						).toString(CryptoJS.enc.Hex);
+
+						// Hash of "mcdonalds"
+						const correctHash =
+							"d944bfb18e1258bfa8deb6009a3067b89caad6ad97c83e0f3459b1481f686d1b";
+
+						if (hashedPassword === correctHash) {
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
+
 							myFunction();
 						} else {
 							errorMark.style.display = "inline";

@@ -195,6 +195,7 @@
 		<link rel="stylesheet" href="statustable.css" />
 		<script src="../js-components/navbar.js"></script>
 		<script src="../githubFileUpdater.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 	</head>
 
 	<app-nav> </app-nav>
@@ -449,6 +450,13 @@
 		</script>
 
 		<script>
+			function sha256(input) {
+				const crypto = require("crypto");
+				return crypto.createHash("sha256").update(input).digest("hex");
+			}
+		</script>
+
+		<script>
 			function openForm() {
 				const form = document.querySelector(".form-container");
 				if (checkPassword()) {
@@ -468,7 +476,16 @@
 					submitButton.addEventListener("click", (event) => {
 						event.preventDefault();
 
-						if (passwordInput.value === "mcdonalds") {
+						// Hash the submitted password
+						const hashedPassword = CryptoJS.SHA256(
+							passwordInput.value
+						).toString(CryptoJS.enc.Hex);
+
+						// Hash of "mcdonalds"
+						const correctHash =
+							"d944bfb18e1258bfa8deb6009a3067b89caad6ad97c83e0f3459b1481f686d1b";
+
+						if (hashedPassword === correctHash) {
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
 
