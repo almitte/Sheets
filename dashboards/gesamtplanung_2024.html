@@ -263,8 +263,7 @@
 			function loadGesamtplanung() {
 				if (checkPassword()) {
 					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-					const password =
-						"d944bfb18e1258bfa8deb6009a3067b89caad6ad97c83e0f3459b1481f686d1b";
+					const password = window.selectedPassword;
 					const wb_name = "gesamtplanung_2024_1";
 
 					fetch(

@@ -266,7 +266,7 @@
 	<app-nav> </app-nav>
 
 	<body
-		onload="openForm([setGridTemplateColumnsNSO, setGridTemplateColumnsIRLX, loadNSOKPIValues, loadIRLXKPIValues])"
+		onload="openForm([loadNSOchart, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues])"
 	>
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
@@ -294,7 +294,7 @@
 					<!-- Refresh button -->
 					<button
 						class="refresh-button"
-						onclick="openForm([setGridTemplateColumnsNSO, setGridTemplateColumnsIRLX, loadNSOKPIValues, loadIRLXKPIValues]);"
+						onclick="openForm([loadNSOchart, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues]);"
 					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
@@ -468,25 +468,6 @@
 					var today = new Date();
 					var month = today.getMonth();
 
-					const month_labels = [
-						"January",
-						"February",
-						"March",
-						"April",
-						"May",
-						"June",
-						"July",
-						"August",
-						"September",
-						"October",
-						"November",
-						"December",
-					];
-
-					const completedColor = "rgba(79, 180, 119, 1)";
-					const plannedColor = "rgba(247, 179, 43, 1)";
-					const unplannedColor = "rgba(186,27,29, 1)";
-
 					// Make a GET request to the Google Sheets API to retrieve the data for the table
 					$.ajax({
 						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2022!B6:M6?key=${API_KEY}`,
@@ -620,25 +601,6 @@
 					var today = new Date();
 					var month = today.getMonth();
 
-					const month_labels = [
-						"January",
-						"February",
-						"March",
-						"April",
-						"May",
-						"June",
-						"July",
-						"August",
-						"September",
-						"October",
-						"November",
-						"December",
-					];
-
-					const completedColor = "rgba(79, 180, 119, 1)";
-					const plannedColor = "rgba(247, 179, 43, 1)";
-					const unplannedColor = "rgba(186,27,29, 1)";
-
 					// Make a GET request to the Google Sheets API to retrieve the data for the table
 					$.ajax({
 						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2022!B23:M23?key=${API_KEY}`,
@@ -758,68 +720,6 @@
 						},
 					});
 				}
-			}
-		</script>
-
-		<script>
-			var unplanned_month_nso = 0;
-			var unplanned_month_irlx = 0;
-			// Write a function that sets the grid-template-columns property of the div with the id chart to the value of the input
-			function setGridTemplateColumnsNSO() {
-				const SHEET_ID = "1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
-
-				$.ajax({
-					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2022!N6?key=${API_KEY}`,
-					type: "GET",
-					success: function (response) {
-						// The response from the API includes the data for the table in the "values" property
-						const data = response.values;
-
-						data.forEach(function (item) {
-							unplanned_month_nso = item[0];
-						});
-						const chartDiv = document.getElementById("chart-nso");
-						const today = new Date();
-						const currentMonth = today.getMonth();
-						const planned_month =
-							unplanned_month_nso - currentMonth - 1;
-						const unplanned_month_nso_nr =
-							12 - unplanned_month_nso + 1;
-
-						chartDiv.style.gridTemplateColumns = `1fr 1fr 1fr`;
-
-						loadNSOchart();
-					},
-				});
-			}
-
-			function setGridTemplateColumnsIRLX() {
-				const SHEET_ID = "1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
-
-				$.ajax({
-					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2022!N23?key=${API_KEY}`,
-					type: "GET",
-					success: function (response) {
-						// The response from the API includes the data for the table in the "values" property
-						const data = response.values;
-
-						data.forEach(function (item) {
-							unplanned_month_irlx = item[0];
-						});
-						const chartDiv = document.getElementById("chart-irlx");
-						const today = new Date();
-						const currentMonth = today.getMonth();
-						const planned_month =
-							unplanned_month_irlx - currentMonth - 1;
-						const unplanned_month_irlx_nr =
-							12 - unplanned_month_irlx + 4;
-
-						chartDiv.style.gridTemplateColumns = `1fr 1fr`;
-						loadIRLXchart();
-					},
-				});
 			}
 		</script>
 	</body>

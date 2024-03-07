@@ -290,7 +290,7 @@
 
 	<app-nav> </app-nav>
 	<body
-		onload="openForm([setGridTemplateColumnsNSO, setGridTemplateColumnsIRLX, loadNSOKPIValues, loadIRLXKPIValues])"
+		onload="openForm([loadNSOchart, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues])"
 	>
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
@@ -318,7 +318,7 @@
 					<!-- Refresh button -->
 					<button
 						class="refresh-button"
-						onclick="openForm([setGridTemplateColumnsNSO, setGridTemplateColumnsIRLX, loadNSOKPIValues, loadIRLXKPIValues]);"
+						onclick="openForm([setGridTemplateColumnsNSO, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues]);"
 					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
@@ -531,25 +531,6 @@
 					var today = new Date();
 					var month = today.getMonth();
 
-					const month_labels = [
-						"January",
-						"February",
-						"March",
-						"April",
-						"May",
-						"June",
-						"July",
-						"August",
-						"September",
-						"October",
-						"November",
-						"December",
-					];
-
-					const completedColor = "rgba(79, 180, 119, 1)";
-					const plannedColor = "rgba(247, 179, 43, 1)";
-					const unplannedColor = "rgba(186,27,29, 1)";
-
 					// Make a GET request to the Google Sheets API to retrieve the data for the table
 					$.ajax({
 						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B6:M8?key=${API_KEY}`,
@@ -694,25 +675,6 @@
 					//Get number of month of todays date
 					var today = new Date();
 					var month = today.getMonth();
-
-					const month_labels = [
-						"January",
-						"February",
-						"March",
-						"April",
-						"May",
-						"June",
-						"July",
-						"August",
-						"September",
-						"October",
-						"November",
-						"December",
-					];
-
-					const completedColor = "rgba(79, 180, 119, 1)";
-					const plannedColor = "rgba(247, 179, 43, 1)";
-					const unplannedColor = "rgba(186,27,29, 1)";
 
 					// Make a GET request to the Google Sheets API to retrieve the data for the table
 					$.ajax({
@@ -860,47 +822,6 @@
 					}
 				}
 				return -1; // Return -1 if no number is found
-			}
-		</script>
-
-		<script>
-			var unplanned_month_nso = 0;
-			var unplanned_month_irlx = 0;
-			// Write a function that sets the grid-template-columns property of the div with the id chart to the value of the input
-			function setGridTemplateColumnsNSO() {
-				const SHEET_ID = "1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
-
-				$.ajax({
-					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B6:M8?key=${API_KEY}`,
-					type: "GET",
-					success: function (response) {
-						// The response from the API includes the data for the table in the "values" property
-						const chartDiv = document.getElementById("chart-nso");
-						chartDiv.style.gridTemplateColumns = `1fr 1fr 1fr`;
-
-						loadNSOchart();
-					},
-				});
-			}
-
-			function setGridTemplateColumnsIRLX() {
-				const SHEET_ID = "1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
-
-				$.ajax({
-					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2023!B25:M27?key=${API_KEY}`,
-					type: "GET",
-					success: function (response) {
-						// The response from the API includes the data for the table in the "values" property
-						const data = response.values;
-
-						const chartDiv = document.getElementById("chart-irlx");
-						chartDiv.style.gridTemplateColumns = `1fr 1fr`;
-
-						loadIRLXchart();
-					},
-				});
 			}
 		</script>
 	</body>

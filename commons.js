@@ -1,25 +1,41 @@
 function checkPassword() {
-  var passwordIsCorrect = getCookie("passwordIsCorrect");
-  if (passwordIsCorrect === "true") {
-    return true;
-  } else {
-    return false;
+  getCookie();
+  return window.selectedPassword == correctHash;
+}
+
+function deleteAllCookies() {
+  var cookies = document.cookie.split(";");
+
+  for (var i = 0; i < cookies.length; i++) {
+    var cookie = cookies[i];
+    var eqPos = cookie.indexOf("=");
+    var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/;";
   }
 }
 
-function setCookie(cname, cvalue, exdays) {
+function setCookie(password, exdays) {
+  deleteAllCookies();
+
   var d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   var expires = "expires=" + d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  document.cookie = "password=" + password + ";" + expires + ";path=/";
 }
 
 function getCookie() {
-  var cookieValue = document.cookie.replace(
-    /(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/,
-    "$1"
-  );
-  return cookieValue;
+  try {
+    window.selectedPassword = CryptoJS.SHA256(
+      document.cookie.match(/password=([^;]+)/)[1]
+    ).toString(CryptoJS.enc.Hex);
+    return (
+      window.selectedPassword !== null &&
+      window.selectedPassword !== undefined &&
+      window.selectedPassword == correctHash
+    );
+  } catch (error) {
+    return false;
+  }
 }
 
 function openForm(functions) {
@@ -44,18 +60,38 @@ function openForm(functions) {
         CryptoJS.enc.Hex
       );
 
-      const correctHash =
-        "d944bfb18e1258bfa8deb6009a3067b89caad6ad97c83e0f3459b1481f686d1b";
-
       if (hashedPassword === correctHash) {
-        setCookie("passwordIsCorrect", "true", 30);
+        setCookie(passwordInput.value.toString(), 30);
         form.remove();
         functions.forEach((functionName) => {
           functionName();
         });
+        window.selectedPassword = passwordInput;
       } else {
         errorMark.style.display = "inline";
       }
     });
   }
 }
+
+const month_labels = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+
+const correctHash =
+  "d944bfb18e1258bfa8deb6009a3067b89caad6ad97c83e0f3459b1481f686d1b";
+
+const completedColor = "rgba(79, 180, 119, 1)";
+const plannedColor = "rgba(247, 179, 43, 1)";
+const unplannedColor = "rgba(186,27,29, 1)";
