@@ -28,13 +28,8 @@ function getCookie() {
     window.selectedPassword = CryptoJS.SHA256(
       document.cookie.match(/password=([^;]+)/)[1]
     ).toString(CryptoJS.enc.Hex);
-    return (
-      window.selectedPassword !== null &&
-      window.selectedPassword !== undefined &&
-      window.selectedPassword == correctHash
-    );
   } catch (error) {
-    return false;
+    console.log(error);
   }
 }
 
