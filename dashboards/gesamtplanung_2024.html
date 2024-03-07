@@ -260,14 +260,30 @@
 			function loadGesamtuebersicht() {
 				if (checkPassword()) {
 					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-					const SHEET_ID =
-						"1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+					const password =
+						"d944bfb18e1258bfa8deb6009a3067b89caad6ad97c83e0f3459b1481f686d1b";
+					const wb_name = "gesamtplanung_2024_1";
 
-					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Gesamtplanung 2024!B5:AZ8?key=${API_KEY}`,
-						type: "GET",
-						success: function (response) {
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((other) => {
 							// The response from the API includes the data for the table in the "values" property
 							const data = response.values;
 							var calenderweeks = data[0];
@@ -439,8 +455,13 @@
 								},
 								options: options,
 							});
-						},
-					});
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
 				}
 			}
 		</script>
