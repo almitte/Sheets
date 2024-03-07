@@ -97,7 +97,7 @@
 
 	<app-nav> </app-nav>
 
-	<body onload="openForm();">
+	<body onload="openForm([loadData]);">
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -279,10 +279,6 @@
 		</script>
 
 		<script>
-			countUp();
-		</script>
-
-		<script>
 			$(function () {
 				$(".scroll-page").on("click", function () {
 					var offset = 60; // Set the offset to 50px
@@ -307,9 +303,11 @@
 		</script>
 		<script>
 			const form = document.querySelector(".form-container");
-			function openForm() {
+			function openForm(functions) {
 				if (checkPassword()) {
-					loadData();
+					functions.forEach((functionName) => {
+						functionName();
+					});
 					form.remove();
 				} else {
 					document.getElementById("myForm").style.display = "block";
@@ -335,7 +333,9 @@
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
 
-							loadData();
+							functions.forEach((functionName) => {
+								functionName();
+							});
 						} else {
 							errorMark.style.display = "inline";
 						}

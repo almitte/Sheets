@@ -289,7 +289,9 @@
 	</head>
 
 	<app-nav> </app-nav>
-	<body onload="openForm()">
+	<body
+		onload="openForm([setGridTemplateColumnsNSO, setGridTemplateColumnsIRLX, loadNSOKPIValues, loadIRLXKPIValues])"
+	>
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -314,7 +316,10 @@
 				<h1>Rollout Planung 2023</h1>
 				<div class="refresh-search-container">
 					<!-- Refresh button -->
-					<button class="refresh-button" onclick="openForm();">
+					<button
+						class="refresh-button"
+						onclick="openForm([setGridTemplateColumnsNSO, setGridTemplateColumnsIRLX, loadNSOKPIValues, loadIRLXKPIValues]);"
+					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
 					</button>
@@ -900,19 +905,13 @@
 		</script>
 
 		<script>
-			countUp();
-		</script>
-
-		<script>
-			function openForm() {
+			function openForm(functions) {
 				const form = document.querySelector(".form-container");
 				if (checkPassword()) {
 					passwordIsCorrect = true;
-					setGridTemplateColumnsNSO();
-					setGridTemplateColumnsIRLX();
-					loadNSOKPIValues();
-					loadIRLXKPIValues();
-
+					functions.forEach((functionName) => {
+						functionName();
+					});
 					form.remove();
 				} else {
 					document.getElementById("myForm").style.display = "block";
@@ -937,11 +936,9 @@
 						if (hashedPassword === correctHash) {
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
-
-							setGridTemplateColumnsNSO();
-							setGridTemplateColumnsIRLX();
-							loadNSOKPIValues();
-							loadIRLXKPIValues();
+							functions.forEach((functionName) => {
+								functionName();
+							});
 						} else {
 							errorMark.style.display = "inline";
 						}

@@ -97,7 +97,7 @@
 
 	<app-nav> </app-nav>
 
-	<body onload="openForm();">
+	<body onload="openForm([loadDetail1, loadDetail2]);">
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -282,11 +282,6 @@
 				}
 			}
 		</script>
-
-		<script>
-			countUp();
-		</script>
-
 		<script>
 			// Get the search box and data table elements
 			var searchBox = document.querySelector(".search-box");
@@ -346,10 +341,12 @@
 		</script>
 		<script>
 			const form = document.querySelector(".form-container");
-			function openForm() {
+			function openForm(functions) {
 				if (checkPassword()) {
-					loadDetail1();
-					loadDetail2();
+					functions.forEach((functionName) => {
+						functionName();
+					});
+
 					form.remove();
 				} else {
 					document.getElementById("myForm").style.display = "block";
@@ -374,9 +371,9 @@
 						if (hashedPassword === correctHash) {
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
-
-							loadDetail1();
-							loadDetail2();
+							functions.forEach((functionName) => {
+								functionName();
+							});
 						} else {
 							errorMark.style.display = "inline";
 						}

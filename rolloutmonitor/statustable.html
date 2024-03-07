@@ -103,7 +103,7 @@
 
 	<app-nav> </app-nav>
 
-	<body onload="openForm()">
+	<body onload="openForm([myFunction])">
 		<!-- The form -->
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
@@ -363,10 +363,6 @@
 		</script>
 
 		<script>
-			countUp();
-		</script>
-
-		<script>
 			// Get the search box and data table elements
 			var searchBox = document.querySelector(".search-box");
 			var dataTable = document.querySelector("#forecast-table");
@@ -424,11 +420,13 @@
 			});
 		</script>
 		<script>
-			function openForm() {
+			function openForm(functions) {
 				const form = document.querySelector(".form-container");
 				if (checkPassword()) {
 					passwordIsCorrect = true;
-					myFunction();
+					functions.forEach((functionName) => {
+						functionName();
+					});
 					form.remove();
 				} else {
 					document.getElementById("myForm").style.display = "block";
@@ -454,7 +452,9 @@
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
 
-							myFunction();
+							functions.forEach((functionName) => {
+								functionName();
+							});
 						} else {
 							errorMark.style.display = "inline";
 						}

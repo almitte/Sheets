@@ -319,7 +319,7 @@
 	</head>
 
 	<app-nav> </app-nav>
-	<body onload="openForm()">
+	<body onload="openForm([loadNSOKPIValues, loadNSOchart, loadOutOfScope])">
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -344,7 +344,10 @@
 				<h1 id="bestellstatus">Bestellstatus: X / X</h1>
 				<div class="refresh-search-container">
 					<!-- Refresh button -->
-					<button class="refresh-button" onclick="openForm();">
+					<button
+						class="refresh-button"
+						onclick="openForm([loadNSOKPIValues, loadNSOchart, loadOutOfScope]);"
+					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
 					</button>
@@ -739,16 +742,13 @@
 		</script>
 
 		<script>
-			countUp();
-		</script>
-		<script>
-			function openForm() {
+			function openForm(functions) {
 				const form = document.querySelector(".form-container");
 				if (checkPassword()) {
 					passwordIsCorrect = true;
-					loadNSOKPIValues();
-					loadNSOchart();
-					loadOutOfScope();
+					functions.forEach((functionName) => {
+						functionName();
+					});
 					form.remove();
 				} else {
 					document.getElementById("myForm").style.display = "block";
@@ -774,9 +774,9 @@
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
 
-							loadNSOKPIValues();
-							loadNSOchart();
-							loadOutOfScope();
+							functions.forEach((functionName) => {
+								functionName();
+							});
 						} else {
 							errorMark.style.display = "inline";
 						}

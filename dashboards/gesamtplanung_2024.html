@@ -200,7 +200,7 @@
 
 	<app-nav> </app-nav>
 
-	<body onload="openForm()">
+	<body onload="openForm([loadGesamtuebersicht])">
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -225,7 +225,10 @@
 				<h1>Gesamtplanung 2024</h1>
 				<div class="refresh-search-container">
 					<!-- Refresh button -->
-					<button class="refresh-button" onclick="openForm();">
+					<button
+						class="refresh-button"
+						onclick="openForm([loadGesamtuebersicht]);"
+					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
 					</button>
@@ -466,10 +469,6 @@
 		</script>
 
 		<script>
-			countUp();
-		</script>
-
-		<script>
 			function sha256(input) {
 				const crypto = require("crypto");
 				return crypto.createHash("sha256").update(input).digest("hex");
@@ -477,11 +476,13 @@
 		</script>
 
 		<script>
-			function openForm() {
+			function openForm(functions) {
 				const form = document.querySelector(".form-container");
 				if (checkPassword()) {
 					passwordIsCorrect = true;
-					loadGesamtuebersicht();
+					functions.forEach((functionName) => {
+						functionName();
+					});
 
 					form.remove();
 				} else {
@@ -507,8 +508,9 @@
 						if (hashedPassword === correctHash) {
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
-
-							loadGesamtuebersicht();
+							functions.forEach((functionName) => {
+								functionName();
+							});
 						} else {
 							errorMark.style.display = "inline";
 						}

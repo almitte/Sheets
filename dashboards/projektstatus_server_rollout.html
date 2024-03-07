@@ -254,7 +254,9 @@
 			</div>
 		</div>
 	</nav>
-	<body onload="openForm()">
+	<body
+		onload="openForm([loadStatusTable, loadLineChart, loadPieChart, loadKPIs])"
+	>
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -279,7 +281,10 @@
 				<h1>Projektstatus Server Rollout</h1>
 				<div class="refresh-search-container">
 					<!-- Refresh button -->
-					<button class="refresh-button" onclick="openForm();">
+					<button
+						class="refresh-button"
+						onclick="openForm([loadStatusTable, loadLineChart, loadPieChart, loadKPIs]);"
+					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
 					</button>
@@ -816,10 +821,13 @@
 		</script>
 
 		<script>
-			function openForm() {
+			function openForm(functions) {
 				const form = document.querySelector(".form-container");
 				if (checkPassword()) {
 					passwordIsCorrect = true;
+					functions.forEach((functionName) => {
+						functionName();
+					});
 					loadStatusTable();
 					loadLineChart();
 					loadPieChart();
@@ -848,7 +856,9 @@
 						if (hashedPassword === correctHash) {
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
-
+							functions.forEach((functionName) => {
+								functionName();
+							});
 							loadStatusTable();
 							loadLineChart();
 							loadPieChart();
@@ -859,10 +869,6 @@
 					});
 				}
 			}
-		</script>
-
-		<script>
-			countUp();
 		</script>
 
 		<script>
