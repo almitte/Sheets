@@ -85,6 +85,7 @@
   <link rel="stylesheet" href="../styling/popup.css">
   <script src = "../js-components/navbar.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script src="/commons.js"></script>
 </head>
 
 <app-nav>
@@ -276,7 +277,6 @@
     const form = document.querySelector(".form-container");
     function openForm() {
       if (checkPassword()) {
-        load2022();
         load2024();
         form.remove();
 
@@ -303,8 +303,6 @@
 						if (hashedPassword === correctHash) {
 							setCookie("passwordIsCorrect", "true", 30);
 							form.remove();
-
-							load2022();
               load2024();
 						} else {
 							errorMark.style.display = "inline";
@@ -333,32 +331,6 @@
       subtree: true
     });
 
-  </script>
-
-
-  <script>
-    function checkPassword() {
-      var passwordIsCorrect = getCookie("passwordIsCorrect");
-      if (passwordIsCorrect === "true") {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-  </script>
-  <script>
-    function setCookie(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-      var expires = "expires=" + d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function getCookie(cname) {
-      var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-      return cookieValue
-    }
   </script>
 
   <script>

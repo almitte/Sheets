@@ -85,6 +85,7 @@
   <link rel="stylesheet" href="../styling/popup.css">
   <script src = "../js-components/navbar.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+  <script src="/commons.js"></script>
 </head>
 
 <app-nav>
@@ -167,79 +168,6 @@
       </div>
     </div>
   </section>
-
-  <script>
-    function load2023() {
-      if (checkPassword()) {
-
-        $(document).ready(function () {
-          // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-          const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-          // Replace YOUR_API_KEY with your Google API key
-          const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-          // Make a GET request to the Google Sheets API to retrieve the data for the table
-          $.ajax({
-
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Archiv2023!A1:L150?key=${API_KEY}`,
-            type: 'GET',
-            success: function (response) {
-              $('#2023-table tbody').empty();
-              // The response from the API includes the data for the table in the "values" property
-              const data = response.values;
-
-              // Skip the first row of the data, which contains the column names
-              data.shift();
-
-              // Iterate through the data and add a row to the table for each item
-              data.forEach(function (item) {
-                try {// Determine the class name for the "status" cell based on its value
-
-                  var varianteClass = "";
-
-                  if (item[3] == "NSO") {
-                    varianteClass = "nso";
-                  } else if (item[3] == "IRLX") {
-                    varianteClass = "irlx";
-                  } else { varianteClass = "else" }
-                }
-
-                catch (e) {
-                  console.log(e);
-                }
-
-                $('#2023-table tbody').append(`
-                  <tr>
-                  <td>${item[0]}</td>
-                  <td>${item[1]}</td>
-                  <td>${item[2]}</td>
-                  <td class="${varianteClass}" disabled><button>${item[3]}</button></td>
-                  <td>${item[4]}</td>
-                  <td>${item[5]}</td>
-                  <td>${item[6]}</td>
-                  <td>${item[7]}</td>
-                  <td>${item[8]}</td>
-                  <td>${item[9]}</td>
-                  <td>${item[10]}</td>
-                  <td>${item[11]}</td>
-                  </tr>
-                `);
-              });
-
-              const table = document.getElementById("2023-table");
-              const tableContainer = document.getElementById("scroll-1");
-
-              if (table.offsetHeight > window.innerHeight * 0.5) {
-                tableContainer.style.height = "50vh";
-              }
-            }
-          });
-        })
-      }
-    }
-
-  </script>
-
   <script>
     function load2022() {
       if (checkPassword()) {
@@ -301,41 +229,6 @@
       }
     }
   </script>
-
-
-  <script>
-    // Get the search box and data table elements
-    var searchBox = document.querySelector('.search-box');
-    var dataTable = $("#2023-table")[0];
-
-    // Add an event listener to the search box that listens for input events
-    searchBox.addEventListener('input', function () {
-      // Get the search query from the search box
-      var query = this.value.toLowerCase();
-
-      // Loop through all the rows in the data table
-      for (var i = 1; i < dataTable.rows.length; i++) {
-        // Get the current row
-        var row = dataTable.rows[i];
-
-        // Set the row's display style to none by default
-        row.style.display = 'none';
-
-        // Loop through all the cells in the row
-        for (var j = 0; j < row.cells.length; j++) {
-          // Get the current cell
-          var cell = row.cells[j];
-
-          // If the cell's text content contains the search query, set the row's display style to '' (empty string) to show the row
-          if (cell.textContent.toLowerCase().indexOf(query) > -1) {
-            row.style.display = '';
-            break;
-          }
-        }
-      }
-    });
-
-  </script>
   <script>
     // Get the search box and data table elements
     var searchBox = document.querySelector('.search-box-2');
@@ -375,7 +268,6 @@
     function openForm() {
       if (checkPassword()) {
         load2022();
-        load2023();
         form.remove();
 
       } else {
@@ -403,7 +295,6 @@
 							form.remove();
 
 							load2022();
-              load2023();
 						} else {
 							errorMark.style.display = "inline";
 						}
@@ -415,7 +306,7 @@
   </script>
   <script>
 
-    const table = document.getElementById("2023-table");
+    const table = document.getElementById("2022-table");
     const tableContainer = document.getElementById("scroll-1");
 
     const observer = new MutationObserver(function () {
@@ -432,33 +323,6 @@
     });
 
   </script>
-
-
-  <script>
-    function checkPassword() {
-      var passwordIsCorrect = getCookie("passwordIsCorrect");
-      if (passwordIsCorrect === "true") {
-        return true;
-      } else {
-        return false;
-      }
-    }
-
-  </script>
-  <script>
-    function setCookie(cname, cvalue, exdays) {
-      var d = new Date();
-      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-      var expires = "expires=" + d.toUTCString();
-      document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-    }
-
-    function getCookie(cname) {
-      var cookieValue = document.cookie.replace(/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/, "$1");
-      return cookieValue
-    }
-  </script>
-
   <script>
     $(function () {
       $('.scroll-page').on('click', function () {
@@ -478,6 +342,10 @@
       });
     });
   </script>
+
+
+
+
 </body>
 
 </html>
