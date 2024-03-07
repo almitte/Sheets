@@ -98,7 +98,7 @@
 
 	<app-nav> </app-nav>
 
-	<body onload="openForm([myFunction])">
+	<body onload="openForm([loadForecast])">
 		<!-- The form -->
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
@@ -142,7 +142,7 @@
 			<!-- Refresh and search container -->
 			<div class="refresh-search-container">
 				<!-- Refresh button -->
-				<button class="refresh-button" onclick="myFunction();">
+				<button class="refresh-button" onclick="loadForecast();">
 					<i class="fa fa-refresh" style="margin-right: 10px"></i
 					>Aktualisieren
 				</button>
@@ -187,7 +187,7 @@
 		</section>
 
 		<script>
-			function myFunction() {
+			function loadForecast() {
 				if (checkPassword()) {
 					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
 					const SHEET_ID =

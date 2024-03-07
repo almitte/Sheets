@@ -319,7 +319,9 @@
 	</head>
 
 	<app-nav> </app-nav>
-	<body onload="openForm([loadNSOKPIValues, loadNSOchart, loadOutOfScope])">
+	<body
+		onload="openForm([loadRestaurantKPIs, loadRestaurantChart, loadOutOfScope])"
+	>
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -346,7 +348,7 @@
 					<!-- Refresh button -->
 					<button
 						class="refresh-button"
-						onclick="openForm([loadNSOKPIValues, loadNSOchart, loadOutOfScope]);"
+						onclick="openForm([loadRestaurantKPIs, loadRestaurantChart, loadOutOfScope]);"
 					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
@@ -432,7 +434,7 @@
 		</div>
 
 		<script>
-			function loadNSOKPIValues() {
+			function loadRestaurantKPIs() {
 				const SHEET_ID = "1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g";
 				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
 
@@ -527,7 +529,7 @@
 		</script>
 
 		<script>
-			function loadNSOchart() {
+			function loadRestaurantChart() {
 				if (checkPassword()) {
 					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
 					const SHEET_ID =

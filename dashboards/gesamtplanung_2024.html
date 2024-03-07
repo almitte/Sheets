@@ -200,7 +200,7 @@
 
 	<app-nav> </app-nav>
 
-	<body onload="openForm([loadGesamtuebersicht])">
+	<body onload="openForm([loadGesamtplanung])">
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -227,7 +227,7 @@
 					<!-- Refresh button -->
 					<button
 						class="refresh-button"
-						onclick="openForm([loadGesamtuebersicht]);"
+						onclick="openForm([loadGesamtplanung]);"
 					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
@@ -260,7 +260,7 @@
 		</div>
 
 		<script>
-			function loadGesamtuebersicht() {
+			function loadGesamtplanung() {
 				if (checkPassword()) {
 					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
 					const password =

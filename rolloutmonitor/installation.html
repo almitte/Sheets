@@ -97,7 +97,7 @@
 
 	<app-nav> </app-nav>
 
-	<body onload="openForm([loadData]);">
+	<body onload="openForm([loadInstallation]);">
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -136,7 +136,7 @@
 			<!-- Refresh and search container -->
 			<div class="refresh-search-container">
 				<!-- Refresh button -->
-				<button class="refresh-button" onclick="loadData();">
+				<button class="refresh-button" onclick="loadInstallation();">
 					<i class="fa fa-refresh" style="margin-right: 10px"></i
 					>Aktualisieren
 				</button>
@@ -173,7 +173,7 @@
 		</section>
 
 		<script>
-			function loadData() {
+			function loadInstallation() {
 				if (checkPassword()) {
 					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
 					const SHEET_ID =
