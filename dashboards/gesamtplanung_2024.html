@@ -194,7 +194,6 @@
 		<link rel="stylesheet" href="../styling/popup.css" />
 		<link rel="stylesheet" href="statustable.css" />
 		<script src="../js-components/navbar.js"></script>
-		<script src="../githubFileUpdater.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 	</head>
 
@@ -283,9 +282,8 @@
 							}
 							return response.json();
 						})
-						.then((other) => {
+						.then((data) => {
 							// The response from the API includes the data for the table in the "values" property
-							const data = response.values;
 							var calenderweeks = data[0];
 
 							// Add the "CW-" prefix to each value using the map function
