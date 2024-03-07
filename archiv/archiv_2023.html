@@ -91,7 +91,7 @@
 <app-nav>
 </app-nav>
 
-<body onload="openForm();">
+<body onload="openForm([load2023]);">
   <div class="form-popup" id="myForm">
     <form class="form-container">
       <h1>Login</h1>
@@ -267,43 +267,6 @@
         }
       }
     });
-
-  </script>
-    <script>
-    const form = document.querySelector(".form-container");
-    function openForm() {
-      if (checkPassword()) {
-        load2023();
-        form.remove();
-      } else {
-        document.getElementById("myForm").style.display = "block";
-        const passwordInput = document.querySelector("input[name='psw']");
-        const errorMark = document.querySelector(".error-mark");
-        const submitButton = document.querySelector("button[type='submit']");
-
-        submitButton.addEventListener("click", (event) => {
-						event.preventDefault();
-
-						// Hash the submitted password
-						const hashedPassword = CryptoJS.SHA256(
-							passwordInput.value
-						).toString(CryptoJS.enc.Hex);
-
-						
-						const correctHash =
-							"d944bfb18e1258bfa8deb6009a3067b89caad6ad97c83e0f3459b1481f686d1b";
-
-						if (hashedPassword === correctHash) {
-							setCookie("passwordIsCorrect", "true", 30);
-							form.remove();						
-              load2023();
-						} else {
-							errorMark.style.display = "inline";
-						}
-					});
-      }
-    }
-
 
   </script>
   <script>
