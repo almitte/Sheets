@@ -117,6 +117,7 @@
 		<link rel="stylesheet" href="dist/css/style.css" />
 		<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
 		<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
+		<script src="/commons.js"></script>
 	</head>
 
 	<body onload="showGame()" class="is-boxed has-animations">
@@ -555,39 +556,8 @@
 		<script src="dist/js/main.min.js"></script>
 		<script>
 			function showGame() {
-				if (checkPassword()) {
-					document.getElementById("button").style.display =
-						"inline-block";
-				} else {
-					document.getElementById("button").style.display = "none";
-				}
-			}
-		</script>
-		<script>
-			function checkPassword() {
-				var passwordIsCorrect = getCookie("passwordIsCorrect");
-				if (passwordIsCorrect === "true") {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		</script>
-		<script>
-			function setCookie(cname, cvalue, exdays) {
-				var d = new Date();
-				d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-				var expires = "expires=" + d.toUTCString();
-				document.cookie =
-					cname + "=" + cvalue + ";" + expires + ";path=/";
-			}
-
-			function getCookie(cname) {
-				var cookieValue = document.cookie.replace(
-					/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/,
-					"$1"
-				);
-				return cookieValue;
+				document.getElementById("button").style.display =
+					"inline-block";
 			}
 		</script>
 	</body>
