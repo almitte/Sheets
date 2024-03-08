@@ -84,6 +84,7 @@
 		<script src="https://unpkg.com/animejs@2.2.0/anime.min.js"></script>
 		<script src="https://unpkg.com/scrollreveal@4.0.0/dist/scrollreveal.min.js"></script>
 		<link rel="stylesheet" href="styling/popup.css" />
+		<script src="/commons.js"></script>
 	</head>
 
 	<body onload="showGame()" class="is-boxed has-animations">
@@ -404,82 +405,8 @@
 		<script src="dist/js/main.min.js"></script>
 		<script>
 			function showGame() {
-				if (checkPassword()) {
-					document.getElementById("button").style.display =
-						"inline-block";
-				} else {
-					document.getElementById("button").style.display = "none";
-				}
-			}
-		</script>
-		<script>
-			const form = document.querySelector(".form-container");
-			function openForm() {
-				if (checkPassword()) {
-					showGame();
-					form.remove();
-				} else {
-					document.getElementById("myForm").style.display = "block";
-					const passwordInput =
-						document.querySelector("input[name='psw']");
-					const errorMark = document.querySelector(".error-mark");
-					const submitButton = document.querySelector(
-						"button[type='submit']"
-					);
-
-					submitButton.addEventListener("click", (event) => {
-						event.preventDefault();
-
-						// Hash the submitted password
-						const hashedPassword = CryptoJS.SHA256(
-							passwordInput.value
-						).toString(CryptoJS.enc.Hex);
-
-						const correctHash =
-							"d944bfb18e1258bfa8deb6009a3067b89caad6ad97c83e0f3459b1481f686d1b";
-
-						if (hashedPassword === correctHash) {
-							setCookie("passwordIsCorrect", "true", 30);
-							form.remove();
-
-							showGame();
-						} else {
-							errorMark.style.display = "inline";
-						}
-					});
-				}
-			}
-		</script>
-		<script>
-			function checkPassword() {
-				var passwordIsCorrect = getCookie("passwordIsCorrect");
-				if (passwordIsCorrect === "true") {
-					return true;
-				} else {
-					return false;
-				}
-			}
-		</script>
-		<script>
-			function setCookie(cname, cvalue, exdays) {
-				var d = new Date();
-				d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
-				var expires = "expires=" + d.toUTCString();
-				document.cookie =
-					cname + "=" + cvalue + ";" + expires + ";path=/";
-			}
-
-			function getCookie(cname) {
-				var cookieValue = document.cookie.replace(
-					/(?:(?:^|.*;\s*)passwordIsCorrect\s*\=\s*([^;]*).*$)|^.*$/,
-					"$1"
-				);
-				return cookieValue;
-			}
-
-			function delCookie() {
-				document.cookie =
-					"passwordIsCorrect=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+				document.getElementById("button").style.display =
+					"inline-block";
 			}
 		</script>
 	</body>
