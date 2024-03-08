@@ -195,9 +195,8 @@
       })
       .then((data) => {$('#2022-table tbody').empty();
             data.shift();
-            // Iterate through the data and add a row to the table for each item
             data.forEach(function (item) {
-              try {// Determine the class name for the "status" cell based on its value
+              try {
                 var varianteClass = "";
                 if (item[3] == "NSO") {
                   varianteClass = "nso";
@@ -241,29 +240,17 @@
   </script>
 
   <script>
-    // Get the search box and data table elements
     var searchBox = document.querySelector('.search-box-2');
     var dataTable2 = $("#2022-table")[0];
 
-    // Add an event listener to the search box that listens for input events
     searchBox.addEventListener('input', function () {
-      // Get the search query from the search box
       var query = this.value.toLowerCase();
-
-      // Loop through all the rows in the data table
       for (var i = 1; i < dataTable2.rows.length; i++) {
-        // Get the current row
         var row = dataTable2.rows[i];
-
-        // Set the row's display style to none by default
         row.style.display = 'none';
-
-        // Loop through all the cells in the row
         for (var j = 0; j < row.cells.length; j++) {
-          // Get the current cell
           var cell = row.cells[j];
 
-          // If the cell's text content contains the search query, set the row's display style to '' (empty string) to show the row
           if (cell.textContent.toLowerCase().indexOf(query) > -1) {
             row.style.display = '';
             break;
@@ -307,14 +294,11 @@
         $(this).addClass('active');
 
         $('html, body').animate({
-          scrollTop: target.offset().top - offset // Subtract the offset from the scrollTop position
+          scrollTop: target.offset().top - offset 
         }, speed, 'swing');
       });
     });
   </script>
-
-
-
 
 </body>
 
