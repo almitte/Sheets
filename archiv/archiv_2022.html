@@ -2,303 +2,302 @@
 <html>
 
 <head>
-  <title>Rollout Monitor</title>
-  <style>
-    :root {
-      --font-big-size: 2rem;
-      --font-medium-size: 1.5rem;
-      --font-small-size: 1rem;
-      --main-dark: #009879;
-      --main-medium: #006a60;
-      --main-light: #40b3a2;
-      --accent-bright: #ffc10b;
-      --accent-medium: #ffd23f;
-      --accent-light: #ffe57a;
-      --margin-big: 2rem;
-      --margin-medium: 1rem;
-      --magin-small: 0.5rem;
-    }
+    <title>Rollout Monitor</title>
+    <style>
+        :root {
+            --font-big-size: 2rem;
+            --font-medium-size: 1.5rem;
+            --font-small-size: 1rem;
+            --main-dark: #009879;
+            --main-medium: #006a60;
+            --main-light: #40b3a2;
+            --accent-bright: #ffc10b;
+            --accent-medium: #ffd23f;
+            --accent-light: #ffe57a;
+            --margin-big: 2rem;
+            --margin-medium: 1rem;
+            --margin-small: 0.5rem;
+        }
 
-    @font-face {
-      font-family: "dashboardfont";
-      src: url("fonts/Roboto-Regular.ttf");
-    }
+        @font-face {
+            font-family: "dashboardfont";
+            src: url("fonts/Roboto-Regular.ttf");
+        }
 
-    * {
-      font-family: "dashboardfont", sans-serif;
-      animation: fadein .5s;
-    }
+        * {
+            font-family: "dashboardfont", sans-serif;
+            animation: fadein .5s;
+        }
 
-    /* Add the fade-in animation */
-    @keyframes fadein {
-      from {
-        opacity: 0;
-      }
+        /* Add the fade-in animation */
+        @keyframes fadein {
+            from {
+                opacity: 0;
+            }
 
-      to {
-        opacity: 1;
-      }
-    }
+            to {
+                opacity: 1;
+            }
+        }
 
-    @media only screen and (max-width: 1620px) {
-      .dropdown {
-        display: none;
-      }
+        @media only screen and (max-width: 1620px) {
+            .dropdown {
+                display: none;
+            }
 
-      #combined-dropdown {
-        display: block !important;
-      }
+            #combined-dropdown {
+                display: block !important;
+            }
 
-      #dropdown-selector {
-        display: block !important;
-      }
+            #dropdown-selector {
+                display: block !important;
+            }
 
-      nav .right {
-        justify-content: right;
-        margin-right: 10vw !important;
-      }
+            nav .right {
+                justify-content: right;
+                margin-right: 10vw !important;
+            }
 
-      .dropdown-content {
-        margin: 0;
-      }
-    }
-  </style>
+            .dropdown-content {
+                margin: 0;
+            }
+        }
+    </style>
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Rollout Monitor</title>
-  <link rel="icon" href="../images/Logo SOS IS GmbH Neu shadow_tif.webp">
-  <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="../styling/table.css">
-  <link rel="stylesheet" href="../styling/nav.css">
-  <link rel="stylesheet" href="../styling/search_and_refresh.css">
-  <link rel="stylesheet" href="../styling/header.css">
-  <link rel="stylesheet" href="../styling/info_box.css">
-  <link rel="stylesheet" href="../styling/background.css">
-  <link rel="stylesheet" href="../styling/div.css">
-  <link rel="stylesheet" href="../styling/popup.css">
-  <script src = "../js-components/navbar.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
-  <script src="/commons.js"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title> Rollout Monitor</title>
+    <link rel="icon" href="../images/Logo SOS IS GmbH Neu shadow_tif.webp">
+    <script src=" https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../styling/table.css">
+    <link rel="stylesheet" href="../styling/nav.css">
+    <link rel="stylesheet" href="../styling/search_and_refresh.css">
+    <link rel="stylesheet" href="../styling/header.css">
+    <link rel="stylesheet" href="../styling/info_box.css">
+    <link rel="stylesheet" href="../styling/background.css">
+    <link rel="stylesheet" href="../styling/div.css">
+    <link rel="stylesheet" href="../styling/popup.css">
+    <script src="../js-components/navbar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+    <script src="/commons.js"></script>
 </head>
 
 <app-nav>
 </app-nav>
 
 <body onload="openForm([load2022]);">
-  <div class="form-popup" id="myForm">
-    <form class="form-container">
-      <h1>Login</h1>
-      <label class="error-mark" for="psw" style="display:none; color: red; font-size: 15px;"><b>Ungültiges
-          Passwort</b></label>
-      <input type="password" placeholder="Enter Password" name="psw" required>
-      <button type="submit" class="btn">Login</button>
-    </form>
-  </div>
-  <section id=" home">
-    <div>
-      <h1>
-        Archiv
-      </h1>
+    <div class="form-popup" id="myForm">
+        <form class="form-container">
+            <h1>Login</h1>
+            <label class="error-mark" for="psw" style="display:none; color: red; font-size: 15px;"><b>Ungültiges
+                    Passwort</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" required>
+            <button type="submit" class="btn">Login</button>
+        </form>
     </div>
-    <div class="info-box">
-      <div class="info-box__icon">i</div>
-      <div class="info-box__text">
-        Diese Seite bietet Ihnen einen Überblick über alle abgeschlossenen Rolloutprojekte aus 2022.
-        <br> Über das
-        Suchfeld kann gezielt nach einzelnen Einträgen gesucht werden. Mit einem Klick auf einen der Spaltenköpfe kann
-        die Tabelle entsprechend sortiert werden. <br> Änderungen werden dabei nur temporär vorgenommen. Nach dem
-        Drücken des Buttons
-        "Aktualisieren" wird die Übersicht aus dem Masterdokument neu geladen.
-      </div>
-    </div>
-  </section id="home">
-
-  <section id="2022">
-    <div>
-      <h2>
-        2022
-      </h2>
-    </div>
-    </p>
-    <div class="refresh-search-container">
-      <!-- Refresh button -->
-      <button class="refresh-button" onclick="load2022();"><i class="fa fa-refresh"
-          style="margin-right: 10px;"></i>Aktualisieren</button>
-      <!-- Search box container -->
-      <div class="search-box-container">
-        <!-- Search box -->
-        <i class="fas fa-search search-icon"></i>
-        <input type="text" class="search-box-2" placeholder="Suche...">
-        <!-- Search icon -->
-      </div>
-    </div>
-
-
-    <div class="bigtable">
-      <div class="table-wrapper">
-        <div class="table-scroll" id="scroll-2">
-          <table id="2022-table" class="sortable">
-            <thead>
-              <tr>
-                <th class="medium">Store</th>
-                <th class="long">Adresse</th>
-                <th class="short">Art</th>
-                <th class="medium">Variante</th>
-                <th class="medium">F/C</th>
-                <th class="medium">DL</th>
-                <th class="medium">Teilschließung</th>
-                <th class="medium">Teileröffnung</th>
-                <th class="medium">Eröffnung</th>
-                <th class="short">KW</th>
-                <th class="medium">VIP-Support</th>
-                <th class="medium">Status Telekom</th>
-              </tr>
-            </thead>
-            <tbody>
-            </tbody>
-          </table>
+    <section id=" home">
+        <div>
+            <h1>
+                Archiv
+            </h1>
         </div>
-      </div>
-    </div>
-  </section>
-  <script>
-    function load2022() {
-  if (checkPassword()) {
-    const password = window.selectedPassword;
-    const wb_name = "archiv_2022_1";
+        <div class="info-box">
+            <div class="info-box__icon">i</div>
+            <div class="info-box__text">
+                Diese Seite bietet Ihnen einen Überblick über alle abgeschlossenen Rolloutprojekte aus 2022.
+                <br> Über das Suchfeld kann gezielt nach einzelnen Einträgen gesucht werden. Mit einem Klick auf einen
+                der Spaltenköpfe kann die Tabelle entsprechend sortiert werden. <br> Änderungen werden dabei nur
+                temporär vorgenommen. Nach dem Drücken des Buttons "Aktualisieren" wird die Übersicht aus dem
+                Masterdokument neu geladen.
+            </div>
+        </div>
+    </section id="home">
 
-    fetch(
-      "https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          password: password,
-          wb_name: wb_name,
-        }),
-      }
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
+    <section id="2022">
+        <div>
+            <h2>
+                2022
+            </h2>
+        </div>
+        <div class="refresh-search-container">
+            <!-- Refresh button -->
+            <button class="refresh-button" onclick="load2022();"><i class="fa fa-refresh"
+                    style="margin-right: 10px;"></i>Aktualisieren</button>
+            <!-- Search box container -->
+            <div class="search-box-container">
+                <!-- Search box -->
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-box-2" placeholder="Suche...">
+                <!-- Search icon -->
+            </div>
+        </div>
+
+
+        <div class="bigtable">
+            <div class="table-wrapper">
+                <div class="table-scroll" id="scroll-2">
+                    <table id="2022-table" class="sortable">
+                        <thead>
+                            <tr>
+                                <th class="medium">Store</th>
+                                <th class="long">Adresse</th>
+                                <th class="short">Art</th>
+                                <th class="medium">Variante</th>
+                                <th class="medium">F/C</th>
+                                <th class="medium">DL</th>
+                                <th class="medium">Teilschließung</th>
+                                <th class="medium">Teileröffnung</th>
+                                <th class="medium">Eröffnung</th>
+                                <th class="short">KW</th>
+                                <th class="medium">VIP-Support</th>
+                                <th class="medium">Status Telekom</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function load2022() {
+            if (checkPassword()) {
+                const password = window.selectedPassword;
+                const wb_name = "archiv_2022_1";
+
+                fetch(
+                    "https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            password: password,
+                            wb_name: wb_name,
+                        }),
+                    }
+                )
+                    .then((response) => {
+                        if (!response.ok) {
+                            throw new Error("Network response was not ok");
+                        }
+                        return response.json();
+                    })
+                    .then((data) => {
+                        $('#2022-table tbody').empty();
+                        data.shift();
+                        data.forEach(function (item) {
+                            try {
+                                var varianteClass = "";
+                                if (item[3] == "NSO") {
+                                    varianteClass = "nso";
+                                } else if (item[3] == "IRLX") {
+                                    varianteClass = "irlx";
+                                } else {
+                                    varianteClass = "else"
+                                }
+                            } catch (e) {
+                                console.log(e);
+                            }
+
+                            $('#2022-table tbody').append(`
+                                <tr>
+                                    <td>${item[0]}</td>
+                                    <td>${item[1]}</td>
+                                    <td>${item[2]}</td>
+                                    <td class="${varianteClass}" disabled><button>${item[3]}</button></td>
+                                    <td>${item[4]}</td>
+                                    <td>${item[5]}</td>
+                                    <td>${item[6]}</td>
+                                    <td>${item[7]}</td>
+                                    <td>${item[8]}</td>
+                                    <td>${item[9]}</td>
+                                    <td>${item[10]}</td>
+                                    <td>${item[11]}</td>
+                                </tr>
+                            `);
+                        });
+
+                        const table2 = document.getElementById("2022-table");
+                        const tableContainer2 = document.getElementById("scroll-2");
+
+                        if (table2.offsetHeight > window.innerHeight * 0.5) {
+                            tableContainer2.style.height = "50vh";
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("There was a problem with the fetch operation:", error);
+                    });
+            }
         }
-        return response.json();
-      })
-      .then((data) => {$('#2022-table tbody').empty();
-            data.shift();
-            data.forEach(function (item) {
-              try {
-                var varianteClass = "";
-                if (item[3] == "NSO") {
-                  varianteClass = "nso";
-                } else if (item[3] == "IRLX") {
-                  varianteClass = "irlx";
-                } else { varianteClass = "else" }
-              }
-              catch (e) {
-                console.log(e);
-              }
+    </script>
 
-              $('#2022-table tbody').append(`
-                <tr>
-                  <td>${item[0]}</td>
-                  <td>${item[1]}</td>
-                  <td>${item[2]}</td>
-                  <td class="${varianteClass}" disabled><button>${item[3]}</button></td>
-                  <td>${item[4]}</td>
-                  <td>${item[5]}</td>
-                  <td>${item[6]}</td>
-                  <td>${item[7]}</td>
-                  <td>${item[8]}</td>
-                  <td>${item[9]}</td>
-                  <td>${item[10]}</td>
-                  <td>${item[11]}</td>
-                </tr>
-              `);
-            });
+    <script>
+        var searchBox = document.querySelector('.search-box-2');
+        var dataTable2 = $("#2022-table")[0];
 
-            const table2 = document.getElementById("2022-table");
-            const tableContainer2 = document.getElementById("scroll-2");
+        searchBox.addEventListener('input', function () {
+            var query = this.value.toLowerCase();
+            for (var i = 1; i < dataTable2.rows.length; i++) {
+                var row = dataTable2.rows[i];
+                row.style.display = 'none';
+                for (var j = 0; j < row.cells.length; j++) {
+                    var cell = row.cells[j];
+                    if (cell.textContent.toLowerCase().indexOf(query) > -1) {
+                        row.style.display = '';
+                        break;
+                    }
+                }
 
-            if (table2.offsetHeight > window.innerHeight * 0.5) {
-              tableContainer2.style.height = "50vh";
-            }})
-      .catch((error) => {
-        console.error("There was a problem with the fetch operation:", error);
-      });
-  }
-}
-  </script>
-
-  <script>
-    var searchBox = document.querySelector('.search-box-2');
-    var dataTable2 = $("#2022-table")[0];
-
-    searchBox.addEventListener('input', function () {
-      var query = this.value.toLowerCase();
-      for (var i = 1; i < dataTable2.rows.length; i++) {
-        var row = dataTable2.rows[i];
-        row.style.display = 'none';
-        for (var j = 0; j < row.cells.length; j++) {
-          var cell = row.cells[j];
-
-          if (cell.textContent.toLowerCase().indexOf(query) > -1) {
-            row.style.display = '';
-            break;
-          }
-        }
-        
-      }
-    });
-
-  </script>
-  <script>
-
-    const table = document.getElementById("2022-table");
-    const tableContainer = document.getElementById("scroll-1");
-
-    const observer = new MutationObserver(function () {
-      if (table.offsetHeight > window.innerHeight * 0.5) {
-        tableContainer.style.height = "50vh";
-        tableContainer.style.overflow = "scroll";
-        tableContainer.style.borderBottom = "1px solid black";
-      }
-    });
-
-    observer.observe(table, {
-      childList: true,
-      subtree: true
-    });
-
-  </script>
-  <script>
-    $(function () {
-      $('.scroll-page').on('click', function () {
-        var offset = 60; // Set the offset to 50px
-        var speed = 800;
-        var target = $(this.hash);
-
-        $('nav a').each(function () {
-          $(this).removeClass('active');
+            }
         });
 
-        $(this).addClass('active');
+    </script>
+    <script>
 
-        $('html, body').animate({
-          scrollTop: target.offset().top - offset 
-        }, speed, 'swing');
-      });
-    });
-  </script>
+        const table = document.getElementById("2022-table");
+        const tableContainer = document.getElementById("scroll-1");
+        
+        const observer = new MutationObserver(function () {
+            if (table.offsetHeight > window.innerHeight * 0.5) {
+                tableContainer.style.height = "50vh";
+                tableContainer.style.overflow = "scroll";
+                tableContainer.style.borderBottom = "1px solid black";
+            }
+        });
+
+        observer.observe(table, {
+            childList: true,
+            subtree: true
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $('.scroll-page').on('click', function () {
+                var offset = 60; // Set the offset to 50px
+                var speed = 800;
+                var target = $(this.hash);
+
+                $('nav a').each(function () {
+                    $(this).removeClass('active');
+                });
+
+                $(this).addClass('active');
+
+                $('html, body').animate({
+                    scrollTop: target.offset().top - offset
+                }, speed, 'swing');
+            });
+        });
+    </script>
 
 </body>
 
