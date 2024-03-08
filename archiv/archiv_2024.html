@@ -169,24 +169,30 @@
 
   <script>
     function load2024() {
-      if (checkPassword()) {
+  if (checkPassword()) {
+    const password = window.selectedPassword;
+    const wb_name = "archiv_2024_1";
 
-        $(document).ready(function () {
-          // Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-          const SHEET_ID = '1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA';
-          // Replace YOUR_API_KEY with your Google API key
-          const API_KEY = 'AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE';
-
-          // Make a GET request to the Google Sheets API to retrieve the data for the table
-          $.ajax({
-
-            url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Archiv2024!A1:L150?key=${API_KEY}`,
-            type: 'GET',
-            success: function (response) {
-              $('#2024-table tbody').empty();
-              // The response from the API includes the data for the table in the "values" property
-              const data = response.values;
-
+    fetch(
+      "https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password: password,
+          wb_name: wb_name,
+        }),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {$('#2024-table tbody').empty();
               // Skip the first row of the data, which contains the column names
               data.shift();
 
@@ -230,13 +236,12 @@
 
               if (table.offsetHeight > window.innerHeight * 0.5) {
                 tableContainer.style.height = "50vh";
-              }
-            }
-          });
-        })
-      }
-    }
-
+              }})
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  }
+}
   </script>
 
   <script>
