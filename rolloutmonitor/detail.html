@@ -97,7 +97,7 @@
 
 	<app-nav> </app-nav>
 
-	<body onload="openForm([loadDetail1, loadDetail2]);">
+	<body onload="openForm([loadDetail1]);">
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
 				<h1>Login</h1>
@@ -153,35 +153,8 @@
 								<th class="long">#04</th>
 								<th class="long">#05</th>
 								<th class="long">#06</th>
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
-				</div>
-			</div>
-		</section>
-		<section id="detail2">
-			<!-- Refresh and search container -->
-			<div class="refresh-search-container" style="margin-top: 30px">
-				<!-- Refresh button -->
-				<button class="refresh-button" onclick="loadDetail2();">
-					<i class="fa fa-refresh" style="margin-right: 10px"></i
-					>Aktualisieren
-				</button>
-				<!-- Search box container -->
-			</div>
-			<div class="bigtable">
-				<div class="table-wrapper">
-					<table id="detail2-table" class="sortable">
-						<thead>
-							<tr>
-								<th class="short"></th>
 								<th class="long">#07</th>
 								<th class="long">#08</th>
-								<th class="long">#09</th>
-								<th class="long">#10</th>
-								<th class="long">#11</th>
-								<th class="long">#12</th>
 							</tr>
 						</thead>
 						<tbody></tbody>
@@ -190,78 +163,33 @@
 			</div>
 		</section>
 
-		<script>
-			function loadDetail2() {
-				if (checkPassword()) {
-					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-					const SHEET_ID =
-						"1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-					// Replace YOUR_API_KEY with your Google API key
-					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
-
-					// Make a GET request to the Google Sheets API to retrieve the data for the table
-					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values:batchGet?ranges=Detailplanung!A1:A37&ranges=Detailplanung!H1:K37&key=${API_KEY}`,
-						type: "GET",
-						success: function (response) {
-							$("#detail2-table tbody").empty();
-							const data1 = response.valueRanges[0].values;
-							const data2 = response.valueRanges[1].values;
-							for (let i = 1; i < data1.length; i++) {
-								let hasValue = false;
-								if (data2[i]) {
-									for (let j = 0; j < data2[i].length; j++) {
-										if (data2[i][j]) {
-											hasValue = true;
-											break;
-										}
-									}
-								}
-								for (let j = 0; j < data1[i].length; j++) {
-									$("#detail2-table tbody").append(`
-        <tr>
-          <td class ="first-column">${data1[i][j]}</td>
-          <td>${hasValue && data2[i] && data2[i][j] ? data2[i][j] : ""}</td>
-          <td>${
-				hasValue && data2[i] && data2[i][j + 1] ? data2[i][j + 1] : ""
-			}</td>
-          <td>${
-				hasValue && data2[i] && data2[i][j + 2] ? data2[i][j + 2] : ""
-			}</td>
-          <td>${
-				hasValue && data2[i] && data2[i][j + 3] ? data2[i][j + 3] : ""
-			}</td>
-          <td>${
-				hasValue && data2[i] && data2[i][j + 4] ? data2[i][j + 4] : ""
-			}</td>
-          <td>${
-				hasValue && data2[i] && data2[i][j + 5] ? data2[i][j + 5] : ""
-			}</td>
-        </tr>
-    `);
-								}
-							}
-						},
-					});
-				}
-			}
-		</script>
 		<script>
 			function loadDetail1() {
 				if (checkPassword()) {
-					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-					const SHEET_ID_2 =
-						"1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-					// Replace YOUR_API_KEY with your Google API key
-					const API_KEY_2 = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
-					// Make a GET request to the Google Sheets API to retrieve the data for the table
-					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID_2}/values/Detailplanung!A1:G37?key=${API_KEY_2}`,
-						type: "GET",
-						success: function (response) {
+					const password = window.selectedPassword;
+					const wb_name = "detail_1";
+
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
 							$("#detail1-table tbody").empty();
-							// The response from the API includes the data for the table in the "values" propertys
-							const data = response.values;
 							data.shift();
 							// Iterate through the data and add a row to the table for each item
 							data.forEach(function (item) {
@@ -274,14 +202,22 @@
                 <td>${item[4] || "\u200B"}</td>
                 <td>${item[5] || "\u200B"}</td>
                 <td>${item[6] || "\u200B"}</td>
+				<td>${item[7] || "\u200B"}</td>
+				<td>${item[8] || "\u200B"}</td>
               </tr>
             `);
 							});
-						},
-					});
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
 				}
 			}
 		</script>
+
 		<script>
 			// Get the search box and data table elements
 			var searchBox = document.querySelector(".search-box");

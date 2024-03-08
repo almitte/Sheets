@@ -90,3 +90,34 @@ const correctHash =
 const completedColor = "rgba(79, 180, 119, 1)";
 const plannedColor = "rgba(247, 179, 43, 1)";
 const unplannedColor = "rgba(186,27,29, 1)";
+
+function loadGesamtplanung() {
+  if (checkPassword()) {
+    const password = window.selectedPassword;
+    const wb_name = "gesamtplanung_2024_1";
+
+    fetch(
+      "https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          password: password,
+          wb_name: wb_name,
+        }),
+      }
+    )
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {})
+      .catch((error) => {
+        console.error("There was a problem with the fetch operation:", error);
+      });
+  }
+}

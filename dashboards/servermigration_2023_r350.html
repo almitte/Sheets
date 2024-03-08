@@ -435,122 +435,174 @@
 
 		<script>
 			function loadRestaurantKPIs() {
-				const SHEET_ID = "1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g";
-				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+				if (checkPassword()) {
+					const password = window.selectedPassword;
+					const wb_name = "servermigration_2023_r350_1";
 
-				$.ajax({
-					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!D2:K2?key=${API_KEY}`,
-					type: "GET",
-					success: function (response) {
-						// The response from the API includes the data for the table in the "values" property
-						const data = response.values;
-						const target = data[0][0];
-						const plannedValue = data[0][1];
-						const completedValue = data[0][2];
-						const unplannedValue = data[0][3];
-						const completedR340 = data[0][4];
-						const completedR350 = data[0][5];
-						const bestellt = data[0][6];
-						const insgesamt = data[0][7];
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
+							const target = data[0][0];
+							const plannedValue = data[0][1];
+							const completedValue = data[0][2];
+							const unplannedValue = data[0][3];
+							const completedR340 = data[0][4];
+							const completedR350 = data[0][5];
+							const bestellt = data[0][6];
+							const insgesamt = data[0][7];
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const planned = document.querySelector(
-							".kpi-value#planned-nso"
-						);
-						// set the innerHTML of the element to the value of the planned_value variable
-						planned.innerHTML = plannedValue;
+							// get the element with class ="kpi-value" and id = "planned"
+							const planned = document.querySelector(
+								".kpi-value#planned-nso"
+							);
+							// set the innerHTML of the element to the value of the planned_value variable
+							planned.innerHTML = plannedValue;
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const bestellstatus =
-							document.querySelector("#bestellstatus");
-						const newText =
-							"Bestellstatus: " + bestellt + " / " + insgesamt;
-						bestellstatus.textContent = newText;
+							// get the element with class ="kpi-value" and id = "planned"
+							const bestellstatus =
+								document.querySelector("#bestellstatus");
+							const newText =
+								"Bestellstatus: " +
+								bestellt +
+								" / " +
+								insgesamt;
+							bestellstatus.textContent = newText;
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const R340 = document.querySelector(
-							".kpi-value#completed-r340"
-						);
-						// set the innerHTML of the element to the value of the planned_value variable
-						R340.innerHTML = completedR340;
+							// get the element with class ="kpi-value" and id = "planned"
+							const R340 = document.querySelector(
+								".kpi-value#completed-r340"
+							);
+							// set the innerHTML of the element to the value of the planned_value variable
+							R340.innerHTML = completedR340;
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const r350 = document.querySelector(
-							".kpi-value#completed-r350"
-						);
-						// set the innerHTML of the element to the value of the planned_value variable
-						r350.innerHTML = completedR350;
+							// get the element with class ="kpi-value" and id = "planned"
+							const r350 = document.querySelector(
+								".kpi-value#completed-r350"
+							);
+							// set the innerHTML of the element to the value of the planned_value variable
+							r350.innerHTML = completedR350;
 
-						// get the element with class ="kpi-value" and id = "completed"
-						const completed = document.querySelector(
-							".kpi-value#completed-nso"
-						);
-						// set the innerHTML of the element to the value of the completed_value variable
-						completed.innerHTML = completedValue;
+							// get the element with class ="kpi-value" and id = "completed"
+							const completed = document.querySelector(
+								".kpi-value#completed-nso"
+							);
+							// set the innerHTML of the element to the value of the completed_value variable
+							completed.innerHTML = completedValue;
 
-						// get the element with class ="kpi-value" and id = "completed"
-						const unplanned = document.querySelector(
-							".kpi-value#unplanned-nso"
-						);
-						// set the innerHTML of the element to the value of the completed_value variable
-						unplanned.innerHTML = unplannedValue;
+							// get the element with class ="kpi-value" and id = "completed"
+							const unplanned = document.querySelector(
+								".kpi-value#unplanned-nso"
+							);
+							// set the innerHTML of the element to the value of the completed_value variable
+							unplanned.innerHTML = unplannedValue;
 
-						// get the element with class ="kpi-value" and id = "total"
-						const total = document.querySelector(
-							".kpi-value#total-nso"
-						);
-						// set the innerHTML of the element to the value of the target_value variable
-						total.innerHTML = target;
-					},
-				});
+							// get the element with class ="kpi-value" and id = "total"
+							const total = document.querySelector(
+								".kpi-value#total-nso"
+							);
+							// set the innerHTML of the element to the value of the target_value variable
+							total.innerHTML = target;
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
+				}
 			}
 		</script>
 
 		<script>
 			function loadOutOfScope() {
-				const SHEET_ID = "1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g";
-				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+				if (checkPassword()) {
+					const password = window.selectedPassword;
+					const wb_name = "servermigration_2023_r350_2";
 
-				$.ajax({
-					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B16:B16?key=${API_KEY}`,
-					type: "GET",
-					success: function (response) {
-						// The response from the API includes the data for the table in the "values" property
-						const data = response.values;
-						const outOfScope = data[0][0];
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
+							const outOfScope = data[0][0];
 
-						const outofscope = document.querySelector(
-							".kpi-value#outOfScope-value"
-						);
-						outofscope.innerHTML = outOfScope;
-					},
-				});
+							const outofscope = document.querySelector(
+								".kpi-value#outOfScope-value"
+							);
+							outofscope.innerHTML = outOfScope;
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
+				}
 			}
 		</script>
 
 		<script>
 			function loadRestaurantChart() {
 				if (checkPassword()) {
-					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-					const SHEET_ID =
-						"1dneDJs_cQdjgrGTt7CyHflRntWkG1jU5Cg6wK929e9g";
-					// Replace YOUR_API_KEY with your Google API key
-					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+					const password = window.selectedPassword;
+					const wb_name = "servermigration_2023_r350_3";
 
 					//Get number of month of todays date
 					var today = new Date();
 					var month = today.getMonth();
 
-					const completedColor = "rgba(61, 128, 86, 1)";
-					const plannedColor = "rgba(247, 179, 43, 1)";
-					const unplannedColor = "rgba(186,27,29, 1)";
-
-					// Make a GET request to the Google Sheets API to retrieve the data for the table
-					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Projektstatus_ServerRollout!B4:P8?key=${API_KEY}`,
-						type: "GET",
-						success: function (response) {
-							const data = response.values;
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
 							const week_labels = data[0];
 							// Check for data[2] and assign to completedData
 							var completedData = data[2] ? data[2] : [];
@@ -726,20 +778,14 @@
 								},
 								options: options,
 							});
-						},
-					});
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
 				}
-			}
-		</script>
-
-		<script>
-			function getLastNumberIndex(arr) {
-				for (let i = 0; i <= 21; i++) {
-					if (arr[i] !== "") {
-						return i;
-					}
-				}
-				return -1; // Return -1 if no number is found
 			}
 		</script>
 	</body>

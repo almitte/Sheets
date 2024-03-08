@@ -509,134 +509,177 @@
 
 		<script>
 			function loadNSOKPIValues() {
-				const SHEET_ID = "1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+				if (checkPassword()) {
+					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
+					const password = window.selectedPassword;
+					const wb_name = "rollout_planung_2024_1";
 
-				$.ajax({
-					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B3:M3?key=${API_KEY}`,
-					type: "GET",
-					success: function (response) {
-						const data = response.values;
-						const target_value = data[0][2];
-						const completed_value = data[0][5];
-						const planned_value = data[0][8];
-						const unplanned_value = data[0][11];
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
+							const target_value = data[0][2];
+							const completed_value = data[0][5];
+							const planned_value = data[0][8];
+							const unplanned_value = data[0][11];
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const planned = document.querySelector(
-							".kpi-value#planned-nso"
-						);
-						// set the innerHTML of the element to the value of the planned_value variable
-						planned.innerHTML = planned_value;
+							const planned = document.querySelector(
+								".kpi-value#planned-nso"
+							);
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const completed = document.querySelector(
-							".kpi-value#completed-nso"
-						);
-						completed.innerHTML = completed_value;
+							planned.innerHTML = planned_value;
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const unplanned = document.querySelector(
-							".kpi-value#unplanned-nso"
-						);
-						// set the innerHTML of the element to the value of the planned_value variable
-						unplanned.innerHTML = unplanned_value;
+							const completed = document.querySelector(
+								".kpi-value#completed-nso"
+							);
+							completed.innerHTML = completed_value;
 
-						// get the element with class ="kpi-value" and id = "total"
-						const total = document.querySelector(
-							".kpi-value#total-nso"
-						);
-						// set the innerHTML of the element to the value of the target_value variable
-						total.innerHTML = target_value;
-					},
-				});
+							const unplanned = document.querySelector(
+								".kpi-value#unplanned-nso"
+							);
+
+							unplanned.innerHTML = unplanned_value;
+
+							const total = document.querySelector(
+								".kpi-value#total-nso"
+							);
+
+							total.innerHTML = target_value;
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
+				}
 			}
 
 			function loadIRLXKPIValues() {
-				const SHEET_ID = "1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-				const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+				if (checkPassword()) {
+					const password = window.selectedPassword;
+					const wb_name = "rollout_planung_2024_2";
 
-				$.ajax({
-					url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B22:U22?key=${API_KEY}`,
-					type: "GET",
-					success: function (response) {
-						// The response from the API includes the data for the table in the "values" property
-						const data = response.values;
-						const target_value = data[0][2];
-						const completed_value = data[0][5];
-						const planned_value = data[0][8];
-						const unplanned_value = data[0][11];
-						const forecast_q1 = data[0][13];
-						const forecast_q2 = data[0][15];
-						const forecast_q3 = data[0][17];
-						const forecast_q4 = data[0][19];
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
+							const target_value = data[0][2];
+							const completed_value = data[0][5];
+							const planned_value = data[0][8];
+							const unplanned_value = data[0][11];
+							const forecast_q1 = data[0][13];
+							const forecast_q2 = data[0][15];
+							const forecast_q3 = data[0][17];
+							const forecast_q4 = data[0][19];
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const completed = document.querySelector(
-							".kpi-value#completed-irlx"
-						);
-						completed.innerHTML = completed_value;
+							const completed = document.querySelector(
+								".kpi-value#completed-irlx"
+							);
+							completed.innerHTML = completed_value;
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const planned = document.querySelector(
-							".kpi-value#planned-irlx"
-						);
-						// set the innerHTML of the element to the value of the planned_value variable
-						planned.innerHTML = planned_value;
+							const planned = document.querySelector(
+								".kpi-value#planned-irlx"
+							);
 
-						// get the element with class ="kpi-value" and id = "planned"
-						const unplanned = document.querySelector(
-							".kpi-value#unplanned-irlx"
-						);
-						// set the innerHTML of the element to the value of the planned_value variable
-						unplanned.innerHTML = unplanned_value;
+							planned.innerHTML = planned_value;
 
-						// get the element with class ="kpi-value" and id = "total"
-						const total = document.querySelector(
-							".kpi-value#total-irlx"
-						);
-						// set the innerHTML of the element to the value of the target_value variable
-						total.innerHTML = target_value;
+							const unplanned = document.querySelector(
+								".kpi-value#unplanned-irlx"
+							);
 
-						const f_q1 = document.querySelector("#forecast-Q1");
-						// set the innerHTML of the element to the value of the target_value variable
-						f_q1.innerHTML = forecast_q1;
+							unplanned.innerHTML = unplanned_value;
 
-						const f_q2 = document.querySelector("#forecast-Q2");
-						// set the innerHTML of the element to the value of the target_value variable
-						f_q2.innerHTML = forecast_q2;
+							const total = document.querySelector(
+								".kpi-value#total-irlx"
+							);
 
-						const f_q3 = document.querySelector("#forecast-Q3");
-						// set the innerHTML of the element to the value of the target_value variable
-						f_q3.innerHTML = forecast_q3;
+							total.innerHTML = target_value;
 
-						const f_q4 = document.querySelector("#forecast-Q4");
-						// set the innerHTML of the element to the value of the target_value variable
-						f_q4.innerHTML = forecast_q4;
-					},
-				});
+							const f_q1 = document.querySelector("#forecast-Q1");
+
+							f_q1.innerHTML = forecast_q1;
+
+							const f_q2 = document.querySelector("#forecast-Q2");
+
+							f_q2.innerHTML = forecast_q2;
+
+							const f_q3 = document.querySelector("#forecast-Q3");
+
+							f_q3.innerHTML = forecast_q3;
+
+							const f_q4 = document.querySelector("#forecast-Q4");
+
+							f_q4.innerHTML = forecast_q4;
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
+				}
 			}
 		</script>
 
 		<script>
 			function loadNSOchart() {
 				if (checkPassword()) {
-					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-					const SHEET_ID =
-						"1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-					// Replace YOUR_API_KEY with your Google API key
-					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+					const password = window.selectedPassword;
+					const wb_name = "rollout_planung_2024_3";
 
-					//Get number of month of todays date
-					var today = new Date();
-					var month = today.getMonth();
-
-					// Make a GET request to the Google Sheets API to retrieve the data for the table
-					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B6:M8?key=${API_KEY}`,
-						type: "GET",
-						success: function (response) {
-							const data = response.values;
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
 							// Check for data[2] and assign to completedData
 							var completedData = data[0] ? data[0] : [];
 
@@ -760,29 +803,41 @@
 								},
 								options: options,
 							});
-						},
-					});
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
 				}
 			}
 
 			function loadIRLXchart() {
 				if (checkPassword()) {
-					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-					const SHEET_ID =
-						"1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-					// Replace YOUR_API_KEY with your Google API key
-					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+					const password = window.selectedPassword;
+					const wb_name = "rollout_planung_2024_4";
 
-					//Get number of month of todays date
-					var today = new Date();
-					var month = today.getMonth();
-
-					// Make a GET request to the Google Sheets API to retrieve the data for the table
-					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Rollout_Planung_2024!B25:M27?key=${API_KEY}`,
-						type: "GET",
-						success: function (response) {
-							const data = response.values;
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
 							// Check for data[2] and assign to completedData
 							var completedData = data[0] ? data[0] : [];
 
@@ -909,20 +964,14 @@
 								},
 								options: options,
 							});
-						},
-					});
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
 				}
-			}
-		</script>
-
-		<script>
-			function getFirstNumberIndex(arr) {
-				for (let i = 0; i <= 12; i++) {
-					if (arr[i] !== "") {
-						return i;
-					}
-				}
-				return -1; // Return -1 if no number is found
 			}
 		</script>
 	</body>

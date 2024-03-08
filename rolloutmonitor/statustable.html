@@ -196,20 +196,29 @@
 		<script>
 			function loadStatustable() {
 				if (checkPassword()) {
-					// Replace YOUR_SHEET_ID with the ID of your Google Sheets file
-					const SHEET_ID =
-						"1Y5nmITD-nCh1Au4RwxMNxwgNMTke5PKaVLJKVmykilA";
-					// Replace YOUR_API_KEY with your Google API key
-					const API_KEY = "AIzaSyAgtyYzCyesKwKsBr1Qzee0jJoFMuwONtE";
+					const password = window.selectedPassword;
+					const wb_name = "statustable_1";
 
-					// Make a GET request to the Google Sheets API to retrieve the data for the table
-					$.ajax({
-						url: `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/Statustable!A1:Q100?key=${API_KEY}`,
-						type: "GET",
-						success: function (response) {
-							// The response from the API includes the data for the table in the "values" property
-							const data = response.values;
-
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
 							// Iterate through the data and add a row to the table for each item
 							$("#forecast-table tbody").empty();
 
@@ -356,8 +365,13 @@
 							if (table.offsetHeight > window.innerHeight * 0.5) {
 								tableContainer.style.height = "70vh";
 							}
-						},
-					});
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
 				}
 			}
 		</script>
