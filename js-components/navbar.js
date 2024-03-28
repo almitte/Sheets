@@ -12,16 +12,18 @@ class Navbar extends HTMLElement {
                 <button class="dropbtn"><i class="fa fa-bars"></i>
                 </button>
                 <div class="dropdown-content">
-                    <h3>NSO/IRLX</h3>
+                    <h3>NSO/RotF</h3>
                     <a href="../rolloutmonitor.html">Home</a>
                     <a href="../rolloutmonitor/forecast.html">Forecast</a>
                     <a href="../rolloutmonitor/detail.html">Detailplanung</a>
                     <a href="../rolloutmonitor/statustable.html">Statustable</a>
                     <hr>
+                    <h3>Archiv</h3>
                     <a href="../archiv/archiv_2022.html">Archiv 2022</a>
                     <a href="../archiv/archiv_2023.html">Archiv 2023</a>
                     <a href="../archiv/archiv_2024.html">Archiv 2024</a>
                     <hr>
+                    <h3>Dashboards</h3>
                     <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                     <hr>
@@ -29,7 +31,7 @@ class Navbar extends HTMLElement {
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn">NSO/IRLX
+                <button class="dropbtn">NSO/RotF
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">

@@ -148,12 +148,12 @@
 				margin-bottom: 0 !important;
 			}
 
-			#chart-irlx {
+			#chart-RotF {
 				margin-left: 0 !important;
 				margin-right: 0 !important;
 			}
 
-			#chart-irlx .kpi-value {
+			#chart-RotF .kpi-value {
 				margin-bottom: 0 !important;
 			}
 
@@ -172,7 +172,7 @@
 				font-size: 4.5rem;
 			}
 
-			.kpis #total-irlx {
+			.kpis #total-RotF {
 				color: #6b9ac4;
 				font-size: 4.5rem;
 			}
@@ -181,7 +181,7 @@
 				color: #ba1b1d;
 			}
 
-			.kpis #unplanned-irlx {
+			.kpis #unplanned-RotF {
 				font-size: 4.5rem;
 			}
 
@@ -266,7 +266,7 @@
 	<app-nav> </app-nav>
 
 	<body
-		onload="openForm([loadNSOchart, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues])"
+		onload="openForm([loadNSOchart, loadRotFchart, loadNSOKPIValues, loadRotFKPIValues])"
 	>
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
@@ -294,7 +294,7 @@
 					<!-- Refresh button -->
 					<button
 						class="refresh-button"
-						onclick="openForm([loadNSOchart, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues]);"
+						onclick="openForm([loadNSOchart, loadRotFchart, loadNSOKPIValues, loadRotFKPIValues]);"
 					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
@@ -341,21 +341,21 @@
 			<div class="project-box">
 				<div class="box-line">
 					<div class="title">
-						<b>I</b>n<b>R</b>eal<b>L</b>ifeE<b>X</b>perience
+						<b>R</b>estaurant<b>O</b>f<b>T</b>he<b>F</b>uture
 					</div>
 				</div>
 				<div class="kpis" id="top">
 					<div class="kpi-box">
-						<div class="kpi-value" id="total-irlx">10</div>
+						<div class="kpi-value" id="total-RotF">10</div>
 
 						<div class="kpi-title">Target</div>
 					</div>
 				</div>
 
 				<div class="completed-planned-box">
-					<div class="kpis" id="chart-irlx">
+					<div class="kpis" id="chart-RotF">
 						<div class="kpi-box" id="completed">
-							<div class="kpi-value" id="completed-irlx">10</div>
+							<div class="kpi-value" id="completed-RotF">10</div>
 
 							<hr class="completed-divider" />
 							<div class="kpi-title">Completed</div>
@@ -364,7 +364,7 @@
 
 					<div class="chart-container">
 						<canvas
-							id="IRLX-chart"
+							id="RotF-chart"
 							width="350"
 							height="200"
 						></canvas>
@@ -433,7 +433,7 @@
 				}
 			}
 
-			function loadIRLXKPIValues() {
+			function loadRotFKPIValues() {
 				if (checkPassword()) {
 					const password = window.selectedPassword;
 					const wb_name = "rollout_planung_2022_2";
@@ -471,12 +471,12 @@
 							});
 
 							const total = document.querySelector(
-								"#.kpi-value#total-irlx"
+								"#.kpi-value#total-RotF"
 							);
 							total.innerHTML = target_value;
 
 							const completed = document.querySelector(
-								".kpi-value#completed-irlx"
+								".kpi-value#completed-RotF"
 							);
 							completed.innerHTML = completed_value;
 						})
@@ -635,7 +635,7 @@
 				}
 			}
 
-			function loadIRLXchart() {
+			function loadRotFchart() {
 				if (checkPassword()) {
 					const password = window.selectedPassword;
 					const wb_name = "rollout_planung_2022_4";
@@ -669,7 +669,7 @@
 							});
 
 							const ctx = document
-								.getElementById("IRLX-chart")
+								.getElementById("RotF-chart")
 								.getContext("2d");
 
 							const options = {
