@@ -627,8 +627,13 @@
 									var new_list_value = 0;
 									if (old_list[i] == 0) {
 										new_list_value = 0;
-									} else if (old_list[i] > 50) {
+									} else if (
+										(old_list[i] > 50) &
+										(old_list[i] < 300)
+									) {
 										new_list_value = old_list[i];
+									} else if (old_list[i] > 350) {
+										new_list_value = 350;
 									} else if (old_list[i] <= 50) {
 										new_list_value = 50;
 									}
