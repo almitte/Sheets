@@ -162,8 +162,8 @@
 			<div class="bigtable" id="statustable">
 				<div class="table-wrapper">
 					<div class="table-scroll" id="scroll-1">
-						<table id="forecast-table" class="sortable">
-							<thead>
+						<table id="status-table" class="sortable">
+							<thead style="top: 1">
 								<tr>
 									<th class="short">Store</th>
 									<th class="short">Art</th>
@@ -192,6 +192,10 @@
 				</div>
 			</div>
 		</section>
+		<script>
+			let tableContainer = document.getElementById("scroll-1");
+			tableContainer.style.height = "70vh";
+		</script>
 
 		<script>
 			function loadStatustable() {
@@ -220,7 +224,7 @@
 						})
 						.then((data) => {
 							// Iterate through the data and add a row to the table for each item
-							$("#forecast-table tbody").empty();
+							$("#status-table tbody").empty();
 
 							var isHeader = true;
 
@@ -228,8 +232,6 @@
 								if (isHeader) {
 									var headerRow = "<tr>";
 									item.forEach(function (headerTitle) {
-										console.log(headerTitle);
-
 										if (headerTitle.includes("-")) {
 											var beforeString =
 												headerTitle.split("-")[0];
@@ -249,7 +251,7 @@
 										}
 									});
 									headerRow += "</tr>";
-									$("#forecast-table thead")
+									$("#status-table thead")
 										.empty()
 										.append(headerRow); // Append header row to thead
 									isHeader = false; // Set to false after creating the header
@@ -306,7 +308,7 @@
 										console.log(e);
 									}
 
-									$("#forecast-table tbody").append(`
+									$("#status-table tbody").append(`
 									<tr>
 									<td>${item[0]}</td>
 									<td class="${varianteClass}" disabled>
@@ -357,10 +359,12 @@
 								`);
 								}
 							});
-							const table =
-								document.getElementById("forecast-table");
-							const tableContainer =
+							let table = document.getElementById("status-table");
+							let tableContainer =
 								document.getElementById("scroll-1");
+
+							console.log(table.offsetHeight);
+							console.log(window.innerHeight);
 
 							if (table.offsetHeight > window.innerHeight * 0.5) {
 								tableContainer.style.height = "70vh";
@@ -379,7 +383,7 @@
 		<script>
 			// Get the search box and data table elements
 			var searchBox = document.querySelector(".search-box");
-			var dataTable = document.querySelector("#forecast-table");
+			var dataTable = document.querySelector("#status-table");
 
 			// Add an event listener to the search box that listens for input events
 			searchBox.addEventListener("input", function () {

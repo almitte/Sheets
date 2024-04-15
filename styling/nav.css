@@ -18,6 +18,7 @@ nav {
 	border-radius: 15px;
 	/* Add round corners to the navbar using the border-radius property */
 	padding: 0px;
+	transition: transform 0.5s;
 }
 
 nav .left {
@@ -52,7 +53,7 @@ nav .right {
 	/* Align the content inside the right div to the center */
 	flex: 1;
 	/* Vertically align the content inside the right div to the center */
-	align-items:center;
+	align-items: center;
 }
 
 nav img {
@@ -82,7 +83,7 @@ nav a {
 	color: white;
 	/* Set the font color of the links to white */
 	transition: all 0.4s ease-in-out;
-	padding: .5rem;
+	padding: 0.5rem;
 	border-radius: 25px;
 }
 
@@ -95,8 +96,8 @@ nav a.active {
 	/* Add a box shadow to the links on hover */
 	border-radius: 25px;
 	/* Add rounded corners to the links on hover */
-	padding-left: .75rem;
-	padding-right: .75rem;
+	padding-left: 0.75rem;
+	padding-right: 0.75rem;
 }
 
 @media only screen and (max-width: 600px) {

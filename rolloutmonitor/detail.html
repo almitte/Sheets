@@ -39,6 +39,11 @@
 				}
 			}
 
+			/* .nav-hidden {
+				transform: translateY(-200px) !important;
+				position: absolute !important;
+			} */
+
 			@media only screen and (max-width: 1400px) {
 				.dropdown {
 					display: none;
@@ -143,25 +148,46 @@
 			</div>
 			<div class="bigtable">
 				<div class="table-wrapper">
-					<table id="detail1-table" class="sortable">
-						<thead>
-							<tr>
-								<th class="short"></th>
-								<th class="long">#01</th>
-								<th class="long">#02</th>
-								<th class="long">#03</th>
-								<th class="long">#04</th>
-								<th class="long">#05</th>
-								<th class="long">#06</th>
-								<th class="long">#07</th>
-								<th class="long">#08</th>
-							</tr>
-						</thead>
-						<tbody></tbody>
-					</table>
+					<div class="table-scroll" id="scroll-1">
+						<table id="detail1-table" class="sortable">
+							<thead>
+								<tr>
+									<th class="short"></th>
+									<th class="long">#01</th>
+									<th class="long">#02</th>
+									<th class="long">#03</th>
+									<th class="long">#04</th>
+									<th class="long">#05</th>
+									<th class="long">#06</th>
+									<th class="long">#07</th>
+									<th class="long">#08</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</section>
+		<script>
+			let tableContainer = document.getElementById("scroll-1");
+			tableContainer.style.height = "70vh";
+		</script>
+		<script>
+			{
+				const nav = document.querySelector("app-nav");
+				let lastScrollY = window.scrollY;
+
+				window.addEventListener("scroll", () => {
+					if (lastScrollY < window.scrollY) {
+						nav.classList.add("nav-hidden");
+					} else {
+						nav.classList.remove("nav-hidden");
+					}
+					lastScrollY = window.scrollY;
+				});
+			}
+		</script>
 
 		<script>
 			function loadDetail1() {

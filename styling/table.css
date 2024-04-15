@@ -16,14 +16,15 @@
 }
 
 .bigtable .table-scroll {
-	margin: 0;
-	overflow: auto;
+	margin: 0 !important;
+	overflow: auto !important;
 	border-bottom: 2px solid var(--main-dark);
 }
 
 .bigtable .table-scroll thead {
-	position: sticky;
+	position: sticky !important;
 	top: 0px;
+	z-index: 1 !important;
 }
 
 .bigtable ::-webkit-scrollbar {
@@ -344,8 +345,12 @@ th:first-child {
 	z-index: 0;
 }
 
-#statustable .sortable td:first-child {
+#statustable .sortable tr:nth-child(odd) td:first-child {
 	background-color: white; /* or the color of your table background */
+}
+
+#statustable .sortable tr:nth-child(even) td:first-child {
+	background-color: #f3f3f3; /* or the color of your table background */
 }
 
 #statustable .sortable th:first-child {
