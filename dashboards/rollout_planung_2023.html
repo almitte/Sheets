@@ -146,12 +146,12 @@
 				animation: fadein 1s;
 			}
 
-			#top-RotF {
+			#top-IRLX {
 				display: grid !important;
 				grid-template-columns: 1fr 1fr;
 			}
 
-			#top-RotF.kpi-value {
+			#top-IRLX.kpi-value {
 				font-size: 3.5rem !important;
 				font-weight: 600;
 				animation: fadein 1s;
@@ -166,12 +166,12 @@
 				margin-bottom: 0 !important;
 			}
 
-			#chart-RotF {
+			#chart-IRLX {
 				margin-left: 0 !important;
 				margin-right: 0 !important;
 			}
 
-			#chart-RotF .kpi-value {
+			#chart-IRLX .kpi-value {
 				margin-bottom: 0 !important;
 			}
 
@@ -190,7 +190,7 @@
 				font-size: 4.5rem;
 			}
 
-			.kpis #total-RotF {
+			.kpis #total-IRLX {
 				color: #6b9ac4;
 				font-size: 4.5rem;
 			}
@@ -199,7 +199,7 @@
 				color: #ba1b1d;
 			}
 
-			.kpis #unplanned-RotF {
+			.kpis #unplanned-IRLX {
 				font-size: 4.5rem;
 			}
 
@@ -246,7 +246,7 @@
 			}
 
 			@media (max-width: 1800px) {
-				#top-RotF {
+				#top-IRLX {
 					margin-left: 9.5rem !important;
 					margin-right: 9.5rem !important;
 				}
@@ -290,7 +290,7 @@
 
 	<app-nav> </app-nav>
 	<body
-		onload="openForm([loadNSOchart, loadRotFchart, loadNSOKPIValues, loadRotFKPIValues])"
+		onload="openForm([loadNSOchart, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues])"
 	>
 		<div class="form-popup" id="myForm">
 			<form class="form-container">
@@ -318,7 +318,7 @@
 					<!-- Refresh button -->
 					<button
 						class="refresh-button"
-						onclick="openForm([setGridTemplateColumnsNSO, loadRotFchart, loadNSOKPIValues, loadRotFKPIValues]);"
+						onclick="openForm([setGridTemplateColumnsNSO, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues]);"
 					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
@@ -380,33 +380,33 @@
 			<div class="project-box">
 				<div class="box-line">
 					<div class="title">
-						<b>R</b>estaurant<b>o</b>f<b>t</b>he<b>F</b>uture
+						<b>I</b>n<b>R</b>ealLifee<b>X</b>perience
 					</div>
 				</div>
-				<div class="kpis" id="top-RotF">
+				<div class="kpis" id="top-IRLX">
 					<div class="kpi-box">
-						<div class="kpi-value" id="total-RotF">10</div>
+						<div class="kpi-value" id="total-IRLX">10</div>
 
 						<div class="kpi-title">Target</div>
 					</div>
 
 					<div class="kpi-box" id="unplanned">
-						<div class="kpi-value" id="unplanned-RotF">10</div>
+						<div class="kpi-value" id="unplanned-IRLX">10</div>
 						<div class="kpi-title">Unplanned</div>
 					</div>
 				</div>
 
 				<div class="completed-planned-box">
-					<div class="kpis" id="chart-RotF">
+					<div class="kpis" id="chart-IRLX">
 						<div class="kpi-box" id="completed">
-							<div class="kpi-value" id="completed-RotF">10</div>
+							<div class="kpi-value" id="completed-IRLX">10</div>
 
 							<hr class="completed-divider" />
 							<div class="kpi-title">Completed</div>
 						</div>
 
 						<div class="kpi-box" id="planned">
-							<div class="kpi-value" id="planned-RotF">20</div>
+							<div class="kpi-value" id="planned-IRLX">20</div>
 
 							<hr class="planned-divider" />
 							<div class="kpi-title">Planned</div>
@@ -415,7 +415,7 @@
 
 					<div class="chart-container">
 						<canvas
-							id="RotF-chart"
+							id="IRLX-chart"
 							width="350"
 							height="200"
 						></canvas>
@@ -489,7 +489,7 @@
 				}
 			}
 
-			function loadRotFKPIValues() {
+			function loadIRLXKPIValues() {
 				if (checkPassword()) {
 					const password = window.selectedPassword;
 					const wb_name = "rollout_planung_2023_2";
@@ -520,25 +520,25 @@
 							const unplanned_value = data[0][11];
 
 							const planned = document.querySelector(
-								".kpi-value#planned-RotF"
+								".kpi-value#planned-IRLX"
 							);
 
 							planned.innerHTML = planned_value;
 
 							const completed = document.querySelector(
-								".kpi-value#completed-RotF"
+								".kpi-value#completed-IRLX"
 							);
 
 							completed.innerHTML = completed_value;
 
 							const unplanned = document.querySelector(
-								".kpi-value#unplanned-RotF"
+								".kpi-value#unplanned-IRLX"
 							);
 
 							unplanned.innerHTML = unplanned_value;
 
 							const total = document.querySelector(
-								".kpi-value#total-RotF"
+								".kpi-value#total-IRLX"
 							);
 
 							total.innerHTML = target_value;
@@ -711,7 +711,7 @@
 				}
 			}
 
-			function loadRotFchart() {
+			function loadIRLXchart() {
 				if (checkPassword()) {
 					const password = window.selectedPassword;
 					const wb_name = "rollout_planung_2023_4";
@@ -745,7 +745,7 @@
 							var unplannedData = data[2] ? data[2] : [];
 
 							const ctx = document
-								.getElementById("RotF-chart")
+								.getElementById("IRLX-chart")
 								.getContext("2d");
 
 							const options = {

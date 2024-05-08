@@ -158,7 +158,7 @@
 				background-color: #7371fc; /* You can change this color manually */
 			}
 
-			.RotF {
+			.IRLX {
 				background-color: #44bba4; /* You can change this color manually */
 			}
 		</style>
@@ -245,7 +245,7 @@
 						<b>Servermigration</b>
 					</div>
 					<div class="legend-item">
-						<span class="dot RotF"></span> <b>RotF</b>
+						<span class="dot IRLX"></span> <b>IRLX</b>
 					</div>
 					<div class="legend-item">
 						<span class="dot nso"></span> <b>NSO</b>
@@ -298,10 +298,10 @@
 
 							const servermigration = data[1];
 							const nso = data[2];
-							const RotF = data[3];
+							const IRLX = data[3];
 							// Create a new list to store the multiplied values
 							var nso_min = [];
-							var RotF_min = [];
+							var IRLX_min = [];
 							var servermigration_min = [];
 
 							function round_up(old_list, new_list) {
@@ -321,7 +321,7 @@
 							}
 
 							nso_min = round_up(nso, nso_min);
-							RotF_min = round_up(RotF, RotF_min);
+							IRLX_min = round_up(IRLX, IRLX_min);
 							servermigration_min = round_up(
 								servermigration,
 								servermigration_min
@@ -333,7 +333,7 @@
 
 							var migrationColor = "rgba(224, 142, 69, 1)";
 							var nsoColor = "rgba(115, 113, 252, 1)";
-							var RotFColor = "rgba(68, 187, 164, 1)";
+							var IRLXColor = "rgba(68, 187, 164, 1)";
 
 							const options = {
 								legend: {
@@ -396,9 +396,9 @@
 												return nso[context.dataIndex];
 											}
 											if (
-												context.dataset.label === "RotF"
+												context.dataset.label === "IRLX"
 											) {
-												return RotF[context.dataIndex];
+												return IRLX[context.dataIndex];
 											}
 											if (
 												context.dataset.label ===
@@ -441,9 +441,9 @@
 											borderWidth: 1,
 										},
 										{
-											label: "RotF",
-											data: RotF_min,
-											backgroundColor: RotFColor,
+											label: "IRLX",
+											data: IRLX_min,
+											backgroundColor: IRLXColor,
 											borderWidth: 1,
 										},
 										{

@@ -12,7 +12,7 @@ class Navbar extends HTMLElement {
                 <button class="dropbtn"><i class="fa fa-bars"></i>
                 </button>
                 <div class="dropdown-content">
-                    <h3>NSO/RotF</h3>
+                    <h3>NSO/IRLX</h3>
                     <a href="../rolloutmonitor.html">Home</a>
                     <a href="../rolloutmonitor/forecast.html">Forecast</a>
                     <a href="../rolloutmonitor/detail.html">Detailplanung</a>
@@ -31,7 +31,7 @@ class Navbar extends HTMLElement {
                 </div>
             </div>
             <div class="dropdown">
-                <button class="dropbtn">NSO/RotF
+                <button class="dropbtn">NSO/IRLX
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
