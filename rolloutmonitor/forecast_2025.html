@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Rollout Monitor</title>
+		<style>
+			:root {
+				--font-big-size: 2rem;
+				--font-medium-size: 1.5rem;
+				--font-small-size: 1rem;
+				--main-dark: #009879;
+				--main-medium: #006a60;
+				--main-light: #40b3a2;
+				--accent-bright: #ffc10b;
+				--accent-medium: #ffd23f;
+				--accent-light: #ffe57a;
+				--margin-big: 2rem;
+				--margin-medium: 1rem;
+				--magin-small: 0.5rem;
+			}
+
+			@font-face {
+				font-family: "dashboardfont";
+				src: url("fonts/Roboto-Regular.ttf");
+			}
+
+			* {
+				font-family: "dashboardfont", sans-serif;
+				animation: fadein 0.5s;
+			}
+
+			body {
+				background-color: #f7f7f7;
+			}
+
+			/* Add the fade-in animation */
+			@keyframes fadein {
+				from {
+					opacity: 0;
+				}
+
+				to {
+					opacity: 1;
+				}
+			}
+
+			@media only screen and (max-width: 1400px) {
+				.dropdown {
+					display: none;
+				}
+
+				#combined-dropdown {
+					display: block !important;
+				}
+
+				#dropdown-selector {
+					display: block !important;
+				}
+
+				nav .right {
+					justify-content: right;
+					margin-right: 10vw !important;
+				}
+
+				.dropdown-content {
+					margin: 0;
+				}
+			}
+		</style>
+
+		<link
+			rel="icon"
+			href="../images/Logo SOS IS GmbH Neu shadow_tif.webp"
+		/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+		<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+		/>
+		<link rel="stylesheet" href="../styling/table.css" />
+		<link rel="stylesheet" href="../styling/nav.css" />
+		<link rel="stylesheet" href="../styling/search_and_refresh.css" />
+		<link rel="stylesheet" href="../styling/header.css" />
+		<link rel="stylesheet" href="../styling/info_box.css" />
+		<link rel="stylesheet" href="../styling/background.css" />
+		<link rel="stylesheet" href="../styling/div.css" />
+		<link rel="stylesheet" href="../styling/popup.css" />
+		<script src="../js-components/navbar.js"></script>
+		<script src="/commons.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
+	</head>
+
+	<app-nav> </app-nav>
+
+	<body onload="openForm([loadForecast])">
+		<!-- The form -->
+		<div class="form-popup" id="myForm">
+			<form class="form-container">
+				<h1>Login</h1>
+
+				<label
+					class="error-mark"
+					for="psw"
+					style="display: none; color: red; font-size: 15px"
+					><b>Ungültiges Passwort</b></label
+				>
+				<input
+					type="password"
+					placeholder="Enter Password"
+					name="psw"
+					required
+				/>
+				<button type="submit" class="btn">Login</button>
+			</form>
+		</div>
+
+		<section id="home">
+			<div>
+				<h1>Forecast für alle geplanten Rolloutprojekte in 2025</h1>
+			</div>
+			<div class="info-box">
+				<div class="info-box__icon">i</div>
+				<div class="info-box__text">
+					Diese Seite bietet Ihnen einen Überblick über alle geplanten
+					Rolloutprojekte (NSO / IRLX). <br />
+					Über das Suchfeld kann gezielt nach einzelnen Einträgen
+					gesucht werden. Mit einem Klick auf einen der Spaltenköpfe
+					kann die Tabelle entsprechend sortiert werden. <br />
+					Änderungen werden dabei nur temporär vorgenommen. Nach dem
+					Drücken des Buttons "Aktualisieren" wird die Übersicht aus
+					dem Masterdokument neu geladen.
+				</div>
+			</div>
+		</section>
+		<section id="main">
+			<!-- Refresh and search container -->
+			<div class="refresh-search-container">
+				<!-- Refresh button -->
+				<button class="refresh-button" onclick="loadForecast();">
+					<i class="fa fa-refresh" style="margin-right: 10px"></i
+					>Aktualisieren
+				</button>
+				<!-- Search box container -->
+				<div class="search-box-container">
+					<!-- Search box -->
+					<i class="fas fa-search search-icon"></i>
+					<input
+						type="text"
+						class="search-box"
+						placeholder="Suche..."
+					/>
+					<!-- Search icon -->
+				</div>
+			</div>
+			<div class="bigtable">
+				<div class="table-wrapper">
+					<div class="table-scroll" id="scroll-1">
+						<table id="forecast-table" class="sortable">
+							<thead>
+								<tr>
+									<th class="status">Status</th>
+									<th class="short">Store</th>
+									<th class="short">PLZ</th>
+									<th class="long">Adresse</th>
+									<th class="short">Art</th>
+									<th class="short">Variante</th>
+									<th class="short">F/C</th>
+									<th class="short">KIOSKE</th>
+									<th class="short">Schließung</th>
+									<th class="short">Eröffnung</th>
+									<th class="short">Mobile Unit</th>
+									<th class="short">IT-Tag 1</th>
+									<th class="comment">Bemerkung</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<script>
+			function loadForecast() {
+				if (checkPassword()) {
+					const password = window.selectedPassword;
+					const wb_name = "forecast_2";
+
+					fetch(
+						"https://europe-west3-shopysmart-600e7.cloudfunctions.net/get-rollout-data",
+						{
+							method: "POST",
+							headers: {
+								"Content-Type": "application/json",
+							},
+							body: JSON.stringify({
+								password: password,
+								wb_name: wb_name,
+							}),
+						}
+					)
+						.then((response) => {
+							if (!response.ok) {
+								throw new Error("Network response was not ok");
+							}
+							return response.json();
+						})
+						.then((data) => {
+							data.shift();
+							// Iterate through the data and add a row to the table for each item
+							$("#forecast-table tbody").empty();
+							data.forEach(function (item) {
+								try {
+									// Determine the class name for the "status" cell based on its value
+									var statusClass = "";
+									if (item[0] == "ABGESCHLOSSEN") {
+										statusClass = "abgeschlossen";
+									} else if (item[0] == "IN BAU") {
+										statusClass = "in-bau";
+									} else if (item[0] == "IN PLANUNG") {
+										statusClass = "in-planung";
+									} else if (item[0] == "VERTRAG") {
+										statusClass = "vertrag";
+									} else if (item[0] == "FREIGABE 2") {
+										statusClass = "freigabe2";
+									} else if (item[0] == "FREIGABE 1") {
+										statusClass = "freigabe1";
+									} else {
+										statusClass = "else";
+									}
+								} catch (e) {
+									console.log(e);
+								}
+								if (item[11] == undefined) {
+									item[11] = "";
+								}
+
+								try {
+									// Determine the class name for the "status" cell based on its value
+									var varianteClass = "";
+									if (item[5] == "NSO") {
+										varianteClass = "nso";
+									} else if (item[5] == "IRLX") {
+										varianteClass = "IRLX";
+									} else {
+										varianteClass = "else";
+									}
+								} catch (e) {
+									console.log(e);
+								}
+
+								$("#forecast-table tbody").append(`
+            <tr>
+              <td class="${statusClass}" disabled>
+                <button>${item[0]}</button>
+              </td>
+              <td>${item[1]}</td>
+              <td>${item[2]}</td>
+              <td>${item[3]}</td>
+              <td>${item[4]}</td>
+              <td class="${varianteClass}" disabled>
+                <button>${item[5]}</button>
+              </td>
+              <td>${item[6]}</td>
+              <td>${item[7]}</td>
+              <td>${item[8]}</td>
+              <td>${item[9]}</td>
+              <td>${item[10]}</td>
+              <td>${item[11]}</td>
+              <td>${item[12]}</td>
+            </tr>
+          `);
+							});
+							const table =
+								document.getElementById("forecast-table");
+							const tableContainer =
+								document.getElementById("scroll-1");
+
+							if (table.offsetHeight > window.innerHeight * 0.5) {
+								tableContainer.style.height = "70vh";
+							}
+						})
+						.catch((error) => {
+							console.error(
+								"There was a problem with the fetch operation:",
+								error
+							);
+						});
+				}
+			}
+		</script>
+
+		<script>
+			// Get the search box and data table elements
+			var searchBox = document.querySelector(".search-box");
+			var dataTable = document.querySelector("#forecast-table");
+
+			// Add an event listener to the search box that listens for input events
+			searchBox.addEventListener("input", function () {
+				// Get the search query from the search box
+				var query = this.value.toLowerCase();
+
+				// Loop through all the rows in the data table
+				for (var i = 1; i < dataTable.rows.length; i++) {
+					// Get the current row
+					var row = dataTable.rows[i];
+
+					// Set the row's display style to none by default
+					row.style.display = "none";
+
+					// Loop through all the cells in the row
+					for (var j = 0; j < row.cells.length; j++) {
+						// Get the current cell
+						var cell = row.cells[j];
+
+						// If the cell's text content contains the search query, set the row's display style to '' (empty string) to show the row
+						if (
+							cell.textContent.toLowerCase().indexOf(query) > -1
+						) {
+							row.style.display = "";
+							break;
+						}
+					}
+				}
+			});
+		</script>
+		<script>
+			$(function () {
+				$(".scroll-page").on("click", function () {
+					var offset = 60; // Set the offset to 50px
+					var speed = 800;
+					var target = $(this.hash);
+
+					$("nav a").each(function () {
+						$(this).removeClass("active");
+					});
+
+					$(this).addClass("active");
+
+					$("html, body").animate(
+						{
+							scrollTop: target.offset().top - offset, // Subtract the offset from the scrollTop position
+						},
+						speed,
+						"swing"
+					);
+				});
+			});
+		</script>
+	</body>
+</html>

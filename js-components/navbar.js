@@ -14,8 +14,8 @@ class Navbar extends HTMLElement {
                 <div class="dropdown-content">
                     <h3>NSO/IRLX</h3>
                     <a href="../rolloutmonitor.html">Home</a>
-                    <a href="../rolloutmonitor/forecast.html">Forecast</a>
-                    <a href="../rolloutmonitor/detail.html">Detailplanung</a>
+                    <a href="../rolloutmonitor/forecast_2024.html">Forecast 2024</a>
+                    <a href="../rolloutmonitor/forecast_2025.html">Forecast 2025</a>
                     <a href="../rolloutmonitor/statustable.html">Statustable</a>
                     <hr>
                     <h3>Archiv</h3>
@@ -23,11 +23,11 @@ class Navbar extends HTMLElement {
                     <a href="../archiv/archiv_2023.html">Archiv 2023</a>
                     <a href="../archiv/archiv_2024.html">Archiv 2024</a>
                     <hr>
+                    <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
+                    <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                     <h3>Dashboards</h3>
                     <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
-                    <hr>
-                    <a href="../dashboards/servermigration_2023_r350.html">Servermigration (R340-SSD/R350)</a>
                 </div>
             </div>
             <div class="dropdown">
@@ -36,8 +36,8 @@ class Navbar extends HTMLElement {
                 </button>
                 <div class="dropdown-content">
                     <a href="../rolloutmonitor.html">Home</a>
-                    <a href="../rolloutmonitor/forecast.html">Forecast</a>
-                    <a href="../rolloutmonitor/detail.html">Detailplanung</a>
+                    <a href="../rolloutmonitor/forecast_2024.html">Forecast 2024</a>
+                    <a href="../rolloutmonitor/forecast_2025.html">Forecast 2025</a>
                     <a href="../rolloutmonitor/statustable.html">Statustable</a>
                 </div>
             </div>
@@ -47,11 +47,8 @@ class Navbar extends HTMLElement {
                 </button>
                 <div class="dropdown-content">
                     <a href="../dashboards.html">Home</a>
-                    <a href="../dashboards/gesamtplanung_2024.html">Gesamtplanung 2024</a>
-                    <hr>
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
-                    <hr>
-                    <a href="../dashboards/servermigration_2023_r350.html">Servermigration (R340-SSD/R350)</a>
+                    <a href="../dashboards/rollout_planung_2025.html">Rollout Planung 2025</a>
                 </div>
             </div>
             <div class="dropdown">
@@ -66,6 +63,8 @@ class Navbar extends HTMLElement {
                   <hr>
                   <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
                   <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
+                  <hr>
+                  <a href="../dashboards/servermigration_2023_r350.html">Servermigration (R340-SSD/R350)</a>
               </div>
             </div>
         </div>
