@@ -22,10 +22,7 @@ class Navbar extends HTMLElement {
                     <a href="../archiv/archiv_2023.html">Archiv 2023</a>
                     <a href="../archiv/archiv_2024.html">Archiv 2024</a>
                     <hr>
-                    <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
-                    <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
-                    <h3>Dashboards</h3>
-                    <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
+                    <a href="../archiv/rollout_planung_2023.html">Rollout Planung 2023</a>
                     <a href="../dashboards/rollout_planung_2024.html">Rollout Planung 2024</a>
                 </div>
             </div>
@@ -59,10 +56,10 @@ class Navbar extends HTMLElement {
                   <a href="../archiv/archiv_2023.html">Archiv 2023</a>
                   <a href="../archiv/archiv_2024.html">Archiv 2024</a>
                   <hr>
-                  <a href="../dashboards/rollout_planung_2022.html">Rollout Planung 2022</a>
-                  <a href="../dashboards/rollout_planung_2023.html">Rollout Planung 2023</a>
+                  <a href="../archiv/rollout_planung_2022.html">Rollout Planung 2022</a>
+                  <a href="../archiv/rollout_planung_2023.html">Rollout Planung 2023</a>
                   <hr>
-                  <a href="../dashboards/servermigration_2023_r350.html">Servermigration (R340-SSD/R350)</a>
+                  <a href="../archiv/servermigration_2023_r350.html">Servermigration (R340-SSD/R350)</a>
               </div>
             </div>
         </div>

@@ -108,13 +108,8 @@
 			}
 
 			.kpis {
-				display: grid;
-				grid-template-columns: 1fr 1fr 1fr;
 				text-align: center;
-				margin: 0 !important;
 				margin-top: 1.5rem !important;
-				margin-left: 14rem !important;
-				margin-right: 14rem !important;
 			}
 
 			.kpi-box {
@@ -135,23 +130,10 @@
 			}
 
 			#top {
-				margin-left: 18rem !important;
-				margin-right: 18rem !important;
 				display: inline !important;
 			}
 
 			#top.kpi-value {
-				font-size: 3.5rem !important;
-				font-weight: 600;
-				animation: fadein 1s;
-			}
-
-			#top-IRLX {
-				display: grid !important;
-				grid-template-columns: 1fr 1fr;
-			}
-
-			#top-IRLX.kpi-value {
 				font-size: 3.5rem !important;
 				font-weight: 600;
 				animation: fadein 1s;
@@ -244,13 +226,6 @@
 					grid-template-columns: repeat(1, 1fr);
 				}
 			}
-
-			@media (max-width: 1800px) {
-				#top-IRLX {
-					margin-left: 9.5rem !important;
-					margin-right: 9.5rem !important;
-				}
-			}
 		</style>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -289,6 +264,7 @@
 	</head>
 
 	<app-nav> </app-nav>
+
 	<body
 		onload="openForm([loadNSOchart, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues])"
 	>
@@ -318,7 +294,7 @@
 					<!-- Refresh button -->
 					<button
 						class="refresh-button"
-						onclick="openForm([setGridTemplateColumnsNSO, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues]);"
+						onclick="openForm([loadNSOchart, loadIRLXchart, loadNSOKPIValues, loadIRLXKPIValues]);"
 					>
 						<i class="fa fa-refresh" style="margin-right: 10px"></i
 						>Aktualisieren
@@ -338,7 +314,6 @@
 				<div class="kpis" id="top">
 					<div class="kpi-box">
 						<div class="kpi-value" id="total-nso">10</div>
-
 						<div class="kpi-title">Target</div>
 					</div>
 				</div>
@@ -350,20 +325,6 @@
 
 							<hr class="completed-divider" />
 							<div class="kpi-title">Completed</div>
-						</div>
-
-						<div class="kpi-box" id="planned">
-							<div class="kpi-value" id="planned-nso">20</div>
-
-							<hr class="planned-divider" />
-							<div class="kpi-title">Planned</div>
-						</div>
-
-						<div class="kpi-box" id="unplanned">
-							<div class="kpi-value" id="unplanned-nso">10</div>
-
-							<hr class="unplanned-divider" />
-							<div class="kpi-title">Unplanned</div>
 						</div>
 					</div>
 
@@ -383,16 +344,11 @@
 						<b>I</b>n<b>R</b>eal<b>L</b>ifeE<b>X</b>perience
 					</div>
 				</div>
-				<div class="kpis" id="top-IRLX">
+				<div class="kpis" id="top">
 					<div class="kpi-box">
 						<div class="kpi-value" id="total-IRLX">10</div>
 
 						<div class="kpi-title">Target</div>
-					</div>
-
-					<div class="kpi-box" id="unplanned">
-						<div class="kpi-value" id="unplanned-IRLX">10</div>
-						<div class="kpi-title">Unplanned</div>
 					</div>
 				</div>
 
@@ -403,13 +359,6 @@
 
 							<hr class="completed-divider" />
 							<div class="kpi-title">Completed</div>
-						</div>
-
-						<div class="kpi-box" id="planned">
-							<div class="kpi-value" id="planned-IRLX">20</div>
-
-							<hr class="planned-divider" />
-							<div class="kpi-title">Planned</div>
 						</div>
 					</div>
 
@@ -451,34 +400,29 @@
 							return response.json();
 						})
 						.then((data) => {
-							const target_value = data[0][2];
-							const completed_value = data[0][5];
-							const planned_value = data[0][8];
-							const unplanned_value = data[0][11];
+							var target_value = 0;
+							var completed_value = 0;
+							var planned_value = 0;
+							var unplanned_value = 0;
 
-							const planned = document.querySelector(
-								".kpi-value#planned-nso"
-							);
-
-							planned.innerHTML = planned_value;
-
-							const completed = document.querySelector(
-								".kpi-value#completed-nso"
-							);
-
-							completed.innerHTML = completed_value;
-
-							const unplanned = document.querySelector(
-								".kpi-value#unplanned-nso"
-							);
-
-							unplanned.innerHTML = unplanned_value;
+							data.forEach(function (item) {
+								target_value = item[2];
+								completed_value = item[5];
+								planned_value = item[8];
+								unplanned_value = item[11];
+							});
 
 							const total = document.querySelector(
 								".kpi-value#total-nso"
 							);
 
 							total.innerHTML = target_value;
+
+							const completed = document.querySelector(
+								".kpi-value#completed-nso"
+							);
+
+							completed.innerHTML = completed_value;
 						})
 						.catch((error) => {
 							console.error(
@@ -514,34 +458,27 @@
 							return response.json();
 						})
 						.then((data) => {
-							const target_value = data[0][2];
-							const completed_value = data[0][5];
-							const planned_value = data[0][8];
-							const unplanned_value = data[0][11];
+							var target_value = 0;
+							var completed_value = 0;
+							var planned_value = 0;
+							var unplanned_value = 0;
 
-							const planned = document.querySelector(
-								".kpi-value#planned-IRLX"
+							data.forEach(function (item) {
+								target_value = item[2];
+								completed_value = item[5];
+								planned_value = item[8];
+								unplanned_value = item[11];
+							});
+
+							const total = document.querySelector(
+								"#.kpi-value#total-IRLX"
 							);
-
-							planned.innerHTML = planned_value;
+							total.innerHTML = target_value;
 
 							const completed = document.querySelector(
 								".kpi-value#completed-IRLX"
 							);
-
 							completed.innerHTML = completed_value;
-
-							const unplanned = document.querySelector(
-								".kpi-value#unplanned-IRLX"
-							);
-
-							unplanned.innerHTML = unplanned_value;
-
-							const total = document.querySelector(
-								".kpi-value#total-IRLX"
-							);
-
-							total.innerHTML = target_value;
 						})
 						.catch((error) => {
 							console.error(
@@ -579,13 +516,13 @@
 							return response.json();
 						})
 						.then((data) => {
-							var completedData = data[0] ? data[0] : [];
+							var values = [];
 
-							// Check for data[3] and assign to plannedData
-							var plannedData = data[1] ? data[1] : [];
-
-							// Check for data[4] and assign to unplannedData
-							var unplannedData = data[2] ? data[2] : [];
+							data.forEach(function (item) {
+								item.forEach(function (value) {
+									values.push(value);
+								});
+							});
 
 							const ctx = document
 								.getElementById("NSO-chart")
@@ -593,83 +530,78 @@
 
 							const options = {
 								legend: {
-									display: false,
+									display: false, // Hide the legend
 								},
+
 								scales: {
 									xAxes: [
 										{
-											stacked: true,
 											ticks: {
-												display: true,
+												display: true, // show tick marks
 											},
 											gridLines: {
-												display: false,
+												display: false, // hide vertical grid lines
 											},
 										},
 									],
 									yAxes: [
 										{
-											stacked: true,
 											ticks: {
-												display: false,
+												display: false, // hide y-axis tick marks and labels
 											},
 											gridLines: {
-												display: true,
-												color: "rgba(0, 0, 0, 0)",
+												display: true, // show the first grid line
+												color: "rgba(0, 0, 0, 0)", // set the color of the grid lines
 												zeroLineColor:
-													"rgba(0, 0, 0, 1)",
-												drawBorder: false,
-												drawTicks: false,
+													"rgba(0, 0, 0, 1)", // set the color of the first grid line
+												drawBorder: false, // hide the y-axis border
+												drawTicks: false, // hide the y-axis tick marks
 											},
 										},
 									],
 								},
 								plugins: {
 									tooltip: {
-										enabled: false,
-									},
-									customText: {
-										color: "black",
-										font: {
-											size: 14,
-											weight: "bold",
-											family: "Arial",
-										},
-										position: {
-											x: 0,
-											y: 0,
-										},
-										text: "",
-									},
-									datalabels: {
-										display: function (context) {
-											const index = context.dataIndex;
-											return (
-												completedData[index] !== "0" ||
-												plannedData[index] !== "0" ||
-												unplannedData[index] !== "0" ||
-												(completedData[index] === "0" &&
-													plannedData[index] ===
-														"0" &&
-													unplannedData[index] ===
-														"0")
-											);
-										},
-
-										anchor: "end",
-										align: "start",
-										color: "white",
-										font: {
-											size: 19,
-											weight: "bold",
-											family: "Arial",
-										},
+										enabled: false, // Disable the tooltip
 									},
 								},
+
 								layout: {
 									padding: {
 										top: 30,
 										bottom: 20,
+									},
+								},
+								plugins: [
+									{
+										afterDraw: function (chart) {
+											const ctx = chart.ctx;
+											const textOptions =
+												chart.options.plugins
+													.customText;
+
+											ctx.save();
+											ctx.fillStyle = textOptions.color;
+											ctx.font = `${textOptions.font.weight} ${textOptions.font.size}px ${textOptions.font.family}`;
+											ctx.fillText(
+												textOptions.text,
+												textOptions.position.x,
+												textOptions.position.y
+											);
+											ctx.restore();
+										},
+									},
+								],
+								plugins: {
+									datalabels: {
+										anchor: "end", // Position the value labels at the end of the bars
+										align: "end",
+										display: true,
+										color: "black",
+										font: {
+											size: 14,
+											weight: "bold",
+										},
 									},
 								},
 							};
@@ -680,21 +612,13 @@
 									labels: month_labels,
 									datasets: [
 										{
-											label: "Completed",
-											backgroundColor: completedColor,
-											data: completedData,
-											borderWidth: 1,
-										},
-										{
-											label: "Planned",
-											data: plannedData,
-											backgroundColor: plannedColor,
-											borderWidth: 1,
-										},
-										{
-											label: "Unplanned",
-											data: unplannedData,
-											backgroundColor: unplannedColor,
+											label: "My Dataset",
+											data: values,
+											backgroundColor: [
+												...Array(12).fill(
+													completedColor
+												),
+											],
 											borderWidth: 1,
 										},
 									],
@@ -736,13 +660,13 @@
 							return response.json();
 						})
 						.then((data) => {
-							var completedData = data[0] ? data[0] : [];
+							var values = [];
 
-							// Check for data[3] and assign to plannedData
-							var plannedData = data[1] ? data[1] : [];
-
-							// Check for data[4] and assign to unplannedData
-							var unplannedData = data[2] ? data[2] : [];
+							data.forEach(function (item) {
+								item.forEach(function (value) {
+									values.push(value);
+								});
+							});
 
 							const ctx = document
 								.getElementById("IRLX-chart")
@@ -750,86 +674,78 @@
 
 							const options = {
 								legend: {
-									display: false,
+									display: false, // Hide the legend
 								},
+
 								scales: {
 									xAxes: [
 										{
-											stacked: true,
 											ticks: {
-												display: true,
+												display: true, // show tick marks
 											},
 											gridLines: {
-												display: false,
+												display: false, // hide vertical grid lines
 											},
 										},
 									],
 									yAxes: [
 										{
-											stacked: true,
 											ticks: {
-												display: false,
+												display: false, // hide y-axis tick marks and labels
 											},
 											gridLines: {
-												display: true,
-												color: "rgba(0, 0, 0, 0)",
+												display: true, // show the first grid line
+												color: "rgba(0, 0, 0, 0)", // set the color of the grid lines
 												zeroLineColor:
-													"rgba(0, 0, 0, 1)",
-												drawBorder: false,
-												drawTicks: false,
+													"rgba(0, 0, 0, 1)", // set the color of the first grid line
+												drawBorder: false, // hide the y-axis border
+												drawTicks: false, // hide the y-axis tick marks
 											},
 										},
 									],
 								},
 								plugins: {
 									tooltip: {
-										enabled: false,
-									},
-									customText: {
-										color: "black",
-										font: {
-											size: 14,
-											weight: "bold",
-											family: "Arial",
-										},
-										position: {
-											x: 0,
-											y: 0,
-										},
-										text: "",
-									},
-									datalabels: {
-										display: function (context) {
-											const index = context.dataIndex;
-											return (
-												completedData[index] !== "0" ||
-												plannedData[index] !== "0" ||
-												unplannedData[index] !== "0" ||
-												(completedData[index] === "0" &&
-													plannedData[index] ===
-														"0" &&
-													unplannedData[index] ===
-														"0")
-											);
-										},
-										formatter: function (value) {
-											return value !== 0 ? value : "";
-										},
-
-										anchor: "end",
-										align: "start",
-										color: "white",
-										font: {
-											size: 19,
-											weight: "bold",
-											family: "Arial",
-										},
+										enabled: false, // Disable the tooltip
 									},
 								},
+
 								layout: {
 									padding: {
 										top: 30,
 										bottom: 20,
+									},
+								},
+								plugins: [
+									{
+										afterDraw: function (chart) {
+											const ctx = chart.ctx;
+											const textOptions =
+												chart.options.plugins
+													.customText;
+
+											ctx.save();
+											ctx.fillStyle = textOptions.color;
+											ctx.font = `${textOptions.font.weight} ${textOptions.font.size}px ${textOptions.font.family}`;
+											ctx.fillText(
+												textOptions.text,
+												textOptions.position.x,
+												textOptions.position.y
+											);
+											ctx.restore();
+										},
+									},
+								],
+								plugins: {
+									datalabels: {
+										anchor: "end", // Position the value labels at the end of the bars
+										align: "end",
+										display: true,
+										color: "black",
+										font: {
+											size: 14,
+											weight: "bold",
+										},
 									},
 								},
 							};
@@ -840,21 +756,13 @@
 									labels: month_labels,
 									datasets: [
 										{
-											label: "Completed",
-											backgroundColor: completedColor,
-											data: completedData,
-											borderWidth: 1,
-										},
-										{
-											label: "Planned",
-											data: plannedData,
-											backgroundColor: plannedColor,
-											borderWidth: 1,
-										},
-										{
-											label: "Unplanned",
-											data: unplannedData,
-											backgroundColor: unplannedColor,
+											label: "My Dataset",
+											data: values,
+											backgroundColor: [
+												...Array(12).fill(
+													completedColor
+												),
+											],
 											borderWidth: 1,
 										},
 									],
