@@ -1,5 +1,5 @@
 nav {
-	z-index: 1;
+	z-index: 3 !important;
 	margin-left: 20px;
 	margin-right: 20px;
 	/* Navbar styles */
@@ -176,7 +176,7 @@ nav a.active {
 	background-color: #f9f9f9;
 	min-width: 160px;
 	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-	z-index: 2;
+	z-index: 3 !important;
 	border-radius: 25px;
 }
 
@@ -189,6 +189,7 @@ nav a.active {
 	display: block;
 	text-align: left;
 	transition: transition 1s ease-out-in !important;
+	z-index: 3 !important;
 }
 
 .dropdown-element span {
@@ -199,7 +200,7 @@ nav a.active {
 	display: block;
 	text-align: left;
 	transition: transition 1s ease-out-in !important;
-	z-index: 2;
+	z-index: 3 !important;
 }
 
 .dropdown-element span:hover {
