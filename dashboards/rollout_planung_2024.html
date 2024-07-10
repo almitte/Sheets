@@ -689,6 +689,36 @@
 							// Check for data[4] and assign to unplannedData
 							var unplannedData = data[2] ? data[2] : [];
 
+							var completed_min = [];
+							var planned_min = [];
+							var unplanned_min = [];
+
+							function round_up(old_list, new_list) {
+								// Multiply each value by 5 and store it in the new list
+								for (var i = 0; i < old_list.length; i++) {
+									var new_list_value = 0;
+									if (old_list[i] == 0) {
+										new_list_value = 0;
+									} else if (old_list[i] < 3) {
+										new_list_value = 3;
+									} else {
+										new_list_value = old_list[i];
+									}
+									new_list.push(new_list_value);
+								}
+								return new_list;
+							}
+
+							completed_min = round_up(
+								completedData,
+								completed_min
+							);
+							planned_min = round_up(plannedData, planned_min);
+							unplanned_min = round_up(
+								unplannedData,
+								unplanned_min
+							);
+
 							const ctx = document
 								.getElementById("NSO-chart")
 								.getContext("2d");
@@ -744,18 +774,33 @@
 										text: "",
 									},
 									datalabels: {
-										display: function (context) {
-											const index = context.dataIndex;
-											return (
-												completedData[index] !== "0" ||
-												plannedData[index] !== "0" ||
-												unplannedData[index] !== "0" ||
-												(completedData[index] === "0" &&
-													plannedData[index] ===
-														"0" &&
-													unplannedData[index] ===
-														"0")
-											);
+										formatter: function (value, context) {
+											// Display nso[index] as the label on the bars for the "nso_min" dataset
+											if (
+												context.dataset.label ===
+												"Completed"
+											) {
+												return completedData[
+													context.dataIndex
+												];
+											}
+											if (
+												context.dataset.label ===
+												"Planned"
+											) {
+												return plannedData[
+													context.dataIndex
+												];
+											}
+											if (
+												context.dataset.label ===
+												"Unplanned"
+											) {
+												return unplannedData[
+													context.dataIndex
+												];
+											}
+											return value;
 										},
 
 										anchor: "end",
@@ -784,18 +829,18 @@
 										{
 											label: "Completed",
 											backgroundColor: completedColor,
-											data: completedData,
+											data: completed_min,
 											borderWidth: 1,
 										},
 										{
 											label: "Planned",
-											data: plannedData,
+											data: planned_min,
 											backgroundColor: plannedColor,
 											borderWidth: 1,
 										},
 										{
 											label: "Unplanned",
-											data: unplannedData,
+											data: unplanned_min,
 											backgroundColor: unplannedColor,
 											borderWidth: 1,
 										},
@@ -846,6 +891,36 @@
 
 							// Check for data[4] and assign to unplannedData
 							var unplannedData = data[2] ? data[2] : [];
+
+							var completed_min = [];
+							var planned_min = [];
+							var unplanned_min = [];
+
+							function round_up(old_list, new_list) {
+								// Multiply each value by 5 and store it in the new list
+								for (var i = 0; i < old_list.length; i++) {
+									var new_list_value = 0;
+									if (old_list[i] == 0) {
+										new_list_value = 0;
+									} else if (old_list[i] < 5) {
+										new_list_value = 5;
+									} else {
+										new_list_value = old_list[i];
+									}
+									new_list.push(new_list_value);
+								}
+								return new_list;
+							}
+
+							completed_min = round_up(
+								completedData,
+								completed_min
+							);
+							planned_min = round_up(plannedData, planned_min);
+							unplanned_min = round_up(
+								unplannedData,
+								unplanned_min
+							);
 
 							const ctx = document
 								.getElementById("IRLX-chart")
@@ -902,21 +977,33 @@
 										text: "",
 									},
 									datalabels: {
-										display: function (context) {
-											const index = context.dataIndex;
-											return (
-												completedData[index] !== "0" ||
-												plannedData[index] !== "0" ||
-												unplannedData[index] !== "0" ||
-												(completedData[index] === "0" &&
-													plannedData[index] ===
-														"0" &&
-													unplannedData[index] ===
-														"0")
-											);
-										},
-										formatter: function (value) {
-											return value !== 0 ? value : "";
+										formatter: function (value, context) {
+											// Display nso[index] as the label on the bars for the "nso_min" dataset
+											if (
+												context.dataset.label ===
+												"Completed"
+											) {
+												return completedData[
+													context.dataIndex
+												];
+											}
+											if (
+												context.dataset.label ===
+												"Planned"
+											) {
+												return plannedData[
+													context.dataIndex
+												];
+											}
+											if (
+												context.dataset.label ===
+												"Unplanned"
+											) {
+												return unplannedData[
+													context.dataIndex
+												];
+											}
+											return value;
 										},
 
 										anchor: "end",
@@ -945,18 +1032,18 @@
 										{
 											label: "Completed",
 											backgroundColor: completedColor,
-											data: completedData,
+											data: completed_min,
 											borderWidth: 1,
 										},
 										{
 											label: "Planned",
-											data: plannedData,
+											data: planned_min,
 											backgroundColor: plannedColor,
 											borderWidth: 1,
 										},
 										{
 											label: "Unplanned",
-											data: unplannedData,
+											data: unplanned_min,
 											backgroundColor: unplannedColor,
 											borderWidth: 1,
 										},
